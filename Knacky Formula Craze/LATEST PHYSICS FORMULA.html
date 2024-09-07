@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+
+                :.                                                                                  
+                +$X+;.                                                                              
+                :XX$X++;:                                               .::;++:                     
+                 :X$X+:::+;:                                       ..:;+$XXX$+.                     
+                  :X$+::::::+:.                                 .:+;::::$XX$x.                      
+                   :+X;:::::::;;.                            .:;;::::::X$$$x.                       
+                     ++:::::::::;+                         .+;:::::::::$XX+                         
+                      :+;:::::::::;:                      +:::::::::::$$x         :;;;              
+                       .+;:::::::::;;  :+++;:::::;++;.  ;::::::::::::Xx.      :+;:::::              
+                         .++:::::::::::::::::::::::::::;+:::::::::;+:    .;;;:::::::+.              
+                           .:x;::::::::::::::::::::::::::::::::++:.  :;+::::::::::::+.              
+                              .:++::::::::::::::::::::::::::;:.  :;;:::::::::::::::;:               
+                               :+::::::::::::::::::::::::::::;;::::::::::::::::::::+.               
+                              .;:::::::::::::::::::::::::::::;+:::::::::::::::::::+:                
+                              .X:::::::::::::::::::::::++;:::;;:::::::::::::::::::;.                
+                              .x::;xx+XX;::::::::::::++;;XX::::::::::::::::::::::;:                 
+                              .+::++:.+X;::::::::::::x+::+$::::;::::::::::::::;;::                  
+                              .x::;X$$X+::::::+;:::::;xXXx;:::;+::::::::;;;:::                      
+                              ;+++;:::::::::::::::::::::::::;;++:::;;;::                            
+                             .$xxxXx;::::;:::;;+;;:;;::::;+XxxX+::::;;.                             
+                             .$xxxxxx;::::;++::::;;;::::;XxxxxXx::::::;;.                           
+                              ;XxxxxX+::::::::::::::::::$xxxxxx;::::::::;;.                         
+                               ;XxXX+::::::::::::::::::::Xxxx+:;;;::::::::;:                        
+                                :+;::::::::::::::::::::::::;+.  .:;:::::;;:                         
+                                :+;+;::::::::::::::::::;;++:;+:+;:::::;+                            
+                                :+:::;++;:::::::::::+++;::::::;::::;;.                              
+                               .;:::::::::;+::;;;:::::::::::::;;::;;.                               
+                               ::::::::::::::::::::::::::::::::;+;;;:;.                             
+                             .+:::::::::::::::::::++::::::::::::+x;.                                
+                            .x::::::::::::::$::::::::::::::::::::+:                                 
+                           ;;:::::::::::::::;::::+x::::::::::::::;;.                                
+                        . :;:::;:::::::::::::X::::::::::::::;+::::+:                                
+                     :+x;;+;:::;+::::::::::::$::;;::::::::::;::::::::+;.                            
+                      ;++;::;+::;+:::::::::::x::+x::::::::::;::::;;:+;+:                            
+                       ;;;;::::::;+::::::::::x::+X:::::::::+::::::;;+++                             
+                        :+;;;;;:::;;:::::::::X;;+x::::::::+::::::::;+;.                             
+                          :+;;;;;;;;+;:::::::x;;+;:::::::+:::::;;;+;.                               
+                           .;+;;+x;;;+;:::;:+::::;:::::++;;+;;;;;:.                                 
+                             .;;;;:::::;;;::     :;;;;;.:::++;;:                                                                                      
+
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Formula Search</title>
+    <style>
+        body,
+        h1,
+        p,
+        input,
+        button {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #00FFFF 100%);
+            color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1822&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-animation div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 60%);
+            animation: move 30s linear infinite, rotate 60s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+
+            100% {
+                transform: translateX(-2000px) translateY(-2000px);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #searchContainer {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 100%;
+            width: 100%;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #searchContainer:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.2em;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #f9a826;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 10px;
+            top: -18%;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .clear-button:hover {
+            color: #f9a826;
+        }
+
+        .clear-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #f9a826;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #f39c12;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (min-width: 600px) {
+            #searchContainer {
+                padding: 40px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.3em;
+            }
+
+            button {
+                font-size: 1.3em;
+            }
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .formula-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.25), rgba(253, 187, 45, 0.15));
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .formula-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.35), rgba(253, 187, 45, 0.25));
+        }
+
+        .formula {
+            font-size: 1.4em;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .definition {
+            color: #f9a826;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1em;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .formula-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, transparent 70%);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .formula-container:hover::before {
+            transform: scale(1.2);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 10%, transparent 70%);
+        }
+
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            width: 300px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .calculator:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator input {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 0.9em;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
+        }
+
+        .calculator input:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #f9a826;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .calculator button:hover {
+            background: linear-gradient(135deg, #66BB6A 0%, #A5D6A7 100%);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator button:active {
+            transform: scale(0.98) translateY(2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator button:focus {
+            outline: 2px solid #f9a826;
+            outline-offset: 2px;
+        }
+
+        .calculator-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 1em;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .calculator {
+                padding: 1em;
+                width: 90%;
+            }
+
+            .calculator input {
+                font-size: 0.8em;
+            }
+
+            .calculator button {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .calculator-title {
+                font-size: 1.2em;
+            }
+        }
+
+        .no-results {
+            color: #f86;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            #searchContainer {
+                padding: 30px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.2em;
+            }
+
+            .formula {
+                font-size: 1.2em;
+            }
+
+            .definition {
+                font-size: 1em;
+            }
+
+            .no-results {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation">
+        <div style="top: 10%; left: 20%; animation-duration: 25s;"></div>
+        <div style="top: 30%; left: 40%; animation-duration: 20s;"></div>
+        <div style="top: 50%; left: 60%; animation-duration: 30s;"></div>
+        <div style="top: 70%; left: 80%; animation-duration: 35s;"></div>
+        <div style="top: 90%; left: 10%; animation-duration: 40s;"></div>
+    </div>
+    <h1>Physics Formula Search</h1>
+    <div id="searchContainer">
+        <div class="input-container">
+            <input type="text" id="searchInput" placeholder="Search for a physics concept..." list="suggestions"
+                oninput="showSuggestions()">
+            <button class="clear-button" onclick="clearInput()">×</button>
+        </div>
+        <datalist id="suggestions"></datalist>
+        <button onclick="searchFormula()">Search</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const formulas = {
+            "force": {
+                formula: "F = ma",
+                definition: "(Force = Mass × Acceleration)",
+                variables: ["F",
+                    "m",
+                    "a"]
+            },
+            "pressure": {
+                formula: "P = F / A",
+                definition: "Pressure = Force / Area",
+                variables: ["P",
+                    "F",
+                    "A"]
+            },
+            "kinematics 1": {
+                formula: "v = u + at",
+                definition: "(Final Velocity = Initial Velocity + Acceleration × Time)",
+                variables: ["v",
+                    "u",
+                    "a",
+                    "t"]
+            },
+            "kinematics 2": {
+                formula: "s = ut + 1/2 at²",
+                definition: "(Displacement = Initial Velocity × Time + 1/2 × Acceleration × Time²)",
+                variables: ["s",
+                    "u",
+                    "a",
+                    "t"]
+            },
+            "kinematics 3": {
+                formula: "v² = u² + 2as",
+                definition: "(Final Velocity² = Initial Velocity² + 2 × Acceleration × Displacement)",
+                variables: ["v",
+                    "u",
+                    "a",
+                    "s"]
+            },
+            "velocity": {
+                formula: "v = Δs/Δt",
+                definition: "(Velocity = Change in displacement / Change in Time)",
+                variables: ["v",
+                    "Δs",
+                    "Δt"]
+            },
+            "acceleration": {
+                formula: "a = Δv/Δt",
+                definition: "(Acceleration = Change in velocity / Change in Time)",
+                variables: ["a",
+                    "Δv",
+                    "Δt"]
+            },
+            "newton's second law": {
+                formula: "F = ma",
+                definition: "(Force = Mass × Acceleration)",
+                variables: ["F",
+                    "m",
+                    "a"]
+            },
+            "friction": {
+                formula: "f = μN",
+                definition: "(Friction = Coefficient of Friction × Normal Force)",
+                variables: ["f",
+                    "μ",
+                    "N"]
+            },
+            "work": {
+                formula: "W = Fd cos θ",
+                definition: "(Work Done = Force × Distance × cos of Angle)",
+                variables: ["W",
+                    "F",
+                    "d",
+                    "θ"]
+            },
+            "kinetic energy": {
+                formula: "KE = 1/2 mv²",
+                definition: "(Kinetic Energy = 1/2 × Mass × Velocity²)",
+                variables: ["KE",
+                    "m",
+                    "v"]
+            },
+            "potential energy": {
+                formula: "PE = mgh",
+                definition: "(Potential Energy = Mass × Gravity × Height)",
+                variables: ["PE",
+                    "m",
+                    "g",
+                    "h"]
+            },
+            "power": {
+                formula: "P = W/t = Fv",
+                definition: "(Power 1 = Work / Time, Power 2 = Force × Velocity)",
+                variables: ["P",
+                    "W",
+                    "t",
+                    "F",
+                    "v"]
+            },
+            "momentum": {
+                formula: "p = mv",
+                definition: "(Linear Momentum = Mass × Velocity)",
+                variables: ["p",
+                    "m",
+                    "v"]
+            },
+            "impulse": {
+                formula: "I = F Δt",
+                definition: "(Impulse = Force × Time Change)",
+                variables: ["I",
+                    "F",
+                    "Δt"]
+            },
+            "conservation of momentum": {
+                formula: "m1u1 + m2u2 = m1v1 + m2v2",
+                definition: "(Elastic Collisions)",
+                variables: ["m1",
+                    "u1",
+                    "m2",
+                    "u2",
+                    "v1",
+                    "v2"]
+            },
+            "centripetal force": {
+                formula: "F = mv²/r",
+                definition: "(Centripetal Force = Mass × Velocity² / Radius)",
+                variables: ["F",
+                    "m",
+                    "v",
+                    "r"]
+            },
+            "angular velocity": {
+                formula: "ω = θ/t",
+                definition: "(Angular Velocity = Angle / Time)",
+                variables: ["ω",
+                    "θ",
+                    "t"]
+            },
+            "linear angular velocity": {
+                formula: "v = rω",
+                definition: "(Linear Velocity = Radius × Angular Velocity)",
+                variables: ["v",
+                    "r",
+                    "ω"]
+            },
+            "gravitational force": {
+                formula: "F = G(m1 * m2) / r²",
+                definition: "(Gravitational Force = Gravitational Constant × (Mass1 × Mass2) / Distance²)",
+                variables: ["F",
+                    "m1",
+                    "m2",
+                    "r"]
+            },
+            "gravitational potential energy": {
+                formula: "U = -G(m1 * m2) / r",
+                definition: "(Gravitational Potential Energy = - Universal Gravitational Constant ( Mass of The First Object × Mass of The second Object) / ",
+                variables: ["U",
+                    "m1",
+                    "m2",
+                    "r"]
+            },
+            "specific heat capacity": {
+                formula: "Q = mcΔT",
+                definition: "(Heat Energy = Mass × Specific Heat Capacity × Change in Temperature)",
+                variables: ["Q",
+                    "m",
+                    "c",
+                    "ΔT"]
+            },
+            "latent heat": {
+                formula: "Q = mL",
+                definition: "(Heat Energy = Mass × Latent Heat)",
+                variables: ["Q",
+                    "m",
+                    "L"]
+            },
+            "first law thermodynamics": {
+                formula: "ΔU = Q - W",
+                definition: "(Change in Internal Energy = Heat Added - Work Done)",
+                variables: ["ΔU",
+                    "Q",
+                    "W"]
+            },
+            "ideal gas law": {
+                formula: "PV = nRT",
+                definition: "(Pressure × Volume = Number of Moles × Ideal Gas Constant × Temperature)",
+                variables: ["P",
+                    "V",
+                    "n",
+                    "T"]
+            },
+            "kinetic energy gas": {
+                formula: "KE_avg = 3/2 k_B T",
+                definition: "(Average Kinetic Energy = 3 × Boltzmann Constant × Temperature / 2)",
+                variables: ["KE_avg",
+                    "T"]
+            },
+            "wave speed": {
+                formula: "v = fλ",
+                definition: "(Wave Speed = Frequency × Wavelength)",
+                variables: ["v",
+                    "f",
+                    "λ"]
+            },
+            "frequency": {
+                formula: "f = 1/T",
+                definition: "(Frequency = 1 / Time Period)",
+                variables: ["f",
+                    "T"]
+            },
+            "doppler effect": {
+                formula: "f' = [(v + v_observer) / (v + v_source)] f",
+                definition: "(Observed frequency = ((velocity of sound wave + velocity of osberver) / (velocity of sound wave + velocity of source) Actual frequency ))",
+                variables: ["f'",
+                    "v_observer",
+                    "v_source",
+                    "v",
+                    "f"]
+            },
+            "snell's law": {
+                formula: "n1 sin θ1 = n2 sin θ2",
+                definition: "(Refractive Index of The First Medium × sin Angle of Incidence = Refractive Index of The Second Medium × sin Angle of Refraction)",
+                variables: ["n1",
+                    "θ1",
+                    "n2",
+                    "θ2"]
+            },
+            "lens formula": {
+                formula: "1/f = 1/v + 1/u",
+                definition: "(Lens formula: 1 / focal length = 1 / image distance + 1 / object distance)",
+                variables: ["f",
+                    "v",
+                    "u"]
+            },
+            "magnification": {
+                formula: "M = v/u",
+                definition: "(Magnification = Image Distance / Object Distance)",
+                variables: ["M",
+                    "v",
+                    "u"]
+            },
+            "ohm's law": {
+                formula: "V = IR",
+                definition: "(Voltage = Current × Resistance)",
+                variables: ["V",
+                    "I",
+                    "R"]
+            },
+            "power electric": {
+                formula: "P = VI = I²R = V²/R",
+                definition: "(Power 1 = Potential Different × Electric Current, Power 2 = Electric Current² × Resistance, Power 3 = Potential Difference² / Resistance)",
+                variables: ["P",
+                    "V",
+                    "I",
+                    "R"]
+            },
+            "coulomb's law": {
+                formula: "F = k q1 q2 / r²",
+                definition: "(Force = Coulomb's Constant × Charge 1 × Charge 2 / Distance²)",
+                variables: ["F",
+                    "q1",
+                    "q2",
+                    "r"]
+            },
+            "electric field": {
+                formula: "E = F / q = k q / r²",
+                definition: "(Electric Field 1 = Force / Charge, Electric Field 2 = Coulomb's Constant × Charge / Distance²)",
+                variables: ["E",
+                    "F",
+                    "q",
+                    "r"]
+            },
+            "electric potential": {
+                formula: "V = k q / r",
+                definition: "(Electirc Potential = Coulomb's Constant × Charge / Distance)",
+                variables: ["V",
+                    "q",
+                    "r"]
+            },
+            "kirchhoff's current law": {
+                formula: "ΣI_in = ΣI_out",
+                definition: "(The Total Current Entering a Junction or a Node Is Equal to the Charge Leaving the Node as No Charge Is Lost)",
+                variables: ["I_in",
+                    "I_out"]
+            },
+            "kirchhoff's voltage law": {
+                formula: "ΣV = 0",
+                definition: "(In Any Complete Loop Within a Circuit, the Sum of All Voltages Across Components Which Supply Electrical Energy Must Equal the Sum of All Voltages Across the Other Components in the Same Loop)",
+                variables: ["V"]
+            },
+            "magnetic force": {
+                formula: "F = qvB sin θ",
+                definition: "(Magnetic Force = Charge × Velocity × Magnetic Field × sin θ)",
+                variables: ["F",
+                    "q",
+                    "v",
+                    "B",
+                    "θ"]
+            },
+            "magnetic field wire": {
+                formula: "B = μ0 I / 2πr",
+                definition: "(Magnetic Field Strength = Permeability of Free Space × Current / 2π × Distance from the Wire)",
+                variables: ["B",
+                    "I",
+                    "r"]
+            },
+            "faraday's law": {
+                formula: "E = -dΦ/dt",
+                definition: "(Induced Electromotive Force = Change in Magnetic × Flux Change in Time)",
+                variables: ["E",
+                    "dΦ",
+                    "dt"]
+            },
+            "radioactive decay": {
+                formula: "N = N0 e^(-λt)",
+                definition: "(Remaining Quantity = Initial Quantity × exponential ( - Decay Constant × time ))",
+                variables: ["N",
+                    "N0",
+                    "λ",
+                    "t"]
+            },
+            "half life": {
+                formula: "T_1/2 = ln(2)/λ",
+                definition: "(Half-life = Natural Logarithm of 2 / Decay constant)",
+                variables: ["T",
+                    "λ"]
+            },
+            "photon energy": {
+                formula: "E = hf",
+                definition: "(Photon Energy = Planck's Constant × Frequency)",
+                variables: ["E",
+                    "f"]
+            }
+        };
+
+        function searchFormula() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            if (formulas[query]) {
+                var formulaData = formulas[query];
+                var formulaContainer = document.createElement('div');
+                formulaContainer.className = 'formula-container';
+                formulaContainer.onclick = function () {
+                    showCalculator(formulaData);
+                };
+
+                var formulaDiv = document.createElement('div');
+                formulaDiv.className = 'formula';
+                formulaDiv.textContent = formulaData.formula;
+
+                var definitionDiv = document.createElement('div');
+                definitionDiv.className = 'definition';
+                definitionDiv.textContent = formulaData.definition;
+
+                formulaContainer.appendChild(formulaDiv);
+                formulaContainer.appendChild(definitionDiv);
+                results.appendChild(formulaContainer);
+            } else {
+                var noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No matching formula found.';
+                results.appendChild(noResults);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                searchFormula();
+            }
+        });
+
+        function showCalculator(formulaData) {
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            var formulaContainer = document.createElement('div');
+            formulaContainer.className = 'formula-container';
+
+            var formulaDiv = document.createElement('div');
+            formulaDiv.className = 'formula';
+            formulaDiv.textContent = formulaData.formula;
+
+            var definitionDiv = document.createElement('div');
+            definitionDiv.className = 'definition';
+            definitionDiv.textContent = formulaData.definition;
+
+            var calculatorDiv = document.createElement('div');
+            calculatorDiv.className = 'calculator';
+
+            formulaData.variables.forEach(variable => {
+                const inputDiv = document.createElement('div');
+                const inputLabel = document.createElement('label');
+                inputLabel.textContent = `${variable}: `;
+                const inputField = document.createElement('input');
+                inputField.type = 'number';
+                inputField.id = variable;
+                inputField.placeholder = `Enter ${variable}`;
+
+                inputDiv.append(inputLabel, inputField);
+                calculatorDiv.appendChild(inputDiv);
+            });
+
+            var calculateButton = document.createElement('button');
+            calculateButton.textContent = 'Calculate';
+            calculateButton.onclick = function () {
+                calculateResult(formulaData);
+            };
+            calculatorDiv.appendChild(calculateButton);
+
+            formulaContainer.appendChild(formulaDiv);
+            formulaContainer.appendChild(definitionDiv);
+            formulaContainer.appendChild(calculatorDiv);
+            results.appendChild(formulaContainer);
+        }
+
+        function calculateResult(formulaData) {
+            var variables = formulaData.variables.map(variable => parseFloat(document.getElementById(variable).value));
+            var result = '';
+
+            if (formulaData.formula === "F = ma") {
+                const F = variables[0];
+                const m = variables[1];
+                const a = variables[2];
+
+                result = {};
+
+                if (isNaN(F) || F === null) {
+                    result.F = (m !== null && a !== null && m !== 0) ? m * a : null;
+                }
+
+                if (isNaN(m) || m === null) {
+                    result.m = (F !== null && a !== null && a !== 0) ? F / a : null;
+                }
+
+                if (isNaN(a) || a === null) {
+                    result.a = (F !== null && m !== null && m !== 0) ? F / m : null;
+                }
+            } else if (formulaData.formula === "P = F / A") {
+                const P = variables[0];
+                const F = variables[1];
+                const A = variables[2];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    if (F !== null && A !== null && A !== 0) {
+                        result.P = F / A;
+                    }
+                }
+
+                if (isNaN(F) || F === null) {
+                    if (P !== null && A !== null) {
+                        result.F = P * A;
+                    }
+                }
+
+                if (isNaN(A) || A === null) {
+                    if (P !== null && F !== null && P !== 0) {
+                        result.A = F / P;
+                    }
+                }
+            } else if (formulaData.formula === "v = u + at") {
+                const v = variables[0];
+                const u = variables[1];
+                const a = variables[2];
+                const t = variables[3];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(u) && !isNaN(a) && !isNaN(t)) {
+                        result.v = u + a * t;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(u) || u === null) {
+                    if (!isNaN(v) && !isNaN(a) && !isNaN(t)) {
+                        result.u = v - a * t;
+                    } else {
+                        result.u = null;
+                    }
+                }
+
+                if (isNaN(a) || a === null) {
+                    if (!isNaN(v) && !isNaN(u) && !isNaN(t) && t !== 0) {
+                        result.a = (v - u) / t;
+                    } else {
+                        result.a = null;
+                    }
+                }
+
+                if (isNaN(t) || t === null) {
+                    if (!isNaN(v) && !isNaN(u) && !isNaN(a) && a !== 0) {
+                        result.t = (v - u) / a;
+                    } else {
+                        result.t = null;
+                    }
+                }
+            } else if (formulaData.formula === "s = ut + 1/2 at²") {
+                const s = variables[0];
+                const u = variables[1];
+                const a = variables[2];
+                const t = variables[3];
+
+                result = {};
+
+                if (isNaN(s) || s === null) {
+                    if (!isNaN(u) && !isNaN(a) && !isNaN(t)) {
+                        result.s = u * t + 0.5 * a * Math.pow(t, 2);
+                    } else {
+                        result.s = null;
+                    }
+                }
+
+                if (isNaN(u) || u === null) {
+                    if (!isNaN(s) && !isNaN(a) && !isNaN(t) && t !== 0) {
+                        result.u = (s - 0.5 * a * Math.pow(t, 2)) / t;
+                    } else {
+                        result.u = null;
+                    }
+                }
+
+                if (isNaN(a) || a === null) {
+                    if (!isNaN(s) && !isNaN(u) && !isNaN(t) && t !== 0) {
+                        result.a = 2 * (s - u * t) / Math.pow(t, 2);
+                    } else {
+                        result.a = null;
+                    }
+                }
+
+                if (isNaN(t) || t === null) {
+                    if (!isNaN(s) && !isNaN(u) && !isNaN(a)) {
+                        const discriminant = Math.pow(u, 2) - 2 * a * (-s);
+                        if (discriminant >= 0) {
+                            const t1 = (-u + Math.sqrt(discriminant)) / a;
+                            const t2 = (-u - Math.sqrt(discriminant)) / a;
+                            result.t = [t1, t2];
+                        } else {
+                            result.t = null;
+                        }
+                    } else {
+                        result.t = null;
+                    }
+                }
+            } else if (formulaData.formula === "v² = u² + 2as") {
+                const v = variables[0];
+                const u = variables[1];
+                const a = variables[2];
+                const s = variables[3];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(u) && !isNaN(a) && !isNaN(s)) {
+                        result.v = Math.sqrt(Math.pow(u, 2) + 2 * a * s);
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(u) || u === null) {
+                    if (!isNaN(v) && !isNaN(a) && !isNaN(s)) {
+                        result.u = Math.sqrt(Math.pow(v, 2) - 2 * a * s);
+                    } else {
+                        result.u = null;
+                    }
+                }
+
+                if (isNaN(a) || a === null) {
+                    if (!isNaN(v) && !isNaN(u) && !isNaN(s)) {
+                        result.a = (Math.pow(v, 2) - Math.pow(u, 2)) / (2 * s);
+                    } else {
+                        result.a = null;
+                    }
+                }
+
+                if (isNaN(s) || s === null) {
+                    if (!isNaN(v) && !isNaN(u) && !isNaN(a)) {
+                        result.s = (Math.pow(v, 2) - Math.pow(u, 2)) / (2 * a);
+                    } else {
+                        result.s = null;
+                    }
+                }
+            } else if (formulaData.formula === "v = Δs/Δt") {
+                const v = variables[0];
+                const Δs = variables[1];
+                const Δt = variables[2];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(Δs) && !isNaN(Δt)) {
+                        result.v = Δs / Δt;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(Δs) || Δs === null) {
+                    if (!isNaN(v) && !isNaN(Δt)) {
+                        result.Δs = v * Δt;
+                    } else {
+                        result.Δs = null;
+                    }
+                }
+
+                if (isNaN(Δt) || Δt === null) {
+                    if (!isNaN(v) && !isNaN(Δs)) {
+                        result.Δt = Δs / v;
+                    } else {
+                        result.Δt = null;
+                    }
+                }
+            } else if (formulaData.formula === "a = Δv/Δt") {
+                const a = variables[0];
+                const Δv = variables[1];
+                const Δt = variables[2];
+
+                result = {};
+
+                if (isNaN(a) || a === null) {
+                    if (!isNaN(Δv) && !isNaN(Δt)) {
+                        result.a = Δv / Δt;
+                    } else {
+                        result.a = null;
+                    }
+                }
+
+                if (isNaN(Δv) || Δv === null) {
+                    if (!isNaN(a) && !isNaN(Δt)) {
+                        result.Δv = a * Δt;
+                    } else {
+                        result.Δv = null;
+                    }
+                }
+
+                if (isNaN(Δt) || Δt === null) {
+                    if (!isNaN(Δv) && !isNaN(a)) {
+                        result.Δt = Δv / a;
+                    } else {
+                        result.Δt = null;
+                    }
+                }
+            } else if (formulaData.formula === "f = μN") {
+                const f = variables[0];
+                const μ = variables[1];
+                const N = variables[2];
+
+                result = {};
+
+                if (isNaN(f) || f === null) {
+                    if (!isNaN(μ) && !isNaN(N)) {
+                        result.f = μ * N;
+                    } else {
+                        result.f = null;
+                    }
+                }
+
+                if (isNaN(μ) || μ === null) {
+                    if (!isNaN(f) && !isNaN(N)) {
+                        result.μ = f / N;
+                    } else {
+                        result.μ = null;
+                    }
+                }
+
+                if (isNaN(N) || N === null) {
+                    if (!isNaN(f) && !isNaN(μ)) {
+                        result.N = f / μ;
+                    } else {
+                        result.N = null;
+                    }
+                }
+            } else if (formulaData.formula === "W = Fd cos θ") {
+                const W = variables[0];
+                const F = variables[1];
+                const d = variables[2];
+                const θ = variables[3];
+
+                result = {};
+
+                function degreesToRadians(degrees) {
+                    return degrees * (Math.PI / 180);
+                }
+
+                if (isNaN(W)) {
+                    if (F !== null && d !== null && θ !== null) {
+                        result.W = F * d * Math.cos(degreesToRadians(θ));
+                    } else {
+                        result.W = null;
+                    }
+                }
+
+                if (isNaN(F)) {
+                    if (W !== null && d !== null && θ !== null) {
+                        result.F = W / (d * Math.cos(degreesToRadians(θ)));
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(d)) {
+                    if (W !== null && F !== null && θ !== null) {
+                        result.d = W / (F * Math.cos(degreesToRadians(θ)));
+                    } else {
+                        result.d = null;
+                    }
+                }
+
+                if (isNaN(θ)) {
+                    if (W !== null && F !== null && d !== null) {
+                        result.θ = Math.acos(W / (F * d)) * (180 / Math.PI);
+                    } else {
+                        result.θ = null;
+                    }
+                }
+            } else if (formulaData.formula === "KE = 1/2 mv²") {
+                const KE = variables[0];
+                const m = variables[1];
+                const v = variables[2];
+
+                result = {};
+
+                if (isNaN(KE) || KE === null) {
+                    if (!isNaN(m) && !isNaN(v)) {
+                        result.KE = 0.5 * m * Math.pow(v, 2);
+                    } else {
+                        result.KE = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(KE) && !isNaN(v)) {
+                        result.m = (2 * KE) / Math.pow(v, 2);
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(KE) && !isNaN(m)) {
+                        result.v = Math.sqrt((2 * KE) / m);
+                    } else {
+                        result.v = null;
+                    }
+                }
+            } else if (formulaData.formula === "PE = mgh") {
+                const PE = variables[0];
+                const m = variables[1];
+                const g = variables[2];
+                const h = variables[3];
+
+                result = {};
+
+                if (isNaN(PE) || PE === null) {
+                    if (!isNaN(m) && !isNaN(g) && !isNaN(h)) {
+                        result.PE = m * g * h;
+                    } else {
+                        result.PE = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(PE) && !isNaN(g) && !isNaN(h)) {
+                        result.m = PE / (g * h);
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(g) || g === null) {
+                    if (!isNaN(PE) && !isNaN(m) && !isNaN(h)) {
+                        result.g = PE / (m * h);
+                    } else {
+                        result.g = null;
+                    }
+                }
+
+                if (isNaN(h) || h === null) {
+                    if (!isNaN(PE) && !isNaN(m) && !isNaN(g)) {
+                        result.h = PE / (m * g);
+                    } else {
+                        result.h = null;
+                    }
+                }
+            } else if (formulaData.formula === "P = W/t = Fv") {
+                const P = variables[0];
+                const W = variables[1];
+                const t = variables[2];
+                const F = variables[3];
+                const v = variables[4];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    if (!isNaN(W) && !isNaN(t) && t !== 0) {
+                        result.power1 = W / t;
+                    } else {
+                        result.power1 = null;
+                    }
+                }
+
+                if (isNaN(P) || P === null) {
+                    if (!isNaN(F) && !isNaN(v)) {
+                        result.power2 = F * v;
+                    } else {
+                        result.power2 = null;
+                    }
+                }
+
+                if (isNaN(W) || W === null) {
+                    if (!isNaN(P) && !isNaN(t) && t !== 0) {
+                        result.W = P * t;
+                    } else if (!isNaN(P) && !isNaN(F) && !isNaN(v)) {
+                        result.W = P * t;
+                    } else {
+                        result.W = null;
+                    }
+                }
+
+                if (isNaN(t) || t === null) {
+                    if (!isNaN(W) && !isNaN(P) && P !== 0) {
+                        result.t = W / P;
+                    } else {
+                        result.t = null;
+                    }
+                }
+
+                if (isNaN(F) || F === null) {
+                    if (!isNaN(P) && !isNaN(v)) {
+                        result.F = P / v;
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(P) && !isNaN(F)) {
+                        result.v = P / F;
+                    } else {
+                        result.v = null;
+                    }
+                }
+            } else if (formulaData.formula === "p = mv") {
+                const p = variables[0];
+                const m = variables[1];
+                const v = variables[2];
+
+                result = {};
+
+                if (isNaN(p) || p === null) {
+                    if (!isNaN(m) && !isNaN(v)) {
+                        result.p = m * v;
+                    } else {
+                        result.p = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(p) && !isNaN(v) && v !== 0) {
+                        result.m = p / v;
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(p) && !isNaN(m) && m !== 0) {
+                        result.v = p / m;
+                    } else {
+                        result.v = null;
+                    }
+                }
+            } else if (formulaData.formula === "I = F Δt") {
+                const I = variables[0];
+                const F = variables[1];
+                const ΔT = variables[2];
+
+                result = {};
+
+                if (isNaN(I) || I === null) {
+                    if (!isNaN(F) && !isNaN(ΔT)) {
+                        result.I = F * ΔT;
+                    } else {
+                        result.I = null;
+                    }
+                }
+
+                if (isNaN(F) || F === null) {
+                    if (!isNaN(I) && !isNaN(ΔT) && ΔT !== 0) {
+                        result.F = I / ΔT;
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(ΔT) || ΔT === null) {
+                    if (!isNaN(I) && !isNaN(F) && F !== 0) {
+                        result.ΔT = I / F;
+                    } else {
+                        result.ΔT = null;
+                    }
+                }
+            } else if (formulaData.formula === "m1u1 + m2u2 = m1v1 + m2v2") {
+                const m1 = variables[0];
+                const u1 = variables[1];
+                const m2 = variables[2];
+                const u2 = variables[3];
+                const v1 = variables[4];
+                const v2 = variables[5];
+
+                const v1Final = ((m1 * u1) + (m2 * u2) - (m2 * v2)) / (m1);
+                const v2Final = ((m1 * u1) + (m2 * u2) - (m1 * v1)) / (m2);
+
+                let m1Final = null;
+                let m2Final = null;
+                let u1Final = null;
+                let u2Final = null;
+
+                if (u1 !== v1) {
+                    m1Final = ((m2 * (v2 - u2)) / (u1 - v1));
+                } else {
+                    console.error("Denominator (u1 - v1) cannot be zero for m1Final calculation.");
+                }
+
+                if (v2 !== u2) {
+                    m2Final = ((m1 * (u1 - v1)) / (v2 - u2));
+                } else {
+                    console.error("Denominator (v2 - u2) cannot be zero for m2Final calculation.");
+                }
+
+                u1Final = ((m1 * v1) + (m2 * v2) - (m2 * u2)) / (m1);
+                u2Final = ((m1 * v1) + (m2 * v2) - (m1 * u1)) / (m2);
+
+                result = {};
+
+                if (isNaN(v1)) {
+                    result.v1 = v1Final;
+                }
+
+                if (isNaN(v2)) {
+                    result.v2 = v2Final;
+                }
+
+                if (isNaN(m1)) {
+                    result.m1 = m1Final;
+                }
+
+                if (isNaN(m2)) {
+                    result.m2 = m2Final;
+                }
+
+                if (isNaN(u1)) {
+                    result.u1 = u1Final;
+                }
+
+                if (isNaN(u2)) {
+                    result.u2 = u2Final;
+                }
+            } else if (formulaData.formula === "F = mv²/r") {
+                const F = variables[0];
+                const m = variables[1];
+                const v = variables[2];
+                const r = variables[3];
+
+                result = {};
+
+                if (isNaN(F) || F === null) {
+                    if (!isNaN(m) && !isNaN(v) && !isNaN(r) && r !== 0) {
+                        result.F = (m * Math.pow(v, 2)) / r;
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(F) && !isNaN(v) && !isNaN(r) && r !== 0) {
+                        result.m = (F * r) / Math.pow(v, 2);
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(F) && !isNaN(m) && !isNaN(r) && r !== 0) {
+                        result.v = Math.sqrt((F * r) / m);
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (!isNaN(F) && !isNaN(m) && !isNaN(v) && v !== 0) {
+                        result.r = (m * Math.pow(v, 2)) / F;
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "ω = θ/t") {
+                const ω = variables[0];
+                const θ = variables[1];
+                const t = variables[2];
+
+                result = {};
+
+                if (isNaN(ω) || ω === null) {
+                    if (!isNaN(θ) && !isNaN(t) && t !== 0) {
+                        result.ω = θ / t;
+                    } else {
+                        result.ω = null;
+                    }
+                }
+
+                if (isNaN(θ) || θ === null) {
+                    if (!isNaN(ω) && !isNaN(t) && t !== 0) {
+                        result.θ = ω * t;
+                    } else {
+                        result.θ = null;
+                    }
+                }
+
+                if (isNaN(t) || t === null) {
+                    if (!isNaN(ω) && !isNaN(θ) && ω !== 0) {
+                        result.t = θ / ω;
+                    } else {
+                        result.t = null;
+                    }
+                }
+            } else if (formulaData.formula === "v = rω") {
+                const v = variables[0];
+                const r = variables[1];
+                const ω = variables[2];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(r) && !isNaN(ω)) {
+                        result.v = r * ω;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (!isNaN(v) && !isNaN(ω) && ω !== 0) {
+                        result.r = v / ω;
+                    } else {
+                        result.r = null;
+                    }
+                }
+
+                if (isNaN(ω) || ω === null) {
+                    if (!isNaN(v) && !isNaN(r) && r !== 0) {
+                        result.ω = v / r;
+                    } else {
+                        result.ω = null;
+                    }
+                }
+            } else if (formulaData.formula === "F = G(m1 * m2) / r²") {
+                const G = 6.67430e-11;
+                const F = variables[0];
+                const m1 = variables[1];
+                const m2 = variables[2];
+                const r = variables[3];
+
+                result = {};
+
+                if (isNaN(F) || F === null) {
+                    if (!isNaN(m1) && !isNaN(m2) && !isNaN(r) && r !== 0) {
+                        result.F = G * (m1 * m2) / Math.pow(r, 2);
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(m1) || m1 === null) {
+                    if (!isNaN(F) && !isNaN(m2) && !isNaN(r) && r !== 0) {
+                        result.m1 = F * Math.pow(r, 2) / (G * m2);
+                    } else {
+                        result.m1 = null;
+                    }
+                }
+
+                if (isNaN(m2) || m2 === null) {
+                    if (!isNaN(F) && !isNaN(m1) && !isNaN(r) && r !== 0) {
+                        result.m2 = F * Math.pow(r, 2) / (G * m1);
+                    } else {
+                        result.m2 = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (!isNaN(F) && !isNaN(m1) && !isNaN(m2) && F !== 0) {
+                        result.r = Math.sqrt(G * (m1 * m2) / F);
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "U = -G(m1 * m2) / r") {
+                const G = 6.67430e-11;
+                const U = variables[0];
+                const m1 = variables[1];
+                const m2 = variables[2];
+                const r = variables[3];
+
+                result = {};
+
+                if (isNaN(U) || U === null) {
+                    if (!isNaN(m1) && !isNaN(m2) && !isNaN(r) && r !== 0) {
+                        result.U = -G * (m1 * m2) / r;
+                    } else {
+                        result.U = null;
+                    }
+                }
+
+                if (isNaN(m1) || m1 === null) {
+                    if (!isNaN(U) && !isNaN(m2) && !isNaN(r) && r !== 0) {
+                        result.m1 = -U * r / (G * m2);
+                    } else {
+                        result.m1 = null;
+                    }
+                }
+
+                if (isNaN(m2) || m2 === null) {
+                    if (!isNaN(U) && !isNaN(m1) && !isNaN(r) && r !== 0) {
+                        result.m2 = -U * r / (G * m1);
+                    } else {
+                        result.m2 = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (!isNaN(U) && !isNaN(m1) && !isNaN(m2) && U !== 0) {
+                        result.r = -G * (m1 * m2) / U;
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "Q = mcΔT") {
+                const Q = variables[0];
+                const m = variables[1];
+                const c = variables[2];
+                const ΔT = variables[3];
+
+                result = {};
+
+                if (isNaN(Q) || Q === null) {
+                    if (!isNaN(m) && !isNaN(c) && !isNaN(ΔT)) {
+                        result.Q = m * c * ΔT;
+                    } else {
+                        result.Q = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(Q) && !isNaN(c) && !isNaN(ΔT) && c !== 0) {
+                        result.m = Q / (c * ΔT);
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(c) || c === null) {
+                    if (!isNaN(Q) && !isNaN(m) && !isNaN(ΔT) && ΔT !== 0) {
+                        result.c = Q / (m * ΔT);
+                    } else {
+                        result.c = null;
+                    }
+                }
+
+                if (isNaN(ΔT) || ΔT === null) {
+                    if (!isNaN(Q) && !isNaN(m) && !isNaN(c) && c !== 0) {
+                        result.ΔT = Q / (m * c);
+                    } else {
+                        result.ΔT = null;
+                    }
+                }
+            } else if (formulaData.formula === "Q = mL") {
+                const Q = variables[0];
+                const m = variables[1];
+                const L = variables[2];
+
+                result = {};
+
+                if (isNaN(Q) || Q === null) {
+                    if (!isNaN(m) && !isNaN(L)) {
+                        result.Q = m * L;
+                    } else {
+                        result.Q = null;
+                    }
+                }
+
+                if (isNaN(m) || m === null) {
+                    if (!isNaN(Q) && !isNaN(L) && L !== 0) {
+                        result.m = Q / L;
+                    } else {
+                        result.m = null;
+                    }
+                }
+
+                if (isNaN(L) || L === null) {
+                    if (!isNaN(Q) && !isNaN(m) && m !== 0) {
+                        result.L = Q / m;
+                    } else {
+                        result.L = null;
+                    }
+                }
+            } else if (formulaData.formula === "ΔU = Q - W") {
+                const ΔU = variables[0];
+                const Q = variables[1];
+                const W = variables[2];
+
+                result = {};
+
+                if (isNaN(ΔU) || ΔU === null) {
+                    if (!isNaN(Q) && !isNaN(W)) {
+                        result.ΔU = Q - W;
+                    } else {
+                        result.ΔU = null;
+                    }
+                }
+
+                if (isNaN(Q) || Q === null) {
+                    if (!isNaN(ΔU) && !isNaN(W)) {
+                        result.Q = ΔU + W;
+                    } else {
+                        result.Q = null;
+                    }
+                }
+
+                if (isNaN(W) || W === null) {
+                    if (!isNaN(ΔU) && !isNaN(Q)) {
+                        result.W = Q - ΔU;
+                    } else {
+                        result.W = null;
+                    }
+                }
+            } else if (formulaData.formula === "PV = nRT") {
+                const R = 8.314;
+                const P = variables[0];
+                const V = variables[1];
+                const n = variables[2];
+                const T = variables[3];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    if (!isNaN(V) && !isNaN(n) && !isNaN(T)) {
+                        result.P = (n * R * T) / V;
+                    } else {
+                        result.P = null;
+                    }
+                }
+
+                if (isNaN(V) || V === null) {
+                    if (!isNaN(P) && !isNaN(n) && !isNaN(T)) {
+                        result.V = (n * R * T) / P;
+                    } else {
+                        result.V = null;
+                    }
+                }
+
+                if (isNaN(n) || n === null) {
+                    if (!isNaN(P) && !isNaN(V) && !isNaN(T)) {
+                        result.n = (P * V) / (R * T);
+                    } else {
+                        result.n = null;
+                    }
+                }
+
+                if (isNaN(T) || T === null) {
+                    if (!isNaN(P) && !isNaN(V) && !isNaN(n)) {
+                        result.T = (P * V) / (n * R);
+                    } else {
+                        result.T = null;
+                    }
+                }
+            } else if (formulaData.formula === "KE_avg = 3/2 k_B T") {
+                const k_B = 1.38e-23;
+                const KE_avg = variables[0];
+                const T = variables[1];
+
+                result = {};
+
+                if (isNaN(KE_avg) || KE_avg === null) {
+                    if (!isNaN(T) && T !== null) {
+                        result.KE_avg = 1.5 * k_B * T;
+                    } else {
+                        result.KE_avg = null;
+                    }
+                }
+
+                if (isNaN(T) || T === null) {
+                    if (!isNaN(KE_avg) && KE_avg !== null) {
+                        result.T = KE_avg / (1.5 * k_B);
+                    } else {
+                        result.T = null;
+                    }
+                }
+            } else if (formulaData.formula === "v = fλ") {
+                const v = variables[0];
+                const f = variables[1];
+                const λ = variables[2];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    if (!isNaN(f) && f !== null && !isNaN(λ) && λ !== null) {
+                        result.v = f * λ;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(f) || f === null) {
+                    if (!isNaN(v) && v !== null && !isNaN(λ) && λ !== null) {
+                        result.f = v / λ;
+                    } else {
+                        result.f = null;
+                    }
+                }
+
+                if (isNaN(λ) || λ === null) {
+                    if (!isNaN(v) && v !== null && !isNaN(f) && f !== null) {
+                        result.λ = v / f;
+                    } else {
+                        result.λ = null;
+                    }
+                }
+            } else if (formulaData.formula === "f = 1/T") {
+                const f = variables[0];
+                const T = variables[1];
+
+                result = {};
+
+                if (isNaN(f) || f === null) {
+                    if (!isNaN(T) && T !== null && T !== 0) {
+                        result.f = 1 / T;
+                    } else {
+                        result.f = null;
+                    }
+                }
+
+                if (isNaN(T) || T === null) {
+                    if (!isNaN(f) && f !== null && f !== 0) {
+                        result.T = 1 / f;
+                    } else {
+                        result.T = null;
+                    }
+                }
+            } else if (formulaData.formula === "f' = [(v + v_observer) / (v + v_source)] f") {
+                const f_prime = variables[0];
+                const v_observer = variables[1];
+                const v_source = variables[2];
+                const v = variables[3];
+                const f = variables[4];
+
+                result = {};
+
+                if (isNaN(f_prime)) {
+                    if (v !== null && v_observer !== null && v_source !== null && f !== null) {
+                        result.f_prime = ((v + v_observer) / (v + v_source)) * f;
+                    } else {
+                        result.f_prime = null;
+                    }
+                }
+
+                if (isNaN(v)) {
+                    if (f !== null && v_observer !== null && v_source !== null && f_prime !== null) {
+                        result.v = ((f_prime / f) * (v + v_source)) - v_observer;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(v_observer)) {
+                    if (f !== null && v !== null && v_source !== null && f_prime !== null) {
+                        result.v_observer = ((f_prime / f) * (v + v_source)) - v;
+                    } else {
+                        result.v_observer = null;
+                    }
+                }
+
+                if (isNaN(v_source)) {
+                    if (f !== null && v !== null && v_observer !== null && f_prime !== null) {
+                        result.v_source = ((f_prime / f) * v) - v_observer;
+                    } else {
+                        result.v_source = null;
+                    }
+                }
+
+                if (isNaN(f)) {
+                    if (v !== null && v_observer !== null && v_source !== null && f_prime !== null) {
+                        result.f = (f_prime * (v + v_source)) / (v + v_observer);
+                    } else {
+                        result.f = null;
+                    }
+                }
+            } else if (formulaData.formula === "n1 sin θ1 = n2 sin θ2") {
+                const n1 = variables[0];
+                const θ1 = variables[1];
+                const n2 = variables[2];
+                const θ2 = variables[3];
+
+                result = {};
+
+                function degreesToRadians(degrees) {
+                    return degrees * (Math.PI / 180);
+                }
+
+                function radiansToDegrees(radians) {
+                    return radians * (180 / Math.PI);
+                }
+
+                if (isNaN(n1)) {
+                    if (n2 !== null && θ2 !== null && θ1 !== null) {
+                        result.n1 = (n2 * Math.sin(degreesToRadians(θ2))) / Math.sin(degreesToRadians(θ1));
+                    } else {
+                        result.n1 = null;
+                    }
+                }
+
+                if (isNaN(n2)) {
+                    if (n1 !== null && θ1 !== null && θ2 !== null) {
+                        result.n2 = (n1 * Math.sin(degreesToRadians(θ1))) / Math.sin(degreesToRadians(θ2));
+                    } else {
+                        result.n2 = null;
+                    }
+                }
+
+                if (isNaN(θ1)) {
+                    if (n1 !== null && n2 !== null && θ2 !== null) {
+                        result.θ1 = radiansToDegrees(Math.asin((n2 * Math.sin(degreesToRadians(θ2))) / n1));
+                    } else {
+                        result.θ1 = null;
+                    }
+                }
+
+                if (isNaN(θ2)) {
+                    if (n1 !== null && n2 !== null && θ1 !== null) {
+                        result.θ2 = radiansToDegrees(Math.asin((n1 * Math.sin(degreesToRadians(θ1))) / n2));
+                    } else {
+                        result.θ2 = null;
+                    }
+                }
+            } else if (formulaData.formula === "1/f = 1/v + 1/u") {
+                const f = variables[0];
+                const v = variables[1];
+                const u = variables[2];
+
+                result = {};
+
+                if (isNaN(f) || f === null) {
+                    if (u !== null && v !== null && u !== 0 && v !== 0) {
+                        result.f = 1 / (1 / u + 1 / v);
+                    } else {
+                        result.f = null;
+                    }
+                }
+                if (isNaN(v) || v === null) {
+                    if (f !== null && u !== null && f !== 0 && u !== 0) {
+                        result.v = 1 / (1 / f - 1 / u);
+                    } else {
+                        result.v = null;
+                    }
+                }
+                if (isNaN(u) || u === null) {
+                    if (f !== null && v !== null && f !== 0 && v !== 0) {
+                        result.u = 1 / (1 / f - 1 / v);
+                    } else {
+                        result.u = null;
+                    }
+                }
+            } else if (formulaData.formula === "M = v/u") {
+                const M = variables[0];
+                const v = variables[1];
+                const u = variables[2];
+
+                result = {};
+
+                if (isNaN(M) || M === null) {
+                    if (v !== null && u !== null && u !== 0) {
+                        result.M = v / u;
+                    } else {
+                        result.M = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (M !== null && u !== null && u !== 0) {
+                        result.v = M * u;
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(u) || u === null) {
+                    if (M !== null && v !== null && M !== 0) {
+                        result.u = v / M;
+                    } else {
+                        result.u = null;
+                    }
+                }
+            } else if (formulaData.formula === "V = IR") {
+                const V = variables[0];
+                const I = variables[1];
+                const R = variables[2];
+
+                result = {};
+
+                if (isNaN(V) || V === null) {
+                    if (I !== null && R !== null && R !== 0) {
+                        result.V = I * R;
+                    } else {
+                        result.V = null;
+                    }
+                }
+
+                if (isNaN(I) || I === null) {
+                    if (V !== null && R !== null && R !== 0) {
+                        result.I = V / R;
+                    } else {
+                        result.I = null;
+                    }
+                }
+
+                if (isNaN(R) || R === null) {
+                    if (V !== null && I !== null && I !== 0) {
+                        result.R = V / I;
+                    } else {
+                        result.R = null;
+                    }
+                }
+            } else if (formulaData.formula === "P = VI = I²R = V²/R") {
+                const P = variables[0];
+                const V = variables[1];
+                const I = variables[2];
+                const R = variables[3];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    let power1 = null;
+                    let power2 = null;
+                    let power3 = null;
+
+                    if (V !== null && I !== null) {
+                        power1 = V * I;
+                    }
+                    if (I !== null && R !== null && I !== 0) {
+                        power2 = I * I * R;
+                    }
+                    if (V !== null && R !== null && R !== 0) {
+                        power3 = V * V / R;
+                    }
+
+                    if (power1 !== null) result.P1 = power1;
+                    if (power2 !== null) result.P2 = power2;
+                    if (power3 !== null) result.P3 = power3;
+                }
+
+                if (isNaN(V) || V === null) {
+                    let voltage1 = null;
+                    let voltage2 = null;
+
+                    if (P !== null && I !== null && I !== 0) {
+                        voltage1 = P / I;
+                    }
+                    if (P !== null && R !== null && R !== 0) {
+                        voltage2 = Math.sqrt(P * R);
+                    }
+
+                    if (voltage1 !== null) result.V1 = voltage1;
+                    if (voltage2 !== null) result.V2 = voltage2;
+                }
+
+                if (isNaN(I) || I === null) {
+                    let current1 = null;
+                    let current2 = null;
+
+                    if (P !== null && V !== null && V !== 0) {
+                        current1 = P / V;
+                    }
+                    if (P !== null && R !== null && R !== 0) {
+                        current2 = Math.sqrt(P / R);
+                    }
+
+                    if (current1 !== null) result.I1 = current1;
+                    if (current2 !== null) result.I2 = current2;
+                }
+
+                if (isNaN(R) || R === null) {
+                    let resistance1 = null;
+                    let resistance2 = null;
+
+                    if (P !== null && V !== null && V !== 0) {
+                        resistance1 = V * V / P;
+                    }
+                    if (P !== null && I !== null && I !== 0) {
+                        resistance2 = P / (I * I);
+                    }
+
+                    if (resistance1 !== null) result.R1 = resistance1;
+                    if (resistance2 !== null) result.R2 = resistance2;
+                }
+            } else if (formulaData.formula === "F = k q1 q2 / r²") {
+                const k = 8.9875517873681764e9;
+                const F = variables[0];
+                const q1 = variables[1];
+                const q2 = variables[2];
+                const r = variables[3];
+
+                result = {};
+
+                if (isNaN(F) || F === null) {
+                    if (q1 !== null && q2 !== null && r !== null && r !== 0) {
+                        result.F = k * q1 * q2 / (r * r);
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(q1) || q1 === null) {
+                    if (F !== null && q2 !== null && r !== null && r !== 0) {
+                        result.q1 = F * r * r / (k * q2);
+                    } else {
+                        result.q1 = null;
+                    }
+                }
+
+                if (isNaN(q2) || q2 === null) {
+                    if (F !== null && q1 !== null && r !== null && r !== 0) {
+                        result.q2 = F * r * r / (k * q1);
+                    } else {
+                        result.q2 = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (F !== null && q1 !== null && q2 !== null && F !== 0) {
+                        result.r = Math.sqrt(k * q1 * q2 / F);
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "E = F / q = k q / r²") {
+                const k = 8.9875517873681764e9;
+                const E = variables[0];
+                const F = variables[1];
+                const q = variables[2]; 
+                const r = variables[3];
+
+                result = {};
+
+                if (!E) {
+                    let electricField1 = null;
+                    let electricField2 = null;
+
+                    if (F && q) {
+                        electricField1 = F / q;
+                    }
+                    if (q && r) {
+                        electricField2 = k * q / Math.pow(r, 2);
+                    }
+
+                    if (electricField1 !== null) result.E1 = electricField1;
+                    if (electricField2 !== null) result.E2 = electricField2;
+                }
+
+                if (!F) {
+                    if (E && q) {
+                        result.F = E * q;
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (!q) {
+                    let charge1 = null;
+                    let charge2 = null;
+
+                    if (E && F) {
+                        charge1 = F / E;
+                    }
+                    if (E && r) {
+                        charge2 = (E * Math.pow(r, 2)) / k;
+                    }
+
+                    if (charge1 !== null) result.q1 = charge1;
+                    if (charge2 !== null) result.q2 = charge2;
+                }
+
+                if (!r) {
+                    if (E && q) {
+                        result.r = Math.sqrt(k * q / E);
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "V = k q / r") {
+                const V = variables[0];
+                const q = variables[1];
+                const r = variables[2];
+                const k = 8.9875517873681764e9;
+
+                result = {};
+
+                if (isNaN(V) || V === null) {
+                    let potential = null;
+
+                    if (q !== null && r !== null && r !== 0) {
+                        potential = k * q / r;
+                    }
+
+                    if (potential !== null) result.V = potential;
+                }
+
+                if (isNaN(q) || q === null) {
+                    let charge = null;
+
+                    if (V !== null && r !== null && r !== 0) {
+                        charge = V * r / k;
+                    }
+
+                    if (charge !== null) result.q = charge;
+                }
+
+                if (isNaN(r) || r === null) {
+                    let distance = null;
+
+                    if (V !== null && q !== null && k !== 0) {
+                        distance = k * q / V;
+                    }
+
+                    if (distance !== null) result.r = distance;
+                }
+            } else if (formulaData.formula === "ΣI_in = ΣI_out") {
+                const I_in = variables[0];
+                const I_out = variables[1];
+
+                result = {};
+
+                if (I_in !== undefined && I_out !== undefined) {
+                    result.equality = I_in === I_out;
+                } else {
+                    result.equality = null;
+                }
+            } else if (formulaData.formula === "ΣV = 0") {
+                result = variables.reduce((acc, val) => acc + val, 0) === 0;
+            } else if (formulaData.formula === "F = qvB sin θ") {
+                const F = variables[0];
+                const q = variables[1];
+                const v = variables[2];
+                const B = variables[3];
+                const θ = variables[4];
+
+                result = {};
+
+                const thetaRad = θ !== null ? θ * (Math.PI / 180) : null;
+
+                if (isNaN(F) || F === null) {
+                    if (q !== null && v !== null && B !== null && thetaRad !== null) {
+                        result.F = q * v * B * Math.sin(thetaRad);
+                    } else {
+                        result.F = null;
+                    }
+                }
+
+                if (isNaN(q) || q === null) {
+                    if (F !== null && v !== null && B !== null && thetaRad !== null) {
+                        result.q = F / (v * B * Math.sin(thetaRad));
+                    } else {
+                        result.q = null;
+                    }
+                }
+
+                if (isNaN(v) || v === null) {
+                    if (F !== null && q !== null && B !== null && thetaRad !== null) {
+                        result.v = F / (q * B * Math.sin(thetaRad));
+                    } else {
+                        result.v = null;
+                    }
+                }
+
+                if (isNaN(B) || B === null) {
+                    if (F !== null && q !== null && v !== null && thetaRad !== null) {
+                        result.B = F / (q * v * Math.sin(thetaRad));
+                    } else {
+                        result.B = null;
+                    }
+                }
+
+                if (isNaN(θ) || θ === null) {
+                    if (F !== null && q !== null && v !== null && B !== null) {
+                        result.θ = Math.asin(F / (q * v * B)) * (180 / Math.PI);
+                    } else {
+                        result.θ = null;
+                    }
+                }
+            } else if (formulaData.formula === "B = μ0 I / 2πr") {
+                const B = variables[0];
+                const I = variables[1];
+                const r = variables[2];
+                const μ0 = 4 * Math.PI * 1e-7;
+
+                result = {};
+
+                if (isNaN(B) || B === null) {
+                    if (I !== undefined && r !== undefined) {
+                        result.B = μ0 * I / (2 * Math.PI * r);
+                    } else {
+                        result.B = null;
+                    }
+                }
+
+                if (isNaN(I) || I === null) {
+                    if (B !== undefined && r !== undefined) {
+                        result.I = B * (2 * Math.PI * r) / μ0;
+                    } else {
+                        result.I = null;
+                    }
+                }
+
+                if (isNaN(r) || r === null) {
+                    if (B !== undefined && I !== undefined) {
+                        result.r = μ0 * I / (2 * Math.PI * B);
+                    } else {
+                        result.r = null;
+                    }
+                }
+            } else if (formulaData.formula === "E = -dΦ/dt") {
+                const E = variables[0];
+                const dΦ = variables[1];
+                const dt = variables[2];
+
+                result = {};
+
+                if (isNaN(E) || E === null) {
+                    if (dΦ !== undefined && dt !== undefined && dt !== 0) {
+                        result.E = -dΦ / dt;
+                    } else {
+                        result.E = null;
+                    }
+                }
+
+                if (isNaN(dΦ) || dΦ === null) {
+                    if (E !== undefined && dt !== undefined && dt !== 0) {
+                        result.dΦ = -E * dt;
+                    } else {
+                        result.dΦ = null;
+                    }
+                }
+
+                if (isNaN(dt) || dt === null) {
+                    if (E !== undefined && dΦ !== undefined && dΦ !== 0) {
+                        result.dt = -dΦ / E;
+                    } else {
+                        result.dt = null;
+                    }
+                }
+            } else if (formulaData.formula === "N = N0 e^(-λt)") {
+                const N = variables[0];
+                const N0 = variables[1];
+                const λ = variables[2];
+                const t = variables[3];
+
+                result = {};
+
+                if (isNaN(N0) || N0 === null) {
+                    if (λ !== null && t !== null && N !== null) {
+                        result.N0 = N / Math.exp(-λ * t);
+                    } else {
+                        result.N0 = null;
+                    }
+                }
+
+                if (isNaN(λ) || λ === null) {
+                    if (N0 !== null && t !== null && N !== null) {
+                        result.λ = -Math.log(N / N0) / t;
+                    } else {
+                        result.λ = null;
+                    }
+                }
+
+                if (isNaN(t) || t === null) {
+                    if (N0 !== null && λ !== null && N !== null) {
+                        result.t = -Math.log(N / N0) / λ;
+                    } else {
+                        result.t = null;
+                    }
+                }
+
+                if (isNaN(N) || N === null) {
+                    if (N0 !== null && λ !== null && t !== null) {
+                        result.N = N0 * Math.exp(-λ * t);
+                    } else {
+                        result.N = null;
+                    }
+                }
+            } else if (formulaData.formula === "T_1/2 = ln(2)/λ") {
+                const T_half = variables[0];
+                const λ = variables[1];
+
+                result = {};
+
+                if (isNaN(λ) || λ === null) {
+                    if (T_half !== null) {
+                        result.λ = Math.log(2) / T_half;
+                    } else {
+                        result.λ = null;
+                    }
+                }
+
+                if (isNaN(T_half) || T_half === null) {
+                    if (λ !== null) {
+                        result.T_half = Math.log(2) / λ;
+                    } else {
+                        result.T_half = null;
+                    }
+                }
+            } else if (formulaData.formula === "E = hf") {
+                const h = 6.62607015e-34;
+                const E = variables[0];
+                const f = variables[1];
+
+                result = {};
+
+                if (isNaN(E) || E === null) {
+                    if (f !== null) {
+                        result.E = h * f;
+                    }
+                }
+
+                if (isNaN(f) || f === null) {
+                    if (E !== null && h !== 0) {
+                        result.f = E / h;
+                    }
+                }
+            }
+
+            alert("The result is: " + JSON.stringify(result));
+        }
+
+        function clearInput() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function showSuggestions() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var datalist = document.getElementById('suggestions');
+            datalist.innerHTML = '';
+
+            Object.keys(formulas).forEach(key => {
+                if (key.includes(query)) {
+                    var option = document.createElement('option');
+                    option.value = key;
+                    datalist.appendChild(option);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

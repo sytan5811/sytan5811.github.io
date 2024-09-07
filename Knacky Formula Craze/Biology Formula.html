@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Formula Search</title>
+    <style>
+        body,
+        h1,
+        p,
+        input,
+        button {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+        }
+        body {
+            background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-animation div {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(239, 244, 248, 0.1);
+            border-radius: 50%;
+            animation: move 240s linear infinite;
+        }
+        
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-1000px) translateX(1000px);
+            }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #searchContainer {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 100%;
+            width: 100%;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgb(255, 255, 255);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            padding-right: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 10px;
+            top: 35%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ea7a7a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f7f3ee;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .formula-container {
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .formula-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .formula {
+            font-size: 1em;
+            color: #050505;
+            margin-bottom: 10px;
+        }
+
+        .definition {
+            color: #edefe1;
+            font-weight: bold;
+            text-align: justify;
+            font-size: 0.9em;
+        }
+
+        .calculator {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calculator input {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+        }
+
+        .calculator button {
+            padding: 5px;
+            background-color: #473757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .no-results {
+            color: #f66;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            #searchContainer {
+                padding: 30px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.2em;
+            }
+
+            .formula {
+                font-size: 1.2em;
+            }
+
+            .definition {
+                font-size: 1em;
+            }
+
+            .no-results {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation">
+        <div style="top: 10%; left: 20%; animation-duration: 25s;"></div>
+        <div style="top: 30%; left: 40%; animation-duration: 20s;"></div>
+        <div style="top: 50%; left: 60%; animation-duration: 30s;"></div>
+        <div style="top: 70%; left: 80%; animation-duration: 35s;"></div>
+        <div style="top: 90%; left: 10%; animation-duration: 40s;"></div>
+    </div>
+    <h1>Biology Formula Search</h1>
+    <div id="searchContainer">
+        <div class="input-container">
+            <input type="text" id="searchInput" placeholder="Search for a biology concept..." list="suggestions"
+                oninput="showSuggestions()">
+            <button class="clear-button" onclick="clearInput()">×</button>
+        </div>
+        <datalist id="suggestions"></datalist>
+        <button onclick="searchFormula()">Search</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const formulas = {
+            "cross over value": {
+                formula: "Cross over value = (Total no. of recombinant offspring / Total no. of offspring) × 100",
+                definition: "(Cross over value)",
+                variables: ["Total no. of recombinant offspring",
+                    "Total no. of offspring"]
+            },
+            "recombinant frequency": {
+                formula: "Recombinant frequency = (Total no. of recombinant offspring / Total no. of offspring) × 100",
+                definition: "(Recombinant frequency)",
+                variables: ["Total no. of recombinant offspring",
+                    "Total no. of offspring"]
+            },
+            "frequency of dominant allele": {
+                formula: "Frequency of dominant allele = Total no. of dominant alleles in gene pool / Total no. of all alleles in gene pool",
+                definition: "(Frequency of dominant allele)",
+                variables: ["Total no. of dominant alleles in gene pool",
+                    "Total no. of all alleles in gene pool"]
+            },
+            "frequency of recessive allele": {
+                formula: "Frequency of recessive allele = Total no. of recessive alleles in gene pool / Total no. of all alleles in gene pool",
+                definition: "(Frequency of recessive allele)",
+                variables: ["Total no. of recessive alleles in gene pool",
+                    "Total no. of all alleles in gene pool"]
+            },
+            "genotype frequency of homozygous dominant": {
+                formula: "Genotype frequency of homozygous dominant = Total no. of homozygous dominant individual / Total no. of all individuals in a population",
+                definition: "(Genotype frequency of homozygous dominant)",
+                variables: ["Total no. of homozygous dominant individual",
+                    "Total no. of all individuals in a population"]
+            },
+            "genotype frequency of homozygous recessive": {
+                formula: "Genotype frequency of homozygous recessive = Total no. of homozygous recessive individual / Total no. of all individuals in a population",
+                definition: "(Force = Mass × Acceleration)",
+                variables: ["Total no. of homozygous recessive individual",
+                "Total no. of all individuals in a population"]
+            },
+            "genotype frequency of heterozygous": {
+                formula: "Genotype frequency of heterozygous = Total no. of heterozygous individual / Total no. of all individuals in a population",
+                definition: "(Genotype frequency of heterozygous)",
+                variables: ["Total no. of heterozygous individual",
+                    "Total no. of all individuals in a population"]
+            },
+            "dominant phenotype frequency": {
+                formula: "Dominant phenotype frequency = Total no. of dominant phenotype / Total no. of individuals",
+                definition: "(Dominant phenotype frequency)",
+                variables: ["Total no. of dominant phenotype",
+                    "Total no. of individuals"]
+            },
+            "recessive phenotype frequency": {
+                formula: "Recessive phenotype frequency = Total no. of recessive phenotype / Total no. of individuals",
+                definition: "(Recessive phenotype frequency)",
+                variables: ["Total no. of recessive phenotype",
+                    "Total no. of individuals"]
+            },
+            "equation for allele frequency": {
+                formula: "Equation for allele frequency = Dominant allele frequency,p + Recessive allele frequency,q = 1",
+                definition: "(p + q = 1)"
+            },
+            "equation for genotype frequency": {
+                formula: "Equation for genotype frequency = Homozygous dominant genotype frequency,p² + Heterozygous genotype frequency,2pq + Homozygous recessive genotype frequency,q² = 1",
+                definition: "(p² + 2pq + q² = 1)"
+            }
+        };
+
+        function searchFormula() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            if (formulas[query]) {
+                var formulaData = formulas[query];
+                var formulaContainer = document.createElement('div');
+                formulaContainer.className = 'formula-container';
+                formulaContainer.onclick = function () {
+                    showCalculator(formulaData);
+                };
+
+                var formulaDiv = document.createElement('div');
+                formulaDiv.className = 'formula';
+                formulaDiv.textContent = formulaData.formula;
+
+                var definitionDiv = document.createElement('div');
+                definitionDiv.className = 'definition';
+                definitionDiv.textContent = formulaData.definition;
+
+                formulaContainer.appendChild(formulaDiv);
+                formulaContainer.appendChild(definitionDiv);
+                results.appendChild(formulaContainer);
+            } else {
+                var noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No matching formula found.';
+                results.appendChild(noResults);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                searchFormula();
+            }
+        });
+
+        function showCalculator(formulaData) {
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            var formulaContainer = document.createElement('div');
+            formulaContainer.className = 'formula-container';
+
+            var formulaDiv = document.createElement('div');
+            formulaDiv.className = 'formula';
+            formulaDiv.textContent = formulaData.formula;
+
+            var definitionDiv = document.createElement('div');
+            definitionDiv.className = 'definition';
+            definitionDiv.textContent = formulaData.definition;
+
+            var calculatorDiv = document.createElement('div');
+            calculatorDiv.className = 'calculator';
+
+            formulaData.variables.forEach(variable => {
+                const inputDiv = document.createElement('div');
+                const inputLabel = document.createElement('label');
+                inputLabel.textContent = `${variable}: `;
+                const inputField = document.createElement('input');
+                inputField.type = 'number';
+                inputField.id = variable;
+                inputField.placeholder = `Enter ${variable}`;
+
+                inputDiv.append(inputLabel, inputField);
+                calculatorDiv.appendChild(inputDiv);
+            });
+
+            var calculateButton = document.createElement('button');
+            calculateButton.textContent = 'Calculate';
+            calculateButton.onclick = function () {
+                calculateResult(formulaData);
+            };
+            calculatorDiv.appendChild(calculateButton);
+
+            formulaContainer.appendChild(formulaDiv);
+            formulaContainer.appendChild(definitionDiv);
+            formulaContainer.appendChild(calculatorDiv);
+            results.appendChild(formulaContainer);
+        }
+
+        function calculateResult(formulaData) {
+            var variables = formulaData.variables.map(variable => parseFloat(document.getElementById(variable).value));
+            var result = '';
+
+            if (formulaData.formula === "Cross over value = (Total no. of recombinant offspring / Total no. of offspring) × 100") {
+                result = variables[0] / variables[1] * 100;
+            } else if (formulaData.formula === "Recombinant frequency = (Total no. of recombinant offspring / Total no. of offspring) × 100") {
+                result = variables[0] / variables[1] * 100;
+            } else if (formulaData.formula === "Frequency of dominant allele = Total no. of dominant alleles in gene pool / Total no. of all alleles in gene pool") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Frequency of recessive allele = Total no. of recessive alleles in gene pool / Total no. of all alleles in gene pool") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Genotype frequency of homozygous dominant = Total no. of homozygous dominant individual / Total no. of all individuals in a population") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Genotype frequency of homozygous recessive = Total no. of homozygous recessive individual / Total no. of all individuals in a population") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Genotype frequency of heterozygous = Total no. of heterozygous individual / Total no. of all individuals in a population") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Dominant phenotype frequency = Total no. of dominant phenotype / Total no. of individuals") {
+                result = variables[0] / variables[1];
+            } else if (formulaData.formula === "Recessive phenotype frequency = Total no. of recessive phenotype / Total no. of individuals") {
+                result = variables[0] / variables[1];
+            }
+            alert("The result is: " + JSON.stringify(result));
+        }
+
+        function clearInput() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function showSuggestions() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var datalist = document.getElementById('suggestions');
+            datalist.innerHTML = '';
+
+            Object.keys(formulas).forEach(key => {
+                if (key.includes(query)) {
+                    var option = document.createElement('option');
+                    option.value = key;
+                    datalist.appendChild(option);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

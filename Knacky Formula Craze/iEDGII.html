@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics & Biology Boxes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .box {
+            width: 250px;
+            height: 350px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            text-decoration: none;
+        }
+
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: 0.6s;
+        }
+
+        .box:hover {
+            transform: scale(1.1);
+        }
+
+        .box:hover::before {
+            top: -20%;
+        }
+
+        .box h2 {
+            margin: 0;
+            padding-top: 120px;
+            z-index: 2;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .box .details {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .box:hover .details {
+            opacity: 1;
+        }
+
+        .physics {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .biology {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .floating-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 7s;
+        }
+
+        .circle:nth-child(2) {
+            top: 70%;
+            left: 50%;
+            animation-duration: 10s;
+        }
+
+        .circle:nth-child(3) {
+            top: 40%;
+            left: 80%;
+            animation-duration: 12s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-30px) translateX(30px);
+            }
+
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="floating-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="container">
+        <a href="LATEST PHYSICS FORMULA.html" class="box physics">
+            <h2>Physics</h2>
+            <div class="details">Explore the world of forces and energy!</div>
+        </a>
+
+        <a href="Biology Formula.html" class="box biology">
+            <h2>Biology</h2>
+            <div class="details">Discover the wonders of life and nature!</div>
+        </a>
+    </div>
+
+</body>
+
+</html>
