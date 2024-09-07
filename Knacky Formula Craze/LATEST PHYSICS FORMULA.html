@@ -424,8 +424,8 @@
 
      .home-button {
             display: inline-block;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 16px;
             font-weight: bold;
             text-align: center;
             color: white;
@@ -438,19 +438,29 @@
             transition: all 0.4s ease-in-out;
             transform: scale(1);
             position: absolute;
-            bottom: 170px;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
         }
 
         .home-button:hover {
             background: linear-gradient(45deg, #c0392b, #e74c3c);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            transform: scale(1.1);
+            transform: translateX(-50%) scale(1.1);
         }
 
         .home-button:active {
             background: linear-gradient(45deg, #a93226, #e74c3c);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transform: scale(1);
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                padding: 10px 20px;
+                font-size: 14px;
+                bottom: 25%;
+            }
         }
     </style>
 </head>
