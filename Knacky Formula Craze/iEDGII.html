@@ -6,16 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics & Biology Boxes</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            min-height: 100vh;
+            background: url('https://i.pinimg.com/originals/bf/fe/de/bffede1d81ebe6ddb2eb3033dc86ac68.gif') no-repeat center center fixed;
+            background-size: cover;
             overflow: hidden;
+            position: relative;
+        }
+
+        .title {
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff0000, #cd5c5c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientAnimation 5s ease infinite;
+            text-shadow:
+                0 0 2px #ff0000,
+                0 0 5px #cd5c5c,
+                0 0 0 rgba(255, 255, 255, 1),
+                1px 1px 0 #fff,
+                -1px -1px 0 #fff,
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 4rem;
+            line-height: 1.2;
+        }
+
+        .creator {
+            margin-top: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #2e2e2e;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .title h1 {
+                font-size: 3rem;
+            }
+
+            .creator {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title h1 {
+                font-size: 2rem;
+            }
+
+            .creator {
+                font-size: 1rem;
+            }
         }
 
         .container {
@@ -33,14 +107,19 @@
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 4px solid #fff;
             text-align: center;
             color: #fff;
             font-size: 24px;
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .box::before {
@@ -57,6 +136,7 @@
 
         .box:hover {
             transform: scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .box:hover::before {
@@ -88,11 +168,13 @@
         }
 
         .physics {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1822&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+            background-size: cover;
         }
 
         .biology {
-            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center;
+            background-size: cover;
         }
 
         .floating-circles {
@@ -149,7 +231,6 @@
             text-decoration: none;
         }
 
-        /* Mobile Styles */
         @media (max-width: 768px) {
             .container {
                 flex-wrap: wrap;
@@ -197,6 +278,13 @@
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="circle"></div>
+    </div>
+
+    <div class="title">
+        <h1>Matriculation Formula Search</h1>
+    </div>
+    <div class="creator">
+        <p>Creator: Knacky Formula Craze (KFC)</p>
     </div>
 
     <div class="container">
