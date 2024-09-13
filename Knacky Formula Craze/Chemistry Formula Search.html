@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Formula Search</title>
+    <style>
+        body,
+        h1,
+        p,
+        input,
+        button {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #00FFFF 100%);
+            color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://i.pinimg.com/736x/db/ca/02/dbca02091cef90abc2d460020aea0f92.jpg');
+            background-size: cover;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-animation div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 60%);
+            animation: move 30s linear infinite, rotate 60s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+
+            100% {
+                transform: translateX(-2000px) translateY(-2000px);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #searchContainer {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 100%;
+            width: 100%;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #searchContainer:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.2em;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #f9a826;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 10px;
+            top: -18%;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .clear-button:hover {
+            color: #f9a826;
+        }
+
+        .clear-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #f9a826;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #f39c12;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (min-width: 600px) {
+            #searchContainer {
+                padding: 40px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.3em;
+            }
+
+            button {
+                font-size: 1.3em;
+            }
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .formula-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.25), rgba(253, 187, 45, 0.15));
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .formula-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.35), rgba(253, 187, 45, 0.25));
+        }
+
+        .formula {
+            font-size: 1.4em;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .definition {
+            color: #f9a826;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1em;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .formula-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, transparent 70%);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .formula-container:hover::before {
+            transform: scale(1.2);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 10%, transparent 70%);
+        }
+
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            width: 300px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .calculator:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator input {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 0.9em;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
+        }
+
+        .calculator input:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #f9a826;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .calculator button:hover {
+            background: linear-gradient(135deg, #66BB6A 0%, #A5D6A7 100%);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator button:active {
+            transform: scale(0.98) translateY(2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator button:focus {
+            outline: 2px solid #f9a826;
+            outline-offset: 2px;
+        }
+
+        .calculator-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 1em;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .calculator {
+                padding: 1em;
+                width: 90%;
+            }
+
+            .calculator input {
+                font-size: 0.8em;
+            }
+
+            .calculator button {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .calculator-title {
+                font-size: 1.2em;
+            }
+        }
+
+        .no-results {
+            color: #f86;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            #searchContainer {
+                padding: 30px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.2em;
+            }
+
+            .formula {
+                font-size: 1.2em;
+            }
+
+            .definition {
+                font-size: 1em;
+            }
+
+            .no-results {
+                font-size: 1.2em;
+            }
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease-in-out;
+            transform: scale(1);
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .home-button:hover {
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .home-button:active {
+            background: linear-gradient(45deg, #a93226, #e74c3c);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                padding: 8px 16px;
+                font-size: 14px;
+                bottom: 20em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-button {
+                padding: 6px 12px;
+                font-size: 12px;
+                bottom: 15em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="iEDGII.html" class="home-button">Home</a>
+    <div class="background-animation">
+        <div style="top: 10%; left: 20%; animation-duration: 25s;"></div>
+        <div style="top: 30%; left: 40%; animation-duration: 20s;"></div>
+        <div style="top: 50%; left: 60%; animation-duration: 30s;"></div>
+        <div style="top: 70%; left: 80%; animation-duration: 35s;"></div>
+        <div style="top: 90%; left: 10%; animation-duration: 40s;"></div>
+    </div>
+    <h1>Chemistry Formula Search</h1>
+    <div id="searchContainer">
+        <div class="input-container">
+            <input type="text" id="searchInput" placeholder="Search for a chemistry concept..." list="suggestions"
+                oninput="showSuggestions()">
+            <button class="clear-button" onclick="clearInput()">×</button>
+        </div>
+        <datalist id="suggestions"></datalist>
+        <button onclick="searchFormula()">Search</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const formulas = {
+            "molarity": {
+                formula: "M = n / v",
+                definition: "(Molarity = Mole ÷ Volume in dm³)",
+                variables: ["M",
+                    "n",
+                    "v"]
+            },
+            "molality": {
+                formula: "m = n / M",
+                definition: "Molality = Mole ÷ Mass in kg",
+                variables: ["m",
+                    "n",
+                    "M"]
+            },
+            "mole": {
+                formula: "n = m / M",
+                definition: "(Mole = Mass ÷ Molar mass)",
+                variables: ["n",
+                    "m",
+                    "M"]
+            },
+            "mole fraction": {
+                formula: "X = n / N",
+                definition: "(Mole fraction = Mole of x ÷ total moles of all components)",
+                variables: ["X",
+                    "n",
+                    "N"]
+            },
+            "percentage by mass": {
+                formula: "%w/w = m / M *100",
+                definition: "(Percentage by mass = mass of solute ÷ mass of solution × 100)",
+                variables: ["%w/w",
+                    "m",
+                    "M",]
+            },
+            "percentage by volume": {
+                formula: "%v/v = v / V * 100",
+                definition: "(Percentage by volume = volume of solute ÷ volume of solution × 100)",
+                variables: ["%v/v",
+                    "v",
+                    "V"]
+            },
+            "percent yield": {
+                formula: "y = a / t * 100",
+                definition: "(%yield = actual yield ÷ theoretical yield × 100)",
+                variables: ["y",
+                    "a",
+                    "t"]
+            },
+            "energy of an electron": {
+                formula: "En = -Rh(1/n²)",
+                definition: "(Energy of an electron = -Rydberg constant × (1÷energy level))",
+                variables: ["E",
+                    "n",
+                    "Rh"]
+            },
+            "energy change of electron": {
+                formula: "ΔE = Rh(1/n_i² - 1/n_f²)",
+                definition: "(Energy change = Rydberg constant × (1/n_i² - 1/n_f²))",
+                variables: ["ΔE",
+                    "Rh",
+                    "n_i",
+                    "n_f"]
+            }
+        };
+
+
+        function searchFormula() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            if (formulas[query]) {
+                var formulaData = formulas[query];
+                var formulaContainer = document.createElement('div');
+                formulaContainer.className = 'formula-container';
+                formulaContainer.onclick = function () {
+                    showCalculator(formulaData);
+                };
+
+                var formulaDiv = document.createElement('div');
+                formulaDiv.className = 'formula';
+                formulaDiv.textContent = formulaData.formula;
+
+                var definitionDiv = document.createElement('div');
+                definitionDiv.className = 'definition';
+                definitionDiv.textContent = formulaData.definition;
+
+                formulaContainer.appendChild(formulaDiv);
+                formulaContainer.appendChild(definitionDiv);
+                results.appendChild(formulaContainer);
+            } else {
+                var noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No matching formula found.';
+                results.appendChild(noResults);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                searchFormula();
+            }
+        });
+
+        function showCalculator(formulaData) {
+            var results = document.getElementById('results');
+            results.innerHTML = '';
+
+            var formulaContainer = document.createElement('div');
+            formulaContainer.className = 'formula-container';
+
+            var formulaDiv = document.createElement('div');
+            formulaDiv.className = 'formula';
+            formulaDiv.textContent = formulaData.formula;
+
+            var definitionDiv = document.createElement('div');
+            definitionDiv.className = 'definition';
+            definitionDiv.textContent = formulaData.definition;
+
+            var calculatorDiv = document.createElement('div');
+            calculatorDiv.className = 'calculator';
+
+            formulaData.variables.forEach(variable => {
+                const inputDiv = document.createElement('div');
+                const inputLabel = document.createElement('label');
+                inputLabel.textContent = `${variable}: `;
+                const inputField = document.createElement('input');
+                inputField.type = 'number';
+                inputField.id = variable;
+                inputField.placeholder = `Enter ${variable}`;
+
+                inputDiv.append(inputLabel, inputField);
+                calculatorDiv.appendChild(inputDiv);
+            });
+
+            var calculateButton = document.createElement('button');
+            calculateButton.textContent = 'Calculate';
+            calculateButton.onclick = function () {
+                calculateResult(formulaData);
+            };
+            calculatorDiv.appendChild(calculateButton);
+
+            formulaContainer.appendChild(formulaDiv);
+            formulaContainer.appendChild(definitionDiv);
+            formulaContainer.appendChild(calculatorDiv);
+            results.appendChild(formulaContainer);
+        }
+
+        function calculateResult(formulaData) {
+            var variables = formulaData.variables.map(variable => parseFloat(document.getElementById(variable).value));
+            var result = '';
+
+            if (formulaData.formula === "M = n / v") {
+                const M = variables[0];
+                const n = variables[1];
+                const v = variables[2];
+
+                result = {};
+
+                if (isNaN(M) || M === null) {
+                    result.M = (n !== null && v !== null && v !== 0) ? n / v : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (M !== null && v !== null) ? M * v : null;
+                }
+
+                if (isNaN(v) || v === null) {
+                    result.v = (M !== null && n !== null && M !== 0) ? n / M : null;
+                }
+            }
+
+            else if (formulaData.formula === "m = n / M") {
+                const m = variables[0];
+                const n = variables[1];
+                const M = variables[2];
+
+                result = {};
+
+                if (isNaN(m) || m === null) {
+                    result.m = (n !== null && M !== null && M !== 0) ? n / M : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (m !== null && M !== null) ? m * M : null;
+                }
+
+                if (isNaN(M) || M === null) {
+                    result.M = (n !== null && m !== null && m !== 0) ? n / m : null;
+                }
+            }
+
+            else if (formulaData.formula === "n = m / M") {
+                const n = variables[0];
+                const m = variables[1];
+                const M = variables[2];
+
+                result = {};
+
+                if (isNaN(n) || n === null) {
+                    result.n = (m !== null && M !== null && M !== 0) ? m / M : null;
+                }
+
+                if (isNaN(m) || m === null) {
+                    result.m = (n !== null && M !== null) ? n * M : null;
+                }
+
+                if (isNaN(M) || M === null) {
+                    result.M = (m !== null && n !== null && n !== 0) ? m / n : null;
+                }
+            }
+
+            else if (formulaData.formula === "X = n / N") {
+                const X = variables[0];
+                const n = variables[1];
+                const N = variables[2];
+
+                result = {};
+
+                if (isNaN(X) || X === null) {
+                    result.X = (n !== null && N !== null && N !== 0) ? n / N : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (X !== null && N !== null) ? X * N : null;
+                }
+
+                if (isNaN(N) || N === null) {
+                    result.N = (n !== null && X !== null && X !== 0) ? n / X : null;
+                }
+            }
+
+            else if (formulaData.formula === "%w/w = m / M *100") {
+                const percentWByW = variables[0];
+                const m = variables[1];
+                const M = variables[2];
+
+                result = {};
+
+                if (isNaN(percentWByW) || percentWByW === null) {
+                    result.percentWByW = (m !== null && M !== null && M !== 0) ? (m / M) * 100 : null;
+                }
+
+                if (isNaN(m) || m === null) {
+                    result.m = (percentWByW !== null && M !== null) ? (percentWByW / 100) * M : null;
+                }
+
+                if (isNaN(M) || M === null) {
+                    result.M = (m !== null && percentWByW !== null && percentWByW !== 0) ? m / (percentWByW / 100) : null;
+                }
+            }
+
+            else if (formulaData.formula === "%v/v = v / V * 100") {
+                const percentVByV = variables[0];
+                const v = variables[1];
+                const V = variables[2];
+
+                result = {};
+
+                if (isNaN(percentVByV) || percentVByV === null) {
+                    result.percentVByV = (v !== null && V !== null && V !== 0) ? (v / V) * 100 : null;
+                }
+
+                if (isNaN(v) || v === null) {
+                    result.v = (percentVByV !== null && V !== null) ? (percentVByV / 100) * V : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (v !== null && percentVByV !== null && percentVByV !== 0) ? v / (percentVByV / 100) : null;
+                }
+            }
+
+            if (formulaData.formula === "y = a / t * 100") {
+                const y = variables[0];
+                const a = variables[1];
+                const t = variables[2];
+
+                result = {};
+
+                if (isNaN(y) || y === null) {
+                    result.y = (a !== null && t !== null && t !== 0) ? (a / t) * 100 : null;
+                }
+
+                if (isNaN(a) || a === null) {
+                    result.a = (y !== null && t !== null) ? (y / 100) * t : null;
+                }
+
+                if (isNaN(t) || t === null) {
+                    result.t = (a !== null && y !== null && y !== 0) ? a / (y / 100) : null;
+                }
+            }
+
+            if (formulaData.formula === "E = -Rh(1/n²)") {
+                const E = variables[0];
+                const Rh = variables[1];
+                const n = variables[2];
+
+                result = {};
+
+                if (isNaN(E) || E === null) {
+                    result.E = (Rh !== null && n !== null && n !== 0) ? -Rh * (1 / (n * n)) : null;
+                }
+
+                if (isNaN(Rh) || Rh === null) {
+                    result.Rh = (E !== null && n !== null && n !== 0) ? -E / (1 / (n * n)) : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (E !== null && Rh !== null && E !== 0) ? Math.sqrt(-Rh / E) : null;
+                }
+            }
+
+            alert("The result is: " + JSON.stringify(result));
+        }
+
+        function clearInput() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function showSuggestions() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var datalist = document.getElementById('suggestions');
+            datalist.innerHTML = '';
+
+            Object.keys(formulas).forEach(key => {
+                if (key.includes(query)) {
+                    var option = document.createElement('option');
+                    option.value = key;
+                    datalist.appendChild(option);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
