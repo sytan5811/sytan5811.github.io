@@ -454,70 +454,174 @@
         const formulas = {
             "molarity": {
                 formula: "M = n / v",
-                definition: "(Molarity = Mole ÷ Volume in dm³)",
+                definition: "(Molarity = Mole / Volume in dm³)",
                 variables: ["M",
                     "n",
                     "v"]
             },
             "molality": {
                 formula: "m = n / M",
-                definition: "Molality = Mole ÷ Mass in kg",
+                definition: "Molality = Mole / Mass in kg",
                 variables: ["m",
                     "n",
                     "M"]
             },
             "mole": {
                 formula: "n = m / M",
-                definition: "(Mole = Mass ÷ Molar mass)",
+                definition: "(Mole = Mass / Molar mass)",
                 variables: ["n",
                     "m",
                     "M"]
             },
             "mole fraction": {
                 formula: "X = n / N",
-                definition: "(Mole fraction = Mole of x ÷ total moles of all components)",
+                definition: "(Mole fraction = Mole of x / total moles of all components)",
                 variables: ["X",
                     "n",
                     "N"]
             },
             "percentage by mass": {
                 formula: "%w/w = m / M *100",
-                definition: "(Percentage by mass = mass of solute ÷ mass of solution × 100)",
+                definition: "(Percentage by mass = mass of solute / mass of solution × 100)",
                 variables: ["%w/w",
                     "m",
                     "M",]
             },
             "percentage by volume": {
                 formula: "%v/v = v / V * 100",
-                definition: "(Percentage by volume = volume of solute ÷ volume of solution × 100)",
+                definition: "(Percentage by volume = volume of solute / volume of solution × 100)",
                 variables: ["%v/v",
                     "v",
                     "V"]
             },
             "percent yield": {
                 formula: "y = a / t * 100",
-                definition: "(%yield = actual yield ÷ theoretical yield × 100)",
+                definition: "(%yield = actual yield / theoretical yield × 100)",
                 variables: ["y",
                     "a",
                     "t"]
             },
             "energy of an electron": {
-                formula: "En = -Rh(1/n²)",
-                definition: "(Energy of an electron = -Rydberg constant × (1÷energy level))",
+                formula: "E = -Rh(1/n²)",
+                definition: "(Energy of an electron = -Rydberg constant × (1/energy level))",
                 variables: ["E",
-                    "n",
-                    "Rh"]
+                    "n",]
             },
-            "energy change of electron": {
+            "energy change of electron (1)": {
                 formula: "ΔE = Rh(1/n_i² - 1/n_f²)",
                 definition: "(Energy change = Rydberg constant × (1/n_i² - 1/n_f²))",
                 variables: ["ΔE",
-                    "Rh",
                     "n_i",
                     "n_f"]
+            },
+            "wavelength emitted": {
+                formula: "1/λ = Rh(1/n_1² - 1/n_2²)",
+                definition: "(Wavelength emitted = Rydberg constant × (1/n_1² - 1/n_2²))",
+                variables: ["λ",
+                    "n_1",
+                    "n_2"]
+            },
+            "energy change of electron (2)": {
+                formula: "ΔE = h * v",
+                definition: "(Energy change = Planck's constant × v)",
+                variables: ["ΔE",
+                    "v"]
+            },
+            "frequency of emission": {
+                formula: "v = c / λ",
+                definition: "(Frequency of emission = speed of light / wavelength emitted)",
+                variables: ["v",
+                    "λ"]
+            },
+            "boyle's law": {
+                formula: "P1 * V1 = P2 * V2",
+                definition: "(P1(atm) × V1(L) = P2(atm) × V2(L))",
+                variables: ["P1",
+                    "V1",
+                    "P2",
+                    "V2"]
+            },
+            "charle's law": {
+                formula: "V1 / T1 = V2 / T2",
+                definition: "(V1(L) / T1(K) = V2(L) / T2(K))",
+                variables: ["T1",
+                    "V1",
+                    "T2",
+                    "V2"]
+            },
+            "combination of boyle's and charle's law": {
+                formula: "P1 * V1 / T1 = P2 * V2 / T2",
+                definition: "(P1(atm) × V1(L) / T1(K) = P2(atm) × V2(L) / T2(K))",
+                variables: ["P1",
+                    "V1",
+                    "T1",
+                    "P2",
+                    "V2",
+                    "T2"]
+            },
+            "ideal-gas law": {
+                formula: "P * V = n * R * T",
+                definition: "(P(atm) × V(L) = n(mol) × Gas Constant × T(K))",
+                variables: ["P",
+                    "V",
+                    "n",
+                    "T"]
+            },
+            "avogadro's law": {
+                formula: "V1 / n1 = V2 / n2",
+                definition: "(V1(L) / n1(mol) = V2(L) / n2(mol))",
+                variables: ["V1",
+                    "n1",
+                    "V2",
+                    "n2"]
+            },
+            "density of gas": {
+                formula: "d = P * Mr / R * T",
+                definition: "(d(g/L) = P(atm) × Mr(g/mol) / Gas Constant × T(K))",
+                variables: ["d",
+                    "P",
+                    "Mr",
+                    "T"]
+            },
+            "molar mass of gas": {
+                formula: "Mr = m * R * T / P * V",
+                definition: "Mr (g/mol) = m (g) × Gas Constant × T (K) / P (atm) × V (L)",
+                variables: ["Mr",
+                    "m",
+                    "T",
+                    "P",
+                    "V"]
+            },
+            "dalton's law": {
+                formula: "P_T = n_T * R * T / V",
+                definition: "(P_T(atm) = n_T(mol) × Gas Constant × T(K) / V(L))",
+                variables: ["P_T",
+                    "n_T",
+                    "T",
+                    "V"]
+            },
+            "total pressure": {
+                formula: "P = X * P_T",
+                definition: "(P(atm) = Mole Fraction of Gas × P_T(atm))",
+                variables: ["P",
+                    "X",
+                    "P_T"]
+            },
+            "solubility": {
+                formula: "Sp = m / V",
+                definition: "(Solubility(g/l) = Amount of solute(g) / Volume of solution(L))",
+                variables: ["Sp",
+                    "m",
+                    "V"]
+            },
+            "molar solubility": {
+                formula: "Mr_Sp = n / V",
+                definition: "(Molar Solubility(mol/l) = Mole of solute(mol) / Volume of solution(L))",
+                variables: ["Mr_Sp",
+                    "n",
+                    "V"]
             }
         };
-
 
         function searchFormula() {
             var query = document.getElementById('searchInput').value.toLowerCase();
@@ -746,25 +850,412 @@
             }
 
             if (formulaData.formula === "E = -Rh(1/n²)") {
+                const Rh = 2.18e-18;
                 const E = variables[0];
-                const Rh = variables[1];
-                const n = variables[2];
+                const n = variables[1];
 
                 result = {};
 
                 if (isNaN(E) || E === null) {
-                    result.E = (Rh !== null && n !== null && n !== 0) ? -Rh * (1 / (n * n)) : null;
-                }
-
-                if (isNaN(Rh) || Rh === null) {
-                    result.Rh = (E !== null && n !== null && n !== 0) ? -E / (1 / (n * n)) : null;
+                    result.E = (n !== null && n !== 0) ? -Rh * (1 / (n * n)) : null;
                 }
 
                 if (isNaN(n) || n === null) {
-                    result.n = (E !== null && Rh !== null && E !== 0) ? Math.sqrt(-Rh / E) : null;
+                    result.n = (E !== null && E !== 0) ? Math.sqrt(-Rh / E) : null;
                 }
             }
 
+
+            if (formulaData.formula === "ΔE = Rh(1/n_i² - 1/n_f²)") {
+                const Rh = 2.18e-18;
+                const E = variables[0];
+                const n_i = variables[1];
+                const n_f = variables[2];
+
+                result = {};
+
+                if (isNaN(E) || E === null) {
+                    if (Rh !== null && n_i !== null && n_f !== null) {
+                        result.E = Rh * ((1 / (n_i * n_i)) - (1 / (n_f * n_f)));
+                    } else {
+                        result.E = null;
+                    }
+                }
+
+                if (isNaN(n_i) || n_i === null) {
+                    if (E !== null && Rh !== null && n_f !== null) {
+                        result.n_i = 1 / Math.sqrt((1 / (n_f * n_f)) + (E / Rh));
+                    } else {
+                        result.n_i = null;
+                    }
+                }
+
+                if (isNaN(n_f) || n_f === null) {
+                    if (E !== null && Rh !== null && n_i !== null) {
+                        result.n_f = 1 / Math.sqrt((1 / (n_i * n_i)) - (E / Rh));
+                    } else {
+                        result.n_f = null;
+                    }
+                }
+            }
+
+
+            if (formulaData.formula === "1/λ = Rh(1/n_1² - 1/n_2²)") {
+                const Rh = 1.0973731568508e7;
+                const λ = variables[0];
+                const n_1 = variables[1];
+                const n_2 = variables[2];
+
+                result = {};
+
+                if (isNaN(λ) || λ === null) {
+                    if (Rh !== null && n_1 !== null && n_2 !== null) {
+                        result.λ = 1 / (Rh * ((1 / (n_1 * n_1)) - (1 / (n_2 * n_2))));
+                    } else {
+                        result.λ = null;
+                    }
+                }
+
+                if (isNaN(n_1) || n_1 === null) {
+                    if (λ !== null && Rh !== null && n_2 !== null) {
+                        result.n_1 = 1 / Math.sqrt((1 / (λ * Rh)) + (1 / (n_2 * n_2)));
+                    } else {
+                        result.n_1 = null;
+                    }
+                }
+
+                if (isNaN(n_2) || n_2 === null) {
+                    if (λ !== null && Rh !== null && n_1 !== null) {
+                        result.n_2 = 1 / Math.sqrt((-1 / (λ * Rh)) + (1 / (n_1 * n_1)));
+                    } else {
+                        result.n_2 = null;
+                    }
+                }
+            }
+
+
+            if (formulaData.formula === "ΔE = h * v") {
+                const h = 6.62607015e-34;
+                const E = variables[0];
+                const v = variables[1];
+
+                result = {};
+
+                if (isNaN(E) || E === null) {
+                    result.E = (h !== null && v !== null) ? h * v : null;
+                }
+
+                if (isNaN(v) || v === null) {
+                    result.v = (h !== null && E !== null) ? E / h : null;
+                }
+            }
+
+            if (formulaData.formula === "v = c / λ") {
+                const c = 299792458;
+                const v = variables[0];
+                const λ = variables[1];
+
+                result = {};
+
+                if (isNaN(v) || v === null) {
+                    result.v = (c !== null && λ !== null) ? c / λ : null;
+                }
+
+                if (isNaN(λ) || λ === null) {
+                    result.λ = (v !== null && c !== null) ? c / v : null;
+                }
+            }
+
+
+            if (formulaData.formula === "P1 * V1 = P2 * V2") {
+                const P1 = variables[0];
+                const V1 = variables[1];
+                const P2 = variables[2];
+                const V2 = variables[3];
+
+                result = {};
+
+                if (isNaN(P1) || P1 === null) {
+                    result.P1 = (V1 !== null && P2 !== null && V2 !== null) ? (P2 * V2) / V1 : null;
+                }
+
+                if (isNaN(V1) || V1 === null) {
+                    result.V1 = (P1 !== null && P2 !== null && V2 !== null) ? (P2 * V2) / P1 : null;
+                }
+
+                if (isNaN(P2) || P2 === null) {
+                    result.P2 = (V1 !== null && P1 !== null && V2 !== null) ? (P1 * V1) / V2 : null;
+                }
+
+                if (isNaN(V2) || V2 === null) {
+                    result.V2 = (V1 !== null && P2 !== null && P1 !== null) ? (P1 * V1) / P2 : null;
+                }
+            }
+
+            if (formulaData.formula === "V1 / T1 = V2 / T2") {
+                const T1 = variables[0];
+                const V1 = variables[1];
+                const T2 = variables[2];
+                const V2 = variables[3];
+
+                result = {};
+
+                if (isNaN(T1) || T1 === null) {
+                    result.T1 = (V1 !== null && T2 !== null && V2 !== null) ? (V1 * T2) / V2 : null;
+                }
+
+                if (isNaN(V1) || V1 === null) {
+                    result.V1 = (T1 !== null && T2 !== null && V2 !== null) ? (V2 / T2) * T1 : null;
+                }
+
+                if (isNaN(T2) || T2 === null) {
+                    result.T2 = (V1 !== null && T1 !== null && V2 !== null) ? (T1 * V2) / V1 : null;
+                }
+
+                if (isNaN(V2) || V2 === null) {
+                    result.V2 = (V1 !== null && T2 !== null && T1 !== null) ? (V1 / T1) * T2 : null;
+                }
+            }
+
+            if (formulaData.formula === "P1 * V1 / T1 = P2 * V2 / T2") {
+                const P1 = variables[0];
+                const V1 = variables[1];
+                const T1 = variables[2];
+                const P2 = variables[3];
+                const V2 = variables[4];
+                const T2 = variables[5];
+
+                result = {};
+
+                if (isNaN(T1) || T1 === null) {
+                    result.T1 = (V1 !== null && T2 !== null && V2 !== null && P1 !== null && P2 !== null) ? (V1 * T2 * P1) / (P2 * V2) : null;
+                }
+
+                if (isNaN(V1) || V1 === null) {
+                    result.V1 = (T1 !== null && T2 !== null && V2 !== null && P1 !== null && P2 !== null) ? (P2 * V2 * T1) / (P1 * T2) : null;
+                }
+
+                if (isNaN(T2) || T2 === null) {
+                    result.T2 = (V1 !== null && T1 !== null && V2 !== null && P1 !== null && P2 !== null) ? (V2 * T1 * P2) / (P1 * V1) : null;
+                }
+
+                if (isNaN(V2) || V2 === null) {
+                    result.V2 = (V1 !== null && T2 !== null && T1 !== null && P1 !== null && P2 !== null) ? (P1 * V1 * T2) / (P2 * T1) : null;
+                }
+                if (isNaN(P1) || P1 === null) {
+                    result.P1 = (V1 !== null && T2 !== null && T1 !== null && V2 !== null && P2 !== null) ? (P2 * V2 * T1) / (V1 * T2) : null;
+                }
+                if (isNaN(P2) || P2 === null) {
+                    result.P2 = (V1 !== null && T2 !== null && T1 !== null && V2 !== null && P1 !== null) ? (P1 * V1 * T2) / (V2 * T1) : null;
+                }
+            }
+
+            if (formulaData.formula === "P * V = n * R * T") {
+                const R = 8.3145;
+                const P = variables[0];
+                const V = variables[1];
+                const n = variables[2];
+                const T = variables[3];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    result.P = (V !== null && n !== null && R !== null && T !== null) ? (n * R * T) / V : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (P !== null && n !== null && R !== null && T !== null) ? (n * R * T) / P : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (P !== null && V !== null && R !== null && T !== null) ? (P * V) / (R * T) : null;
+                }
+
+                if (isNaN(T) || T === null) {
+                    result.T = (P !== null && V !== null && R !== null && n !== null) ? (P * V) / (R * n) : null;
+                }
+            }
+
+
+            if (formulaData.formula === "V1 / n1 = V2 / n2") {
+                const V1 = variables[0];
+                const n1 = variables[1];
+                const V2 = variables[2];
+                const n2 = variables[3];
+
+                result = {};
+
+                if (isNaN(V1) || V1 === null) {
+                    result.V1 = (n1 !== null && V2 !== null && n2 !== null) ? (V2 * n2) / n1 : null;
+                }
+
+                if (isNaN(n1) || n1 === null) {
+                    result.n1 = (V1 !== null && n2 !== null && V2 !== null) ? (V1 / V2) * n2 : null;
+                }
+
+                if (isNaN(V2) || V2 === null) {
+                    result.V2 = (V1 !== null && n1 !== null && n2 !== null) ? (V1 * n2) / n1 : null;
+                }
+
+                if (isNaN(n2) || n2 === null) {
+                    result.n2 = (V1 !== null && V2 !== null && n1 !== null) ? (V1 / V2) * n1 : null;
+                }
+            }
+
+            if (formulaData.formula === "d = P * Mr / R * T") {
+                const R = 8.3145;
+                const d = variables[0];
+                const P = variables[1];
+                const Mr = variables[2];
+                const T = variables[3];
+
+                result = {};
+
+                if (isNaN(d) || d === null) {
+                    result.d = (P !== null && Mr !== null && T !== null) ? (P * Mr) / (R * T) : null;
+                }
+
+                if (isNaN(P) || P === null) {
+                    result.P = (d !== null && Mr !== null && T !== null) ? (d * R * T) / Mr : null;
+                }
+
+                if (isNaN(Mr) || Mr === null) {
+                    result.Mr = (d !== null && P !== null && T !== null) ? (d * R * T) / P : null;
+                }
+
+                if (isNaN(T) || T === null) {
+                    result.T = (P !== null && d !== null && Mr !== null) ? (d * R) / (P * Mr) : null;
+                }
+            }
+
+            if (formulaData.formula === "Mr = m * R * T / P * V") {
+                const R = 8.3145;
+                const Mr = variables[0];
+                const m = variables[1];
+                const T = variables[2];
+                const P = variables[3];
+                const V = variables[4];
+
+                result = {};
+
+                if (isNaN(P) || P === null) {
+                    result.P = (m !== null && Mr !== null && R !== null && T !== null && V !== null)
+                        ? (m * R * T) / (Mr * V)
+                        : null;
+                }
+
+                if (isNaN(Mr) || Mr === null) {
+                    result.Mr = (m !== null && V !== null && R !== null && T !== null && P !== null)
+                        ? (m * R * T) / (P * V)
+                        : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (m !== null && Mr !== null && R !== null && T !== null && P !== null)
+                        ? (m * R * T) / (P * Mr)
+                        : null;
+                }
+
+                if (isNaN(T) || T === null) {
+                    result.T = (m !== null && V !== null && R !== null && Mr !== null && P !== null)
+                        ? (Mr * P * V) / (m * R)
+                        : null;
+                }
+
+                if (isNaN(m) || m === null) {
+                    result.m = (T !== null && V !== null && R !== null && Mr !== null && P !== null)
+                        ? (Mr * P * V) / (T * R)
+                        : null;
+                }
+            }
+
+            if (formulaData.formula === "P_T = n_T * R * T / V") {
+                const R = 8.3145;
+                const P_T = variables[0];
+                const n_T = variables[1];
+                const T = variables[2];
+                const V = variables[3];
+
+                result = {};
+
+                if (isNaN(P_T) || P_T === null) {
+                    result.P_T = (n_T !== null && R !== null && T !== null && V !== null) ? (n_T * R * T) / V : null;
+                }
+
+                if (isNaN(n_T) || n_T === null) {
+                    result.n_T = (P_T !== null && R !== null && T !== null && V !== null) ? (P_T * V) / (R * T) : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (P_T !== null && R !== null && T !== null && n_T !== null) ? (n_T * R * T) / P_T : null;
+                }
+
+                if (isNaN(T) || T === null) {
+                    result.T = (P_T !== null && R !== null && n_T !== null && V !== null) ? (P_T * V) / (n_T * R) : null;
+                }
+            }
+
+
+            if (formulaData.formula === "P = X * P_T") {
+                const P = variables[0];
+                const X = variables[1];
+                const P_T = variables[2];
+
+                result = {};
+
+                if (isNaN(P_T) || P_T === null) {
+                    result.P_T = (X !== null && P !== null) ? P / X : null;
+                }
+
+                if (isNaN(P) || P === null) {
+                    result.P = (X !== null && P_T !== null) ? X * P_T : null;
+                }
+
+                if (isNaN(X) || X === null) {
+                    result.X = (P_T !== null && P !== null) ? P / P_T : null;
+                }
+            }
+
+            if (formulaData.formula === "Sp = m / V") {
+                const Sp = variables[0];
+                const m = variables[1];
+                const V = variables[2];
+
+                result = {};
+
+                if (isNaN(Sp) || Sp === null) {
+                    result.Sp = (m !== null && V !== null) ? m / V : null;
+                }
+
+                if (isNaN(m) || m === null) {
+                    result.m = (Sp !== null && V !== null) ? Sp * V : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (Sp !== null && m !== null) ? m / Sp : null;
+                }
+            }
+
+            if (formulaData.formula === "Mr_Sp = n / V") {
+                const Mr_Sp = variables[0];
+                const n = variables[1];
+                const V = variables[2];
+
+                result = {};
+
+                if (isNaN(Mr_Sp) || Mr_Sp === null) {
+                    result.Mr_Sp = (n !== null && V !== null) ? n / V : null;
+                }
+
+                if (isNaN(n) || n === null) {
+                    result.n = (Mr_Sp !== null && V !== null) ? Mr_Sp * V : null;
+                }
+
+                if (isNaN(V) || V === null) {
+                    result.V = (Mr_Sp !== null && n !== null) ? n / Mr_Sp : null;
+                }
+            }
+            
             alert("The result is: " + JSON.stringify(result));
         }
 
