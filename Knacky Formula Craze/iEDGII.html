@@ -94,13 +94,22 @@
             }
         }
 
+        /* Updated container style */
         .container {
             display: flex;
             gap: 50px;
             position: relative;
             z-index: 1;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
+            flex-direction: row;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         .box {
@@ -241,11 +250,6 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
             .box {
                 width: 200px;
                 height: 300px;
