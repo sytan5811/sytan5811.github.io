@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knacky Formula Craze</title>
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
         body {
             font-family: 'Arial', sans-serif;
@@ -31,12 +31,26 @@
             background: none;
             color: white;
             text-shadow:
-            0 0 2px black,
-            0 0 5px black,
-            1px 1px 0 black,
-            -1px -1px 0 black,
-            1px -1px 0 black,
-            -1px 1px 0 black;
+                0 0 2px black,
+                0 0 5px black,
+                1px 1px 0 black,
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
         }
 
         .title h1 {
@@ -52,15 +66,15 @@
             color: #ffffff;
             font-style: italic;
             text-shadow:
-            0 0 2px black,
-            0 0 5px black,
-            1px 1px 0 black,
-            -1px -1px 0 black,
-            1px -1px 0 black,
-            -1px 1px 0 black;
+                0 0 2px black,
+                0 0 5px black,
+                1px 1px 0 black,
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black;
         }
 
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
             .title h1 {
                 font-size: 3rem;
             }
@@ -70,7 +84,7 @@
             }
         }
 
-@media (max-width: 480px) {
+        @media (max-width: 480px) {
             .title h1 {
                 font-size: 2rem;
             }
@@ -82,23 +96,22 @@
 
         .container {
             display: flex;
-            gap: 30px;
+            gap: 50px;
             position: relative;
             z-index: 1;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 0 15px;
         }
 
         .box {
-            width: 100%;
-            max-width: 250px;
+            width: 250px;
             height: 350px;
             border-radius: 15px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
             border: 4px solid #fff;
             text-align: center;
             color: #fff;
@@ -126,7 +139,7 @@
         }
 
         .box:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
@@ -138,7 +151,7 @@
             margin: 0;
             padding-top: 120px;
             z-index: 2;
-            font-size: 28px;
+            font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -209,7 +222,7 @@
             animation-duration: 12s;
         }
 
-@keyframes float {
+        @keyframes float {
             0% {
                 transform: translateY(0) translateX(0);
             }
@@ -227,14 +240,20 @@
             text-decoration: none;
         }
 
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
+            .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .box {
-                max-width: 200px;
+                width: 200px;
                 height: 300px;
+                font-size: 20px;
             }
 
             .box h2 {
-                font-size: 24px;
+                font-size: 28px;
             }
 
             .box .details {
@@ -242,14 +261,15 @@
             }
         }
 
-@media (max-width: 480px) {
+        @media (max-width: 480px) {
             .box {
-                max-width: 180px;
+                width: 180px;
                 height: 250px;
+                font-size: 18px;
             }
 
             .box h2 {
-                font-size: 20px;
+                font-size: 24px;
             }
 
             .box .details {
@@ -271,34 +291,26 @@
         <h1>Matriculation Formula Search</h1>
     </div>
     <div class="creator">
-        <p>
-            Creator: Knacky Formula Craze (KFC)
-        </p>
+        <p>Creator: Knacky Formula Craze (KFC)</p>
     </div>
 
     <div class="container">
         <a href="Physics Formula.html" class="box physics">
             <h2>Physics</h2>
-            <div class="details">
-                Explore the world of forces and energy!
-            </div>
+            <div class="details">Explore the world of forces and energy!</div>
         </a>
 
         <a href="Biology Formula.html" class="box biology">
             <h2>Biology</h2>
-            <div class="details">
-                Discover the wonders of life and nature!
-            </div>
+            <div class="details">Discover the wonders of life and nature!</div>
         </a>
 
         <a href="Chemistry Formula.html" class="box chemistry">
             <h2>Chemistry</h2>
-            <div class="details">
-                Uncover the secrets of chemical reactions!
-            </div>
+            <div class="details">Uncover the secrets of chemical reactions!</div>
         </a>
     </div>
 
 </body>
 
-</html> 
+</html>
