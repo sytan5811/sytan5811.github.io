@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,11 +13,11 @@
         button {
             margin: 0;
             padding: 0;
-            font-family: 'Times New Roman', Times, serif, sans-serif;
+            font-family: Arial, sans-serif;
         }
+
         body {
-            background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #00FFFF 100%);
             color: #f3f4f6;
             display: flex;
             flex-direction: column;
@@ -27,6 +28,8 @@
             box-sizing: border-box;
             overflow: hidden;
             position: relative;
+            background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
 
         .background-animation {
@@ -47,7 +50,7 @@
             border-radius: 50%;
             animation: move 240s linear infinite;
         }
-        
+
 
         @keyframes move {
             0% {
@@ -68,18 +71,23 @@
         }
 
         #searchContainer {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
             max-width: 100%;
             width: 100%;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
             backdrop-filter: blur(10px);
-            border: 1px solid rgb(255, 255, 255);
+            border: 1px solid rgb(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
+        }
+
+        #searchContainer:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
         }
 
         .input-container {
@@ -88,31 +96,32 @@
             margin: 0 auto;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
-            font-size: 1em;
+            padding: 15px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
             color: #333;
-            padding-right: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+            font-size: 1.2em;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         input[type="text"]:focus {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #e426f9;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .clear-button {
             position: absolute;
             right: 10px;
-            top: 35%;
-            transform: translateY(-50%);
+            top: -18%;
             background: none;
             border: none;
             color: #999;
@@ -120,19 +129,48 @@
             font-size: 1.2em;
         }
 
+        .clear-button:hover {
+            color: #ea7a7a;
+        }
+
+        .clear-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
         button {
-            padding: 10px 20px;
-            background-color: #ea7a7a;
+            padding: 12px 24px;
+            background-color: #ef8f8f;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            margin-top: 15px;
         }
 
         button:hover {
-            background-color: #f7f3ee;
+            background-color: #ef8f8f;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (min-width: 600px) {
+            #searchContainer {
+                padding: 40px;
+                max-width: 600px;
+            }
+
+            input[type="text"] {
+                font-size: 1.3em;
+            }
+
+            button {
+                font-size: 1.3em;
+            }
         }
 
         #results {
@@ -144,53 +182,157 @@
         .formula-container {
             display: flex;
             flex-direction: column;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.25), rgba(253, 187, 45, 0.15));
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
 
         .formula-container:hover {
-            transform: translateY(-5px);
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(34, 193, 195, 0.35), rgba(253, 187, 45, 0.25));
         }
 
         .formula {
-            font-size: 1em;
+            font-size: 1.4em;
             color: #050505;
             margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
         }
 
         .definition {
-            color: #edefe1;
-            font-weight: bold;
-            text-align: justify;
-            font-size: 0.9em;
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1em;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .formula-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, transparent 70%);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .formula-container:hover::before {
+            transform: scale(1.2);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 10%, transparent 70%);
         }
 
         .calculator {
-            margin-top: 10px;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            width: 300px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .calculator:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
         }
 
         .calculator input {
-            margin-bottom: 5px;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
-            font-size: 1em;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 0.9em;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
+        }
+
+        .calculator input:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #e426f9;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
         .calculator button {
-            padding: 5px;
-            background-color: #473757;
-            color: white;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgb(196, 38, 156) 0%, #f67fae 100%);
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .calculator button:hover {
+            background: linear-gradient(135deg, #d584be 0%, #f0addd 100%);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator button:active {
+            transform: scale(0.98) translateY(2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator button:focus {
+            outline: 2px solid #e426f9;
+            outline-offset: 2px;
+        }
+
+        .calculator-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 1em;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .calculator {
+                padding: 1em;
+                width: 90%;
+            }
+
+            .calculator input {
+                font-size: 0.8em;
+            }
+
+            .calculator button {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .calculator-title {
+                font-size: 1.2em;
+            }
         }
 
         .no-results {
@@ -229,33 +371,51 @@
 
         .home-button {
             display: inline-block;
-            padding: 8px 15px;
-            font-size: 18px;
-            font-weight: normal;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
             text-align: center;
             color: white;
             background: linear-gradient(45deg, #007bff, #00d4ff);
             border: none;
-            border-radius: 8px;
+            border-radius: 25px;
             cursor: pointer;
             text-decoration: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.4s ease-in-out;
             transform: scale(1);
             position: absolute;
-            bottom: 180px;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
         }
 
         .home-button:hover {
             background: linear-gradient(45deg, #0056b3, #00aaff);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            transform: scale(1.1);
+            transform: translateX(-50%) scale(1.1);
         }
 
         .home-button:active {
             background: linear-gradient(45deg, #004494, #0099e0);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transform: scale(1);
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                padding: 8px 16px;
+                font-size: 14px;
+                bottom: 20em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-button {
+                padding: 6px 12px;
+                font-size: 12px;
+                bottom: 15em;
+            }
         }
     </style>
 </head>
@@ -317,7 +477,7 @@
                 formula: "Genotype frequency of homozygous recessive = Total no. of homozygous recessive individual / Total no. of all individuals in a population",
                 definition: "(Force = Mass × Acceleration)",
                 variables: ["Total no. of homozygous recessive individual",
-                "Total no. of all individuals in a population"]
+                    "Total no. of all individuals in a population"]
             },
             "genotype frequency of heterozygous": {
                 formula: "Genotype frequency of heterozygous = Total no. of heterozygous individual / Total no. of all individuals in a population",
@@ -452,7 +612,7 @@
             } else if (formulaData.formula === "Recessive phenotype frequency = Total no. of recessive phenotype / Total no. of individuals") {
                 result = variables[0] / variables[1];
             }
-            
+
             if (typeof result === 'object' && Object.keys(result).length > 0) {
                 let resultText = "Results:\n";
                 for (const [key, value] of Object.entries(result)) {
@@ -474,7 +634,7 @@
                 alert(result || "Could not calculate - check inputs");
             }
         }
-        
+
         function clearInput() {
             document.getElementById('searchInput').value = '';
             document.getElementById('results').innerHTML = '';
