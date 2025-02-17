@@ -7,34 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mathematics Formula Search</title>
     <style>
-        /* Add this scroll behavior section */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Prevents content from being hidden behind the virtual keyboard on mobile */
-        @media (max-width: 600px) {
-            html {
-                /* Fallback for browsers that don't support viewport-fit */
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-
-            /* Adjust content position when keyboard is active */
-            body {
-                padding-bottom: env(safe-area-inset-bottom);
-                margin-bottom: -env(safe-area-inset-bottom);
-            }
-        }
-
-        /* Handle touch scrolling */
-        body {
-            touch-action: pan-y;
-        }
-
-        body:active {
-            cursor: pointer;
-        }
-
         body,
         h1,
         p,
@@ -685,24 +657,6 @@
                 }
             });
         }
-
-        // Add this scroll behavior script at the end of your body
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Handle touch scrolling
-        document.addEventListener('touchmove', function (e) {
-            if (e.targetTouches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
     </script>
 </body>
 
