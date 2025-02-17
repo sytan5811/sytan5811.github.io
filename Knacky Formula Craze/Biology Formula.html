@@ -456,13 +456,25 @@
             if (typeof result === 'object' && Object.keys(result).length > 0) {
                 let resultText = "Results:\n";
                 for (const [key, value] of Object.entries(result)) {
-                    resultText += `${key}: ${value.toFixed(2)}\n`;
+                    if (typeof value === 'number') {
+                        if (Math.abs(value) >= 1e6 || (Math.abs(value) > 0 && Math.abs(value) < 1e-6)) {
+                            let exponent = Math.floor(Math.log10(Math.abs(value)));
+                            let mantissa = value / Math.pow(10, exponent);
+                            mantissa = Math.round(mantissa * 100) / 100; // round to 2 decimals
+                            resultText += `${key}: ${mantissa}x10^${exponent}\n`;
+                        } else {
+                            resultText += `${key}: ${value.toFixed(2)}\n`;
+                        }
+                    } else {
+                        resultText += `${key}: ${value}\n`;
+                    }
                 }
                 alert(resultText);
             } else {
                 alert(result || "Could not calculate - check inputs");
             }
         }
+        
         function clearInput() {
             document.getElementById('searchInput').value = '';
             document.getElementById('results').innerHTML = '';
