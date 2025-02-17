@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biology Formula Search</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body,
         h1,
         p,
@@ -27,7 +31,7 @@
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
             background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -83,7 +87,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgb(255, 255, 255, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: auto;
         }
 
         #searchContainer:hover {
