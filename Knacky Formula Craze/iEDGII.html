@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
             scroll-behavior: smooth;
         }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
         body {
             font-family: 'Arial', sans-serif;
@@ -34,12 +35,12 @@
             background: none;
             color: white;
             text-shadow:
-            0 0 2px black,
-            0 0 5px black,
-            1px 1px 0 black,
-            -1px -1px 0 black,
-            1px -1px 0 black,
-            -1px 1px 0 black;
+                0 0 2px black,
+                0 0 5px black,
+                1px 1px 0 black,
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black;
         }
 
         .title h1 {
@@ -55,26 +56,29 @@
             color: #ffffff;
             font-style: italic;
             text-shadow:
-            0 0 2px black,
-            0 0 5px black,
-            1px 1px 0 black,
-            -1px -1px 0 black,
-            1px -1px 0 black,
-            -1px 1px 0 black;
+                0 0 2px black,
+                0 0 5px black,
+                1px 1px 0 black,
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black;
         }
 
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
             .title h1 {
                 font-size: 3rem;
             }
+
             .creator {
                 font-size: 1.2rem;
             }
         }
-@media (max-width: 480px) {
+
+        @media (max-width: 480px) {
             .title h1 {
                 font-size: 2rem;
             }
+
             .creator {
                 font-size: 1rem;
             }
@@ -82,23 +86,27 @@
 
         .container {
             display: flex;
-            gap: 50px;
+            gap: 20px;
             position: relative;
             z-index: 1;
             flex-wrap: nowrap;
             justify-content: center;
             flex-direction: row;
             margin-bottom: 50px;
+            padding: 0 20px;
         }
-@media (max-width: 768px) {
+
+        @media (max-width: 768px) {
             .container {
                 flex-wrap: wrap;
                 justify-content: center;
+                padding: 0 10px;
+                margin: 0 auto;
             }
         }
 
         .box {
-            width: 250px;
+            width: 300px;
             height: 350px;
             border-radius: 15px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -119,6 +127,7 @@
             justify-content: center;
             margin: 20px;
         }
+
         .box::before {
             content: '';
             position: absolute;
@@ -130,21 +139,25 @@
             transform: rotate(45deg);
             transition: 0.6s;
         }
+
         .box:hover {
             transform: scale(1.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
+
         .box:hover::before {
             top: -20%;
         }
+
         .box h2 {
             margin: 0;
-            padding-top: 120px;
+            padding-top: 100px;
             z-index: 2;
             font-size: 36px;
             font-weight: bold;
             text-transform: uppercase;
         }
+
         .box .details {
             position: absolute;
             bottom: 30px;
@@ -155,6 +168,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
         }
+
         .box:hover .details {
             opacity: 1;
         }
@@ -163,12 +177,19 @@
             background: url('https://sytan5811.github.io/Images/Physics%20Use.jpg') no-repeat center center;
             background-size: cover;
         }
+
         .biology {
             background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center;
             background-size: cover;
         }
+
         .chemistry {
             background: url('https://sytan5811.github.io/Images/Chemistry%20Used.webp') no-repeat center center;
+            background-size: cover;
+        }
+
+        .mathematics {
+            background: url('https://images.unsplash.com/photo-1509474520651-0e0c78d60c21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
             background-size: cover;
         }
 
@@ -180,6 +201,7 @@
             left: 0;
             z-index: -1;
         }
+
         .circle {
             position: absolute;
             width: 200px;
@@ -188,63 +210,77 @@
             border-radius: 50%;
             animation: float 8s ease-in-out infinite;
         }
+
         .circle:nth-child(1) {
             top: 10%;
             left: 20%;
             animation-duration: 7s;
         }
+
         .circle:nth-child(2) {
             top: 70%;
             left: 50%;
             animation-duration: 10s;
         }
+
         .circle:nth-child(3) {
             top: 40%;
             left: 80%;
             animation-duration: 12s;
         }
-@keyframes float {
+
+        @keyframes float {
             0% {
                 transform: translateY(0) translateX(0);
             }
+
             50% {
                 transform: translateY(-30px) translateX(30px);
             }
+
             100% {
                 transform: translateY(0) translateX(0);
             }
         }
+
         a {
             text-decoration: none;
         }
-@media (max-width: 768px) {
+
+        @media (max-width: 768px) {
             .box {
-                width: 200px;
-                height: 300px;
+                width: 250px;
+                height: 350px;
                 font-size: 20px;
             }
+
             .box h2 {
                 font-size: 28px;
             }
+
             .box .details {
                 font-size: 14px;
             }
         }
-@media (max-width: 480px) {
+
+        @media (max-width: 480px) {
             .box {
-                width: 180px;
-                height: 250px;
+                width: 220px;
+                height: 350px;
                 font-size: 18px;
             }
+
             .box h2 {
                 font-size: 24px;
             }
+
             .box .details {
                 font-size: 12px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="floating-circles">
         <div class="circle"></div>
@@ -280,6 +316,13 @@
                 Uncover the secrets of chemical reactions!
             </div>
         </a>
+        <a href="Mathematics Formula.html" class="box mathematics">
+            <h2>Mathematics</h2>
+            <div class="details">
+                Uncover the secrets of mathematical formulas!
+            </div>
+        </a>
     </div>
 </body>
+
 </html>
