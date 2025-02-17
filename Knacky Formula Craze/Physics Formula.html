@@ -51,6 +51,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Formula Search</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+      
         body,
         h1,
         p,
@@ -71,7 +75,7 @@
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
             background-image: url('https://sytan5811.github.io/Images/Physics%20Used.jpg');
             background-size: cover;
@@ -135,7 +139,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: auto;
         }
 
         #searchContainer:hover {
@@ -244,7 +248,7 @@
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.3);
             position: relative;
-            overflow: hidden;
+            overflow: auto;
             z-index: 1;
         }
 
