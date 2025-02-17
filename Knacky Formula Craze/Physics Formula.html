@@ -51,6 +51,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Formula Search</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 600px) {
+            html {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            body {
+                padding-bottom: env(safe-area-inset-bottom);
+                margin-bottom: -env(safe-area-inset-bottom);
+            }
+        }
+
+        body {
+            touch-action: pan-y;
+        }
+
+        body:active {
+            cursor: pointer;
+        }
+      
         body,
         h1,
         p,
@@ -2460,6 +2483,21 @@
                 }
             });
         }
+      
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.addEventListener('touchmove', function (e) {
+            if (e.targetTouches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 
