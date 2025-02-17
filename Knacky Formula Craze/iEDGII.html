@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knacky Formula Craze</title>
+    <title>Knacky Formula Craze - Scrollable</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
         body {
@@ -16,17 +18,16 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
             background: url('https://i.pinimg.com/originals/bf/fe/de/bffede1d81ebe6ddb2eb3033dc86ac68.gif') no-repeat center center fixed;
             background-size: cover;
-            overflow: hidden;
             position: relative;
         }
 
         .title {
-            margin-bottom: 30px;
+            margin: 30px 0 10px 0;
             text-align: center;
             font-family: 'Times New Roman', serif;
             font-weight: 700;
@@ -66,23 +67,19 @@
             .title h1 {
                 font-size: 3rem;
             }
-
             .creator {
                 font-size: 1.2rem;
             }
         }
-
 @media (max-width: 480px) {
             .title h1 {
                 font-size: 2rem;
             }
-
             .creator {
                 font-size: 1rem;
             }
         }
 
-        /* Updated container style */
         .container {
             display: flex;
             gap: 50px;
@@ -91,8 +88,8 @@
             flex-wrap: nowrap;
             justify-content: center;
             flex-direction: row;
+            margin-bottom: 50px;
         }
-
 @media (max-width: 768px) {
             .container {
                 flex-wrap: wrap;
@@ -108,7 +105,6 @@
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
             border: 4px solid #fff;
             text-align: center;
             color: #fff;
@@ -121,8 +117,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 20px;
         }
-
         .box::before {
             content: '';
             position: absolute;
@@ -134,16 +130,13 @@
             transform: rotate(45deg);
             transition: 0.6s;
         }
-
         .box:hover {
             transform: scale(1.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
-
         .box:hover::before {
             top: -20%;
         }
-
         .box h2 {
             margin: 0;
             padding-top: 120px;
@@ -152,7 +145,6 @@
             font-weight: bold;
             text-transform: uppercase;
         }
-
         .box .details {
             position: absolute;
             bottom: 30px;
@@ -163,7 +155,6 @@
             opacity: 0;
             transition: opacity 0.5s ease;
         }
-
         .box:hover .details {
             opacity: 1;
         }
@@ -172,12 +163,10 @@
             background: url('https://sytan5811.github.io/Images/Physics%20Use.jpg') no-repeat center center;
             background-size: cover;
         }
-
         .biology {
             background: url('https://img.freepik.com/premium-photo/cellular-differentiation-stem-cell-biology-lab_1266280-3099.jpg') no-repeat center center;
             background-size: cover;
         }
-
         .chemistry {
             background: url('https://sytan5811.github.io/Images/Chemistry%20Used.webp') no-repeat center center;
             background-size: cover;
@@ -191,7 +180,6 @@
             left: 0;
             z-index: -1;
         }
-
         .circle {
             position: absolute;
             width: 200px;
@@ -200,79 +188,64 @@
             border-radius: 50%;
             animation: float 8s ease-in-out infinite;
         }
-
         .circle:nth-child(1) {
             top: 10%;
             left: 20%;
             animation-duration: 7s;
         }
-
         .circle:nth-child(2) {
             top: 70%;
             left: 50%;
             animation-duration: 10s;
         }
-
         .circle:nth-child(3) {
             top: 40%;
             left: 80%;
             animation-duration: 12s;
         }
-
 @keyframes float {
             0% {
                 transform: translateY(0) translateX(0);
             }
-
             50% {
                 transform: translateY(-30px) translateX(30px);
             }
-
             100% {
                 transform: translateY(0) translateX(0);
             }
         }
-
         a {
             text-decoration: none;
         }
-
 @media (max-width: 768px) {
             .box {
                 width: 200px;
                 height: 300px;
                 font-size: 20px;
             }
-
             .box h2 {
                 font-size: 28px;
             }
-
             .box .details {
                 font-size: 14px;
             }
         }
-
 @media (max-width: 480px) {
             .box {
                 width: 180px;
                 height: 250px;
                 font-size: 18px;
             }
-
             .box h2 {
                 font-size: 24px;
             }
-
             .box .details {
                 font-size: 12px;
             }
         }
     </style>
 </head>
-
 <body>
-
     <div class="floating-circles">
         <div class="circle"></div>
         <div class="circle"></div>
@@ -295,14 +268,12 @@
                 Explore the world of forces and energy!
             </div>
         </a>
-
         <a href="Biology Formula.html" class="box biology">
             <h2>Biology</h2>
             <div class="details">
                 Discover the wonders of life and nature!
             </div>
         </a>
-
         <a href="Chemistry Formula.html" class="box chemistry">
             <h2>Chemistry</h2>
             <div class="details">
@@ -310,7 +281,5 @@
             </div>
         </a>
     </div>
-
 </body>
-
 </html>
