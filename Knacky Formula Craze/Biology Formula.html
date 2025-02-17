@@ -452,9 +452,17 @@
             } else if (formulaData.formula === "Recessive phenotype frequency = Total no. of recessive phenotype / Total no. of individuals") {
                 result = variables[0] / variables[1];
             }
-            alert("The result is: " + JSON.stringify(result));
+            
+            if (typeof result === 'object' && Object.keys(result).length > 0) {
+                let resultText = "Results:\n";
+                for (const [key, value] of Object.entries(result)) {
+                    resultText += `${key}: ${value.toFixed(2)}\n`;
+                }
+                alert(resultText);
+            } else {
+                alert(result || "Could not calculate - check inputs");
+            }
         }
-
         function clearInput() {
             document.getElementById('searchInput').value = '';
             document.getElementById('results').innerHTML = '';
