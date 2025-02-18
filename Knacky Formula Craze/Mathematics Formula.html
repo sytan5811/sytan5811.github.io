@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mathematics Formula Search</title>
     <style>
         html {
             scroll-behavior: smooth;
         }
-        
+
         body,
         h1,
         p,
@@ -35,6 +35,125 @@
             position: relative;
             background-image: url('https://sytan5811.github.io/Images/Mathematics%20Used.jpg');
             background-size: cover;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            border-right: 2px solid #f9a826;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h2 {
+            color: #f9a826;
+            margin: 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.5em;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        .clear-history-btn {
+            width: 100%;
+            padding: 10px;
+            background: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .open-sidebar {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1100;
+            background: rgba(249, 168, 38, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .open-sidebar:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: #f9a826;
+            box-shadow: 0 6px 20px rgba(249, 168, 38, 0.3);
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 5px;
+        }
+
+        .close-sidebar:hover {
+            transform: rotate(180deg);
+            color: #f9a826;
         }
 
         .background-animation {
@@ -172,6 +291,10 @@
         }
 
         @media (min-width: 600px) {
+            h1 {
+                font-size: 3em;
+            }
+
             #searchContainer {
                 padding: 40px;
                 max-width: 600px;
@@ -434,6 +557,16 @@
 </head>
 
 <body>
+    <div id="sidebar" class="sidebar">
+        <button id="closeSidebar" class="close-sidebar">×</button>
+        <h2>Recent Searches</h2>
+        <ul id="historyList"></ul>
+        <button id="clearHistory" class="clear-history-btn">Clear All</button>
+        <h2>Favorites</h2>
+        <ul id="favoritesList"></ul>
+    </div>
+    <button id="openSidebar" class="open-sidebar">☰</button>
+
     <a href="iEDGII.html" class="home-button">Home</a>
     <div class="background-animation">
         <div style="top: 10%; left: 20%; animation-duration: 25s;"></div>
@@ -446,7 +579,7 @@
     <div id="searchContainer">
         <div class="input-container">
             <input type="text" id="searchInput" placeholder="Search for a math concept..." list="suggestions"
-                oninput="showSuggestions()">
+                oninput="showSuggestions()" />
             <button class="clear-button" onclick="clearInput()">×</button>
         </div>
         <datalist id="suggestions"></datalist>
@@ -488,12 +621,118 @@
             }
         };
 
+        const openSidebarButton = document.getElementById('openSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebarButton = document.getElementById('closeSidebar');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            openSidebarButton.style.display = sidebar.classList.contains('open') ? 'none' : 'block';
+        }
+
+        openSidebarButton.addEventListener('click', toggleSidebar);
+        closeSidebarButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleSidebar();
+        });
+
+        sidebar.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && event.target !== openSidebarButton && sidebar.classList.contains('open')) {
+                toggleSidebar();
+            }
+        });
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            history.slice().reverse().forEach((entry, idx) => {
+                const originalIndex = history.length - 1 - idx;
+                const li = document.createElement('li');
+                li.className = 'search-history-item';
+                li.innerHTML = `
+          <span title="${new Date(entry.timestamp).toLocaleString()}">${entry.query}</span>
+          <button class="delete-btn" data-index="${originalIndex}">×</button>
+        `;
+                li.onclick = function (e) {
+                    if (e.target.classList.contains('delete-btn')) return;
+                    document.getElementById('searchInput').value = entry.query;
+                    searchFormula();
+                    sidebar.classList.remove('open');
+                    openSidebarButton.style.display = 'block';
+                };
+                historyList.appendChild(li);
+            });
+        }
+
+        document.getElementById('historyList').addEventListener('click', function (e) {
+            if (e.target.classList.contains('delete-btn')) {
+                e.stopPropagation();
+                let index = e.target.getAttribute('data-index');
+                let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+                history.splice(index, 1);
+                localStorage.setItem('searchHistory', JSON.stringify(history));
+                loadHistory();
+            }
+        });
+
+        function addToHistory(query) {
+            if (!query.trim()) return;
+            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            if (history.find(entry => entry.query === query.trim())) return;
+            history.push({ query: query.trim(), timestamp: Date.now() });
+            if (history.length > 5) history.shift();
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            loadHistory();
+        }
+
+        document.getElementById('clearHistory').addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            loadHistory();
+        });
+
+        function loadFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favoritesList = document.getElementById('favoritesList');
+            favoritesList.innerHTML = '';
+            favorites.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.onclick = function () {
+                    document.getElementById('searchInput').value = item;
+                    searchFormula();
+                    sidebar.classList.remove('open');
+                    openSidebarButton.style.display = 'block';
+                };
+                favoritesList.appendChild(li);
+            });
+        }
+
+        function toggleFavorite(query) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const index = favorites.indexOf(query);
+            if (index === -1) {
+                favorites.push(query);
+                alert("Added to favorites!");
+            } else {
+                favorites.splice(index, 1);
+                alert("Removed from favorites!");
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            loadFavorites();
+        }
+
         function searchFormula() {
             var query = document.getElementById('searchInput').value.toLowerCase();
             var results = document.getElementById('results');
             results.innerHTML = '';
 
             if (formulas[query]) {
+                addToHistory(query);
                 var formulaData = formulas[query];
                 var formulaContainer = document.createElement('div');
                 formulaContainer.className = 'formula-container';
@@ -509,14 +748,27 @@
                 definitionDiv.className = 'definition';
                 definitionDiv.textContent = formulaData.definition;
 
+                var favoriteButton = document.createElement('button');
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                favoriteButton.textContent = favorites.includes(query) ? "★ Unfavorite" : "☆ Favorite";
+                favoriteButton.style.marginTop = "10px";
+                favoriteButton.onclick = function (event) {
+                    event.stopPropagation();
+                    toggleFavorite(query);
+                    const updatedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                    favoriteButton.textContent = updatedFavorites.includes(query) ? "★ Unfavorite" : "☆ Favorite";
+                };
+
                 formulaContainer.appendChild(formulaDiv);
                 formulaContainer.appendChild(definitionDiv);
+                formulaContainer.appendChild(favoriteButton);
                 results.appendChild(formulaContainer);
             } else {
                 var noResults = document.createElement('div');
                 noResults.className = 'no-results';
                 noResults.textContent = 'No matching formula found.';
                 results.appendChild(noResults);
+                addToHistory(query);
             }
         }
 
@@ -569,6 +821,7 @@
             formulaContainer.appendChild(calculatorDiv);
             results.appendChild(formulaContainer);
         }
+
         function calculateResult(formulaData) {
             var inputs = {};
             formulaData.variables.forEach(variable => {
@@ -672,6 +925,9 @@
                 }
             });
         }
+
+        loadHistory();
+        loadFavorites();
     </script>
 </body>
 
