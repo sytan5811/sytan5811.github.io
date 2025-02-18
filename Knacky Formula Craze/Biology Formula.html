@@ -669,7 +669,7 @@
         });
 
         function loadHistory() {
-            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const history = JSON.parse(localStorage.getItem(historyKey)) || [];
             const historyList = document.getElementById('historyList');
             historyList.innerHTML = '';
             history.slice().reverse().forEach((entry, idx) => {
@@ -695,30 +695,30 @@
             if (e.target.classList.contains('delete-btn')) {
                 e.stopPropagation();
                 let index = e.target.getAttribute('data-index');
-                let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+                let history = JSON.parse(localStorage.getItem(historyKey)) || [];
                 history.splice(index, 1);
-                localStorage.setItem('searchHistory', JSON.stringify(history));
+                localStorage.setItem(historyKey, JSON.stringify(history));
                 loadHistory();
             }
         });
 
         function addToHistory(query) {
             if (!query.trim()) return;
-            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            let history = JSON.parse(localStorage.getItem(historyKey)) || [];
             if (history.find(entry => entry.query === query.trim())) return;
             history.push({ query: query.trim(), timestamp: Date.now() });
             if (history.length > 5) history.shift();
-            localStorage.setItem('searchHistory', JSON.stringify(history));
+            localStorage.setItem(historyKey, JSON.stringify(history));
             loadHistory();
         }
 
         document.getElementById('clearHistory').addEventListener('click', () => {
-            localStorage.removeItem('searchHistory');
+            localStorage.removeItem(historyKey);
             loadHistory();
         });
 
         function loadFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favoritesList = document.getElementById('favoritesList');
             favoritesList.innerHTML = '';
             favorites.forEach(item => {
@@ -735,7 +735,7 @@
         }
 
         function toggleFavorite(query) {
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const index = favorites.indexOf(query);
             if (index === -1) {
                 favorites.push(query);
@@ -744,7 +744,7 @@
                 favorites.splice(index, 1);
                 alert("Removed from favorites!");
             }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+            localStorage.setItem(favoritesKey, JSON.stringify(favorites));
             loadFavorites();
         }
 
@@ -771,13 +771,13 @@
                 definitionDiv.textContent = formulaData.definition;
 
                 var favoriteButton = document.createElement('button');
-                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
                 favoriteButton.textContent = favorites.includes(query) ? "★ Unfavorite" : "☆ Favorite";
                 favoriteButton.style.marginTop = "10px";
                 favoriteButton.onclick = function (event) {
                     event.stopPropagation();
                     toggleFavorite(query);
-                    const updatedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                    const updatedFavorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
                     favoriteButton.textContent = updatedFavorites.includes(query) ? "★ Unfavorite" : "☆ Favorite";
                 };
 
