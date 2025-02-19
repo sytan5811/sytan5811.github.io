@@ -916,6 +916,8 @@
                     }
                 }
                 alert(resultText);
+            } else if (typeof result === 'number') {
+                alert(result.toFixed(2));
             } else {
                 alert(result || "Could not calculate - check inputs");
             }
