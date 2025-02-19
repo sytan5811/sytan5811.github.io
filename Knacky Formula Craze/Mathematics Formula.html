@@ -591,48 +591,178 @@
         const pageIdentifier = 'mathematics';
         const historyKey = `${pageIdentifier}_searchHistory`;
         const favoritesKey = `${pageIdentifier}_favorites`;
-        
+
         const formulas = {
             "quadratic equation": {
                 formula: "ax² + bx + c = 0",
-                definition: "Roots: x = [-b ± √(b² - 4ac)]/(2a)",
+                definition: "Standard form of a quadratic equation. Solutions: x = [-b ± √(b² - 4ac)]/(2a)",
                 variables: ["a",
                     "b",
                     "c"]
             },
             "pythagorean theorem": {
                 formula: "a² + b² = c²",
-                definition: "For right-angled triangles",
+                definition: "For right-angled triangles, relates the sides of the triangle",
                 variables: ["a",
                     "b",
                     "c"]
             },
             "area of circle": {
                 formula: "A = πr²",
-                definition: "Area = Pi × radius squared",
+                definition: "Area of a circle with radius r",
                 variables: ["A",
                     "r"]
+            },
+            "circumference of circle": {
+                formula: "C = 2πr",
+                definition: "The circle's circumference (perimeter)",
+                variables: ["C",
+                    "r"]
+            },
+            "area of rectangle": {
+                formula: "A = l × w",
+                definition: "Area of a rectangle",
+                variables: ["A",
+                    "l (length)",
+                    "w (width)"]
+            },
+            "perimeter of rectangle": {
+                formula: "P = 2(l + w)",
+                definition: "Perimeter of a rectangle",
+                variables: ["P",
+                    "l (length)",
+                    "w (width)"]
+            },
+            "area of triangle": {
+                formula: "A = ½bh",
+                definition: "Area of a triangle",
+                variables: ["A",
+                    "b (base)",
+                    "h (height)"]
+            },
+            "perimeter of triangle": {
+                formula: "P = a + b + c",
+                definition: "Sum of the sides of the triangle",
+                variables: ["P",
+                    "a",
+                    "b",
+                    "c"]
+            },
+            "area of parallelogram": {
+                formula: "A = b × h",
+                definition: "Area of a parallelogram",
+                variables: ["A",
+                    "b (base)",
+                    "h (height)"]
+            },
+            "area of trapezoid": {
+                formula: "A = ½(a + b)h",
+                definition: "Area of a trapezoid",
+                variables: ["A",
+                    "a (parallel side 1)",
+                    "b (parallel side 2)",
+                    "h (height)"]
+            },
+            "volume of rectangular prism": {
+                formula: "V = l × w × h",
+                definition: "Volume of a rectangular prism",
+                variables: ["V",
+                    "l (length)",
+                    "w (width)",
+                    "h (height)"]
+            },
+            "volume of cube": {
+                formula: "V = a³",
+                definition: "Volume of a cube",
+                variables: ["V",
+                    "a (side length)"]
+            },
+            "surface area of cube": {
+                formula: "SA = 6a²",
+                definition: "Surface area of a cube",
+                variables: ["SA",
+                    "a (side length)"]
+            },
+            "volume of cylinder": {
+                formula: "V = πr²h",
+                definition: "Volume of a cylinder",
+                variables: ["V",
+                    "r (radius)",
+                    "h (height)"]
+            },
+            "volume of cone": {
+                formula: "V = (1/3)πr²h",
+                definition: "Volume of a cone",
+                variables: ["V",
+                    "r (radius)",
+                    "h (height)"]
             },
             "volume of sphere": {
                 formula: "V = (4/3)πr³",
                 definition: "Volume of a sphere",
                 variables: ["V",
-                    "r"]
+                    "r (radius)"]
             },
-            "slope intercept": {
-                formula: "y = mx + b",
-                definition: "Equation of a straight line",
-                variables: ["m",
-                    "b",
-                    "x",
-                    "y"]
+            "area of ellipse": {
+                formula: "A = πab",
+                definition: "Area of an ellipse",
+                variables: ["A",
+                    "a (semi-major axis)",
+                    "b (semi-minor axis)"]
             },
-            "quadratic formula": {
-                formula: "x = [-b ± √(b² - 4ac)]/(2a)",
-                definition: "Solutions to ax² + bx + c = 0",
-                variables: ["a",
-                    "b",
-                    "c"]
+            "distance formula": {
+                formula: "d = √[(x₂ - x₁)² + (y₂ - y₁)²]",
+                definition: "Distance between two points in the Cartesian plane",
+                variables: ["d",
+                    "x₁",
+                    "x₂",
+                    "y₁",
+                    "y₂"]
+            },
+            "midpoint formula": {
+                formula: "M = ((x₁ + x₂)/2, (y₁ + y₂)/2)",
+                definition: "Midpoint between two points",
+                variables: ["x₁",
+                    "x₂",
+                    "y₁",
+                    "y₂"]
+            },
+            "density formula": {
+                formula: "Density = mass / volume",
+                definition: "Density is mass per unit volume",
+                variables: ["density",
+                    "mass",
+                    "volume"]
+            },
+            "speed formula": {
+                formula: "Speed = Distance / Time",
+                definition: "Speed as the rate of change of distance over time",
+                variables: ["speed",
+                    "Distance",
+                    "Time"]
+            },
+            "acceleration formula": {
+                formula: "Acceleration = ΔVelocity / Time",
+                definition: "Change in velocity per unit time",
+                variables: ["acceleration",
+                    "ΔVelocity",
+                    "Time"]
+            },
+            "simple interest": {
+                formula: "SI = (P × R × T) / 100",
+                definition: "Calculates simple interest",
+                variables: ["SI",
+                    "P (Principal)",
+                    "R (Rate of interest)",
+                    "T (Time in years)"]
+            },
+            "compound interest (annually)": {
+                formula: "CI = P × (1 + R/100)^T - P",
+                definition: "Calculates compound interest compounded annually",
+                variables: ["CI",
+                    "P (Principal)",
+                    "R (Rate of interest)",
+                    "T (Time in years)"]
             }
         };
 
@@ -838,66 +968,347 @@
         }
 
         function calculateResult(formulaData) {
-            var inputs = {};
-            formulaData.variables.forEach(variable => {
-                inputs[variable] = parseFloat(document.getElementById(variable).value);
-            });
+            var values = formulaData.variables.map(variable => parseFloat(document.getElementById(variable).value));
+            var result = {};
 
-            let result = {};
-            switch (formulaData.formula) {
-                case "ax² + bx + c = 0":
-                case "x = [-b ± √(b² - 4ac)]/(2a)":
-                    const a = inputs.a;
-                    const b = inputs.b;
-                    const c = inputs.c;
-                    if (a !== 0) {
-                        const discriminant = b * b - 4 * a * c;
-                        if (discriminant >= 0) {
-                            result.root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-                            result.root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            if (formulaData.formula === "ax² + bx + c = 0" || formulaData.formula === "x = [-b ± √(b² - 4ac)]/(2a)") {
+                const a = values[0];
+                const b = values[1];
+                const c = values[2];
+
+                if (a === 0) {
+                    result.error = "Coefficient 'a' cannot be zero.";
+                } else {
+                    const discriminant = b * b - 4 * a * c;
+                    if (discriminant < 0) {
+                        result.error = "Complex roots.";
+                    } else {
+                        const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                        const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                        result.root1 = root1.toFixed(2);
+                        result.root2 = root2.toFixed(2);
+                    }
+                }
+            } else if (formulaData.formula === "a² + b² = c²") {
+                const a = values[0];
+                const b = values[1];
+                const c = values[2];
+
+                if (isNaN(c)) {
+                    result.c = Math.sqrt(a * a + b * b);
+                } else if (isNaN(a)) {
+                    result.a = Math.sqrt(c * c - b * b);
+                } else if (isNaN(b)) {
+                    result.b = Math.sqrt(c * c - a * a);
+                }
+            } else if (formulaData.formula === "A = πr²") {
+                const A = values[0];
+                const r = values[1];
+
+                if (isNaN(A)) {
+                    result.A = Math.PI * Math.pow(r, 2);
+                } else if (isNaN(r)) {
+                    result.r = Math.sqrt(A / Math.PI);
+                }
+            } else if (formulaData.formula === "C = 2πr") {
+                const C = values[0];
+                const r = values[1];
+
+                if (isNaN(C)) {
+                    result.C = 2 * Math.PI * r;
+                } else if (isNaN(r)) {
+                    result.r = C / (2 * Math.PI);
+                }
+            } else if (formulaData.formula === "A = l × w") {
+                const A = values[0];
+                const l = values[1];
+                const w = values[2];
+
+                if (isNaN(A)) {
+                    result.A = l * w;
+                } else if (isNaN(l)) {
+                    result.l = A / w;
+                } else if (isNaN(w)) {
+                    result.w = A / l;
+                }
+            } else if (formulaData.formula === "P = 2(l + w)") {
+                const P = values[0];
+                const l = values[1];
+                const w = values[2];
+
+                if (isNaN(P)) {
+                    result.P = 2 * (l + w);
+                } else if (isNaN(l)) {
+                    result.l = (P / 2) - w;
+                } else if (isNaN(w)) {
+                    result.w = (P / 2) - l;
+                }
+            } else if (formulaData.formula === "A = ½bh") {
+                const A = values[0];
+                const b = values[1];
+                const h = values[2];
+
+                if (isNaN(A)) {
+                    result.A = 0.5 * b * h;
+                } else if (isNaN(b)) {
+                    result.b = (2 * A) / h;
+                } else if (isNaN(h)) {
+                    result.h = (2 * A) / b;
+                }
+            } else if (formulaData.formula === "P = a + b + c") {
+                const P = values[0];
+                const a = values[1];
+                const b = values[2];
+                const c = values[3];
+
+                if (isNaN(P)) {
+                    result.P = a + b + c;
+                } else if (isNaN(a)) {
+                    result.a = P - b - c;
+                } else if (isNaN(b)) {
+                    result.b = P - a - c;
+                } else if (isNaN(c)) {
+                    result.c = P - a - b;
+                }
+            } else if (formulaData.formula === "A = b × h") {
+                const A = values[0];
+                const b = values[1];
+                const h = values[2];
+
+                if (isNaN(A)) {
+                    result.A = b * h;
+                } else if (isNaN(b)) {
+                    result.b = A / h;
+                } else if (isNaN(h)) {
+                    result.h = A / b;
+                }
+            } else if (formulaData.formula === "A = ½(a + b)h") {
+                const A = values[0];
+                const a = values[1];
+                const b = values[2];
+                const h = values[3];
+
+                if (isNaN(A)) {
+                    result.A = 0.5 * (a + b) * h;
+                } else if (isNaN(a)) {
+                    result.a = (2 * A / h) - b;
+                } else if (isNaN(b)) {
+                    result.b = (2 * A / h) - a;
+                } else if (isNaN(h)) {
+                    result.h = (2 * A) / (a + b);
+                }
+            } else if (formulaData.formula === "V = l × w × h") {
+                const V = values[0];
+                const l = values[1];
+                const w = values[2];
+                const h = values[3];
+
+                if (isNaN(V)) {
+                    result.V = l * w * h;
+                } else if (isNaN(l)) {
+                    result.l = V / (w * h);
+                } else if (isNaN(w)) {
+                    result.w = V / (l * h);
+                } else if (isNaN(h)) {
+                    result.h = V / (l * w);
+                }
+            } else if (formulaData.formula === "V = a³") {
+                const V = values[0];
+                const a = values[1];
+
+                if (isNaN(V)) {
+                    result.V = Math.pow(a, 3);
+                } else if (isNaN(a)) {
+                    result.a = Math.cbrt(V);
+                }
+            } else if (formulaData.formula === "SA = 6a²") {
+                const SA = values[0];
+                const a = values[1];
+
+                if (isNaN(SA)) {
+                    result.SA = 6 * Math.pow(a, 2);
+                } else if (isNaN(a)) {
+                    result.a = Math.sqrt(SA / 6);
+                }
+            } else if (formulaData.formula === "V = πr²h") {
+                const V = values[0];
+                const r = values[1];
+                const h = values[2];
+
+                if (isNaN(V)) {
+                    result.V = Math.PI * Math.pow(r, 2) * h;
+                } else if (isNaN(r)) {
+                    result.r = Math.sqrt(V / (Math.PI * h));
+                } else if (isNaN(h)) {
+                    result.h = V / (Math.PI * Math.pow(r, 2));
+                }
+            } else if (formulaData.formula === "V = (1/3)πr²h") {
+                const V = values[0];
+                const r = values[1];
+                const h = values[2];
+
+                if (isNaN(V)) {
+                    result.V = (1 / 3) * Math.PI * Math.pow(r, 2) * h;
+                } else if (isNaN(r)) {
+                    result.r = Math.sqrt((3 * V) / (Math.PI * h));
+                } else if (isNaN(h)) {
+                    result.h = (3 * V) / (Math.PI * Math.pow(r, 2));
+                }
+            } else if (formulaData.formula === "V = (4/3)πr³") {
+                const V = values[0];
+                const r = values[1];
+
+                if (isNaN(V)) {
+                    result.V = (4 / 3) * Math.PI * Math.pow(r, 3);
+                } else if (isNaN(r)) {
+                    result.r = Math.cbrt((3 * V) / (4 * Math.PI));
+                }
+            } else if (formulaData.formula === "A = πab") {
+                const A = values[0];
+                const a = values[1];
+                const b = values[2];
+
+                if (isNaN(A)) {
+                    result.A = Math.PI * a * b;
+                } else if (isNaN(a)) {
+                    result.a = A / (Math.PI * b);
+                } else if (isNaN(b)) {
+                    result.b = A / (Math.PI * a);
+                }
+            } if (formulaData.formula === "d = √[(x₂ - x₁)² + (y₂ - y₁)²]") {
+                const d = values[0];
+                const x1 = values[1];
+                const x2 = values[2];
+                const y1 = values[3];
+                const y2 = values[4];
+
+                if (isNaN(d)) {
+                    let computed = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                    result.d = parseFloat(computed.toFixed(2));
+                } else if (isNaN(x1)) {
+                    const temp = Math.pow(d, 2) - Math.pow(y2 - y1, 2);
+                    if (temp < 0) {
+                        result.error = "Invalid parameters: negative square value.";
+                    } else {
+                        const delta = Math.sqrt(temp);
+                        result.x1 = [parseFloat((x2 + delta).toFixed(2)), parseFloat((x2 - delta).toFixed(2))];
+                    }
+                } else if (isNaN(x2)) {
+                    const temp = Math.pow(d, 2) - Math.pow(y2 - y1, 2);
+                    if (temp < 0) {
+                        result.error = "Invalid parameters: negative square value.";
+                    } else {
+                        const delta = Math.sqrt(temp);
+                        result.x2 = [parseFloat((x1 + delta).toFixed(2)), parseFloat((x1 - delta).toFixed(2))];
+                    }
+                } else if (isNaN(y1)) {
+                    const temp = Math.pow(d, 2) - Math.pow(x2 - x1, 2);
+                    if (temp < 0) {
+                        result.error = "Invalid parameters: negative square value.";
+                    } else {
+                        const delta = Math.sqrt(temp);
+                        result.y1 = [parseFloat((y2 + delta).toFixed(2)), parseFloat((y2 - delta).toFixed(2))];
+                    }
+                } else if (isNaN(y2)) {
+                    const temp = Math.pow(d, 2) - Math.pow(x2 - x1, 2);
+                    if (temp < 0) {
+                        result.error = "Invalid parameters: negative square value.";
+                    } else {
+                        const delta = Math.sqrt(temp);
+                        result.y2 = [parseFloat((y1 + delta).toFixed(2)), parseFloat((y1 - delta).toFixed(2))];
+                    }
+                }
+            } if (formulaData.formula === "M = ((x₁ + x₂)/2, (y₁ + y₂)/2)") {
+                const x1 = values[0];
+                const x2 = values[1];
+                const y1 = values[2];
+                const y2 = values[3];
+
+                if (!isNaN(x1) && !isNaN(x2) && !isNaN(y1) && !isNaN(y2)) {
+                    result.M = { x: (x1 + x2) / 2, y: (y1 + y2) / 2 };
+                } else {
+                    result.error = "Please provide all coordinates for the midpoint calculation.";
+                }
+            } else if (formulaData.formula === "Density = mass / volume") {
+                const density = values[0];
+                const mass = values[1];
+                const volume = values[2];
+
+                if (isNaN(density)) {
+                    result.density = mass / volume;
+                } else if (isNaN(mass)) {
+                    result.mass = density * volume;
+                } else if (isNaN(volume)) {
+                    result.volume = mass / density;
+                }
+            } else if (formulaData.formula === "Speed = Distance / Time") {
+                const speed = values[0];
+                const Distance = values[1];
+                const Time = values[2];
+
+                if (isNaN(speed)) {
+                    result.speed = Distance / Time;
+                } else if (isNaN(Distance)) {
+                    result.Distance = speed * Time;
+                } else if (isNaN(Time)) {
+                    result.Time = Distance / speed;
+                }
+            } else if (formulaData.formula === "Acceleration = ΔVelocity / Time") {
+                const acceleration = values[0];
+                const dV = values[1];
+                const Time = values[2];
+
+                if (isNaN(acceleration)) {
+                    result.acceleration = dV / Time;
+                } else if (isNaN(dV)) {
+                    result.dV = acceleration * Time;
+                } else if (isNaN(Time)) {
+                    result.Time = dV / acceleration;
+                }
+            } else if (formulaData.formula === "SI = (P × R × T) / 100") {
+                const SI = values[0];
+                const P = values[1];
+                const R = values[2];
+                const T = values[3];
+
+                if (isNaN(SI)) {
+                    result.SI = (P * R * T) / 100;
+                } else if (isNaN(P)) {
+                    result.P = (SI * 100) / (R * T);
+                } else if (isNaN(R)) {
+                    result.R = (SI * 100) / (P * T);
+                } else if (isNaN(T)) {
+                    result.T = (SI * 100) / (P * R);
+                }
+            } else if (formulaData.formula === "CI = P × (1 + R/100)^T - P") {
+                const CI = values[0];
+                const P = values[1];
+                const R = values[2];
+                const T = values[3];
+
+                if (isNaN(CI)) {
+                    if (!isNaN(P) && !isNaN(R) && !isNaN(T)) {
+                        result.CI = P * (Math.pow(1 + R / 100, T) - 1);
+                    }
+                } else if (isNaN(P)) {
+                    if (!isNaN(CI) && !isNaN(R) && !isNaN(T)) {
+                        const denominator = Math.pow(1 + R / 100, T) - 1;
+                        if (denominator !== 0) {
+                            result.P = CI / denominator;
                         } else {
-                            result = "Complex roots";
+                            result.P = NaN;
                         }
                     }
-                    break;
-
-                case "a² + b² = c²":
-                    if (!inputs.c) {
-                        result.c = Math.sqrt(inputs.a ** 2 + inputs.b ** 2);
-                    } else if (!inputs.a) {
-                        result.a = Math.sqrt(inputs.c ** 2 - inputs.b ** 2);
-                    } else if (!inputs.b) {
-                        result.b = Math.sqrt(inputs.c ** 2 - inputs.a ** 2);
+                } else if (isNaN(R)) {
+                    if (!isNaN(CI) && !isNaN(P) && !isNaN(T) && P !== 0 && T !== 0) {
+                        const base = (CI / P) + 1;
+                        result.R = (Math.pow(base, 1 / T) - 1) * 100;
                     }
-                    break;
-
-                case "A = πr²":
-                    if (!inputs.A) {
-                        result.A = Math.PI * inputs.r ** 2;
-                    } else {
-                        result.r = Math.sqrt(inputs.A / Math.PI);
+                } else if (isNaN(T)) {
+                    if (!isNaN(CI) && !isNaN(P) && !isNaN(R) && P !== 0 && (1 + R / 100) > 0 && (1 + R / 100) !== 1) {
+                        result.T = Math.log((CI / P) + 1) / Math.log(1 + R / 100);
                     }
-                    break;
-
-                case "V = (4/3)πr³":
-                    if (!inputs.V) {
-                        result.V = (4 / 3) * Math.PI * inputs.r ** 3;
-                    } else {
-                        result.r = Math.cbrt((3 * inputs.V) / (4 * Math.PI));
-                    }
-                    break;
-
-                case "y = mx + b":
-                    if (!inputs.y) {
-                        result.y = inputs.m * inputs.x + inputs.b;
-                    } else if (!inputs.m) {
-                        result.m = (inputs.y - inputs.b) / inputs.x;
-                    } else if (!inputs.b) {
-                        result.b = inputs.y - inputs.m * inputs.x;
-                    } else if (!inputs.x) {
-                        result.x = (inputs.y - inputs.b) / inputs.m;
-                    }
-                    break;
+                }
             }
 
             if (typeof result === 'object' && Object.keys(result).length > 0) {
@@ -912,6 +1323,8 @@
                         } else {
                             resultText += `${key}: ${value.toFixed(2)}\n`;
                         }
+                    } else if (typeof value === 'object') {
+                        resultText += `${key}: ${JSON.stringify(value)}\n`;
                     } else {
                         resultText += `${key}: ${value}\n`;
                     }
