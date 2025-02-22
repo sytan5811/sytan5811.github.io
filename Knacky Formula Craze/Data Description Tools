@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Statistics Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #8b5cf6;
+            --background: #f8fafc;
+            --text: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .data-type-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            background: #e0e7ff;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        /* Ungrouped section frequency toggle only for ungrouped */
+        #ungroupedSection .toggle-frequency {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        #ungroupedSection .toggle-frequency input {
+            margin-left: 0.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .data-table input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .data-table input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .data-table .delete-btn {
+            background: transparent;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .percentile-input {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .percentile-input input {
+            padding: 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            width: 150px;
+            margin-left: 0.5rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .percentile-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: #c7d2fe;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        #boxPlotCanvas {
+            display: block;
+            margin: 20px auto;
+            background: white;
+            border: 1px solid #ccc;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Statistics Master</h1>
+            <div class="data-type-tabs">
+                <button class="tab-btn active" onclick="toggleDataType('ungrouped')">
+                    <i class="fas fa-list-ol"></i> Ungrouped Data
+                </button>
+                <button class="tab-btn" onclick="toggleDataType('grouped')">
+                    <i class="fas fa-chart-bar"></i> Grouped Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Ungrouped Data Section -->
+        <div class="input-section" id="ungroupedSection">
+            <div class="toggle-frequency">
+                <label>
+                    <input type="checkbox" id="toggleFrequency" checked onchange="toggleFrequency()" />
+                    Use Frequency
+                </label>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Data Point</th>
+                        <th class="frequency-col">Frequency</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ungroupedTableBody">
+                    <tr>
+                        <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+                        <td class="frequency-col"><input type="number" step="1" placeholder="Frequency"
+                                class="data-frequency" value="1" /></td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="percentile-input">
+                <label for="percentile">Percentile (0-100):</label>
+                <input type="number" id="percentile" step="any" placeholder="e.g., 6" />
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="addUngroupedRow()"><i class="fas fa-plus"></i> Add Row</button>
+                <!-- Updated: using calculateUngroupedStats() -->
+                <button class="btn btn-secondary" onclick="calculateUngroupedStats()"><i class="fas fa-calculator"></i>
+                    Calculate</button>
+                <button class="btn btn-secondary" onclick="clearUngroupedData()"><i class="fas fa-trash"></i> Clear
+                    Data</button>
+            </div>
+        </div>
+
+        <!-- Grouped Data Section -->
+        <div class="input-section" id="groupedSection" style="display: none;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Lower Bound</th>
+                        <th>Upper Bound</th>
+                        <th>Frequency</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="groupedTableBody">
+                    <tr>
+                        <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+                        <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+                        <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Grouped percentile input -->
+            <div class="percentile-input">
+                <label for="groupedPercentile">Percentile (0-100):</label>
+                <input type="number" id="groupedPercentile" step="any" placeholder="e.g., 6" />
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="addGroupedRow()"><i class="fas fa-plus"></i> Add Row</button>
+                <!-- Updated: Do not draw box plot for grouped data -->
+                <button class="btn btn-secondary" onclick="calculateGroupedStats()"><i class="fas fa-calculator"></i>
+                    Calculate</button>
+                <button class="btn btn-secondary" onclick="clearGroupedData()"><i class="fas fa-trash"></i> Clear
+                    Data</button>
+            </div>
+        </div>
+
+        <!-- Results and Box Plot -->
+        <div class="results-grid" id="resultsGrid"></div>
+        <canvas id="boxPlotCanvas" width="600" height="150"></canvas>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // --- Utility Functions ---
+        function toggleDataType(type) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.input-section').forEach(section => section.style.display = 'none');
+            document.getElementById(type + "Section").style.display = 'block';
+            document.querySelector(`button[onclick="toggleDataType('${type}')"]`).classList.add('active');
+        }
+        // Toggle frequency only in ungrouped section
+        function toggleFrequency() {
+            const useFreq = document.getElementById('toggleFrequency').checked;
+            document.querySelectorAll('#ungroupedSection .frequency-col').forEach(el => {
+                el.style.display = useFreq ? 'table-cell' : 'none';
+            });
+        }
+        function deleteRow(btn) {
+            const row = btn.parentElement.parentElement;
+            row.parentElement.removeChild(row);
+        }
+        function addUngroupedRow() {
+            const tbody = document.getElementById('ungroupedTableBody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+        <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+      `;
+            tbody.appendChild(row);
+            toggleFrequency();
+        }
+        function clearUngroupedData() {
+            document.getElementById('ungroupedTableBody').innerHTML = `
+        <tr>
+          <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+          <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
+            document.getElementById('percentile').value = '';
+            document.getElementById('resultsGrid').innerHTML = '';
+            clearBoxPlot();
+            showNotification('Ungrouped data cleared!', 'success');
+            toggleFrequency();
+        }
+        function addGroupedRow() {
+            const tbody = document.getElementById('groupedTableBody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+        <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+        <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+      `;
+            tbody.appendChild(row);
+        }
+        function clearGroupedData() {
+            document.getElementById('groupedTableBody').innerHTML = `
+        <tr>
+          <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+          <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+          <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
+            document.getElementById('groupedPercentile').value = '';
+            document.getElementById('resultsGrid').innerHTML = '';
+            clearBoxPlot();
+            showNotification('Grouped data cleared!', 'success');
+        }
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => { notification.style.display = 'none'; }, 3000);
+        }
+        // --- Updated Ungrouped Calculations (Standard formulas with lower/upper fences) ---
+        function calculateUngroupedStats() {
+            const useFrequency = document.getElementById('toggleFrequency').checked;
+            const rows = document.querySelectorAll('#ungroupedTableBody tr');
+            let dataPoints = [];
+            rows.forEach(row => {
+                const value = parseFloat(row.querySelector('.data-value').value);
+                const freq = useFrequency ? parseInt(row.querySelector('.data-frequency').value, 10) : 1;
+                if (!isNaN(value) && !isNaN(freq) && freq > 0) {
+                    for (let i = 0; i < freq; i++) {
+                        dataPoints.push(value);
+                    }
+                }
+            });
+            if (dataPoints.length < 2) {
+                showNotification('Enter at least 2 valid data points!', 'error');
+                return;
+            }
+            // sort data
+            const sorted = dataPoints.sort((a, b) => a - b);
+            const n = sorted.length;
+            const mean = sorted.reduce((sum, v) => sum + v, 0) / n;
+            // Sample variance (n-1) if needed but using population variance here as before
+            const variance = sorted.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / n;
+            const stdDev = Math.sqrt(variance);
+            const median = n % 2 === 0 ? (sorted[n / 2 - 1] + sorted[n / 2]) / 2 : sorted[Math.floor(n / 2)];
+            const mode = calculateMode(sorted);
+            const quartiles = calculateQuartiles(sorted);
+            const skew = calculateSkewness(sorted, mean, stdDev);
+            const skewClass = classifySkewness(skew);
+
+            // Compute fences for outlier detection (Tukey's method)
+            const IQR = quartiles.Q3 - quartiles.Q1;
+            const lowerFence = quartiles.Q1 - 1.5 * IQR;
+            const upperFence = quartiles.Q3 + 1.5 * IQR;
+
+            let percentileValue = null;
+            let percentileLabel = '';
+            const pInput = document.getElementById('percentile').value;
+            if (pInput !== '') {
+                const p = parseFloat(pInput);
+                if (!isNaN(p) && p >= 0 && p <= 100) {
+                    percentileValue = calculatePercentile(sorted, p);
+                    percentileLabel = `${p}th Percentile`;
+                } else {
+                    showNotification('Enter a valid percentile (0-100)!', 'error');
+                }
+            }
+            const stats = [
+                { title: 'Mean', value: mean, icon: 'fa-chart-line' },
+                { title: 'Median', value: median, icon: 'fa-sliders-h' },
+                { title: 'Mode', value: Array.isArray(mode) ? mode.join(', ') : mode, icon: 'fa-th' },
+                { title: 'Variance', value: variance, icon: 'fa-square' },
+                { title: 'Std Dev', value: stdDev, icon: 'fa-superscript' },
+                { title: 'Range', value: sorted[n - 1] - sorted[0], icon: 'fa-arrows-alt-h' },
+                { title: 'Q1', value: quartiles.Q1, icon: 'fa-sort-amount-down' },
+                { title: 'Q3', value: quartiles.Q3, icon: 'fa-sort-amount-up' },
+                { title: 'Skewness', value: skew, icon: 'fa-slash' },
+                { title: 'Distribution', value: skewClass, icon: 'fa-balance-scale' }
+            ];
+            if (percentileValue !== null) {
+                stats.push({ title: percentileLabel, value: percentileValue, icon: 'fa-percent' });
+            }
+            displayResults(stats);
+            // Draw box plot with fences and outliers for ungrouped data
+            drawBoxPlot(sorted, quartiles, lowerFence, upperFence);
+        }
+        // --- Grouped Calculations (unchanged except remove box plot drawing) ---
+        function calculateGroupedStats() {
+            const rows = document.querySelectorAll('#groupedTableBody tr');
+            let classes = [];
+            let totalFreq = 0;
+            // Read each class row
+            rows.forEach(row => {
+                const lower = parseFloat(row.cells[0].querySelector('input').value);
+                const upper = parseFloat(row.cells[1].querySelector('input').value);
+                const freq = parseInt(row.cells[2].querySelector('input').value, 10);
+                if (!isNaN(lower) && !isNaN(upper) && !isNaN(freq) && freq > 0) {
+                    const width = upper - lower;
+                    classes.push({ lower, upper, freq, width });
+                    totalFreq += freq;
+                }
+            });
+            if (classes.length < 1 || totalFreq < 2) {
+                showNotification('Enter at least 2 valid grouped rows!', 'error');
+                return;
+            }
+            // Build cumulative frequency array
+            let cum = 0;
+            let cumulative = classes.map(cl => { cum += cl.freq; return cum; });
+            // Mean using class marks
+            let mean = classes.reduce((sum, cl) => sum + cl.freq * ((cl.lower + cl.upper) / 2), 0) / totalFreq;
+            // Variance using class marks
+            let variance = classes.reduce((sum, cl) => {
+                let mark = (cl.lower + cl.upper) / 2;
+                return sum + cl.freq * Math.pow(mark - mean, 2);
+            }, 0) / totalFreq;
+            let stdDev = Math.sqrt(variance);
+            // Overall range
+            let minVal = Math.min(...classes.map(cl => cl.lower));
+            let maxVal = Math.max(...classes.map(cl => cl.upper));
+            let range = maxVal - minVal;
+            // Median calculation
+            let medianThreshold = totalFreq / 2;
+            let medIdx = cumulative.findIndex(cf => cf >= medianThreshold);
+            let medClass = classes[medIdx];
+            let CF_before = medIdx === 0 ? 0 : cumulative[medIdx - 1];
+            let median = medClass.lower + ((medianThreshold - CF_before) / medClass.freq) * medClass.width;
+            // Q1 and Q3
+            let Q1Threshold = totalFreq / 4;
+            let Q1Idx = cumulative.findIndex(cf => cf >= Q1Threshold);
+            let Q1Class = classes[Q1Idx];
+            let CF_before_Q1 = Q1Idx === 0 ? 0 : cumulative[Q1Idx - 1];
+            let Q1 = Q1Class.lower + ((Q1Threshold - CF_before_Q1) / Q1Class.freq) * Q1Class.width;
+
+            let Q3Threshold = (3 * totalFreq) / 4;
+            let Q3Idx = cumulative.findIndex(cf => cf >= Q3Threshold);
+            let Q3Class = classes[Q3Idx];
+            let CF_before_Q3 = Q3Idx === 0 ? 0 : cumulative[Q3Idx - 1];
+            let Q3 = Q3Class.lower + ((Q3Threshold - CF_before_Q3) / Q3Class.freq) * Q3Class.width;
+            // Mode using grouped formula
+            let modalIdx = classes.reduce((maxI, cl, i) => (cl.freq > classes[maxI].freq ? i : maxI), 0);
+            let modalClass = classes[modalIdx];
+            let f_m = modalClass.freq;
+            let f_prev = modalIdx > 0 ? classes[modalIdx - 1].freq : 0;
+            let f_next = modalIdx < classes.length - 1 ? classes[modalIdx + 1].freq : 0;
+            let mode = modalClass.lower + ((f_m - f_prev) / ((f_m - f_prev) + (f_m - f_next))) * modalClass.width;
+            let percentileValue = null;
+            let percentileLabel = '';
+            const pInput = document.getElementById('groupedPercentile').value;
+            if (pInput !== '') {
+                let p = parseFloat(pInput);
+                if (!isNaN(p) && p >= 0 && p <= 100) {
+                    let threshold = (p / 100) * totalFreq;
+                    let idx = cumulative.findIndex(cf => cf >= threshold);
+                    let cls = classes[idx];
+                    let CF_beforePercentile = idx === 0 ? 0 : cumulative[idx - 1];
+                    percentileValue = cls.lower + ((threshold - CF_beforePercentile) / cls.freq) * cls.width;
+                    percentileLabel = `${p}th Percentile`;
+                } else {
+                    showNotification('Enter valid percentile (0-100) for grouped data!', 'error');
+                }
+            }
+            // Skewness using class marks
+            let sum_fx3 = classes.reduce((sum, cl) => {
+                let mark = (cl.lower + cl.upper) / 2;
+                return sum + cl.freq * Math.pow(mark - mean, 2);
+            }, 0);
+            let skew = (sum_fx3 / totalFreq) / Math.pow(stdDev, 3);
+            let skewClass = skew > 0.1 ? "Positively skewed (right skewed)" : (skew < -0.1 ? "Negatively skewed (left skewed)" : "Symmetrical");
+
+            let stats = [
+                { title: 'Mean', value: mean, icon: 'fa-chart-line' },
+                { title: 'Median', value: median, icon: 'fa-sliders-h' },
+                { title: 'Mode', value: mode, icon: 'fa-th' },
+                { title: 'Variance', value: variance, icon: 'fa-square' },
+                { title: 'Std Dev', value: stdDev, icon: 'fa-superscript' },
+                { title: 'Range', value: range, icon: 'fa-arrows-alt-h' },
+                { title: 'Q1', value: Q1, icon: 'fa-sort-amount-down' },
+                { title: 'Q3', value: Q3, icon: 'fa-sort-amount-up' },
+                { title: 'Skewness', value: skew, icon: 'fa-slash' },
+                { title: 'Distribution', value: skewClass, icon: 'fa-balance-scale' }
+            ];
+            if (percentileValue !== null) {
+                stats.push({ title: percentileLabel, value: percentileValue, icon: 'fa-percent' });
+            }
+            displayResults(stats);
+            // For grouped data, do not plot any box plot
+            clearBoxPlot();
+        }
+        // --- Updated drawBoxPlot for Ungrouped Data with Fences and Outliers ---
+        function drawBoxPlot(sorted, quartiles, lowerFence, upperFence) {
+            const canvas = document.getElementById('boxPlotCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const margin = 50;
+            const plotWidth = canvas.width - 2 * margin;
+            const minVal = sorted[0];
+            const maxVal = sorted[sorted.length - 1];
+            const median = calculateMedian(sorted);
+
+            // Helper function: map numerical value to x coordinate
+            function mapX(val) {
+                return margin + ((val - minVal) / (maxVal - minVal)) * plotWidth;
+            }
+
+            // Determine whiskers: most extreme data points within fences
+            let whiskerLeft = sorted.find(v => v >= lowerFence) || minVal;
+            let whiskerRight = sorted.slice().reverse().find(v => v <= upperFence) || maxVal;
+
+            // Draw whisker line
+            ctx.beginPath();
+            ctx.moveTo(mapX(whiskerLeft), canvas.height / 2);
+            ctx.lineTo(mapX(whiskerRight), canvas.height / 2);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw box for Q1 to Q3
+            const boxY = canvas.height / 2 - 20;
+            const boxHeight = 40;
+            ctx.fillStyle = "#ccc";
+            ctx.fillRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
+            ctx.strokeRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
+
+            // Draw median line
+            ctx.beginPath();
+            ctx.moveTo(mapX(median), boxY);
+            ctx.lineTo(mapX(median), boxY + boxHeight);
+            ctx.strokeStyle = "#f00";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw lower and upper fence lines
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);
+            ctx.moveTo(mapX(lowerFence), canvas.height / 2 - 30);
+            ctx.lineTo(mapX(lowerFence), canvas.height / 2 + 30);
+            ctx.moveTo(mapX(upperFence), canvas.height / 2 - 30);
+            ctx.lineTo(mapX(upperFence), canvas.height / 2 + 30);
+            ctx.strokeStyle = "#00f";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Identify and plot outliers (values outside fences)
+            const outliers = sorted.filter(v => v < lowerFence || v > upperFence);
+            outliers.forEach(val => {
+                ctx.beginPath();
+                ctx.arc(mapX(val), canvas.height / 2, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = "red";
+                ctx.fill();
+            });
+
+            // Draw labels for min and max values
+            ctx.fillStyle = "#000";
+            ctx.font = "12px sans-serif";
+            ctx.fillText(minVal.toFixed(2), mapX(minVal) - 10, canvas.height / 2 + 30);
+            ctx.fillText(maxVal.toFixed(2), mapX(maxVal) - 10, canvas.height / 2 + 30);
+        }
+        function clearBoxPlot() {
+            const canvas = document.getElementById('boxPlotCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        // --- Helper Functions ---
+        function calculateMode(data) {
+            const freq = {};
+            data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+            const maxFreq = Math.max(...Object.values(freq));
+            return Object.keys(freq).filter(v => freq[v] === maxFreq).map(Number);
+        }
+        function calculateQuartiles(data) {
+            const mid = Math.floor(data.length / 2);
+            let lower = data.slice(0, mid);
+            let upper = data.length % 2 === 0 ? data.slice(mid) : data.slice(mid + 1);
+            return { Q1: calculateMedian(lower), Q3: calculateMedian(upper) };
+        }
+        function calculateMedian(data) {
+            const m = Math.floor(data.length / 2);
+            return data.length % 2 === 0 ? (data[m - 1] + data[m]) / 2 : data[m];
+        }
+        function calculatePercentile(data, k) {
+            const n = data.length;
+            const pos = Math.ceil((k * n) / 100);
+            return data[Math.max(0, pos - 1)];
+        }
+        function calculateSkewness(data, mean, stdDev) {
+            const n = data.length;
+            const sumCubed = data.reduce((sum, v) => sum + Math.pow(v - mean, 3), 0);
+            return (sumCubed / n) / Math.pow(stdDev, 3);
+        }
+        function classifySkewness(skew) {
+            if (skew > 0.1) return "Positively skewed (right skewed)";
+            else if (skew < -0.1) return "Negatively skewed (left skewed)";
+            else return "Symmetrical";
+        }
+        function displayResults(stats) {
+            document.getElementById('resultsGrid').innerHTML =
+                stats.map(s => `<div class="stat-card">
+          <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
+          <div class="stat-value">${typeof s.value === 'number' ? s.value.toFixed(2) : s.value}</div>
+        </div>`).join('');
+        }
+        // When document loads, ensure ungrouped frequency toggle is applied
+        document.addEventListener('DOMContentLoaded', () => { toggleFrequency(); });
+    </script>
+</body>
+
+</html>
