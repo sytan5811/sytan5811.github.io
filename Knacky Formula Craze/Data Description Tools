@@ -55,9 +55,9 @@
             font-weight: 700;
         }
 
-        /* Home button styling */
         .home-btn {
             margin-bottom: 1rem;
+            text-decoration: none;
         }
 
         .data-type-tabs {
@@ -178,7 +178,7 @@
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 500;
@@ -280,9 +280,9 @@
     <div class="container">
         <div class="header">
             <h1>📊 Statistics Master</h1>
-            <button class="btn btn-secondary home-btn" onclick=" window.location.href ='Mathematics Test.html'">
+            <a class="btn btn-secondary home-btn" href="Mathematics Formula.html">
                 <i class="fas fa-home"></i> Home
-            </button>
+            </a>
             <div class="data-type-tabs">
                 <button class="tab-btn active" onclick="toggleDataType('ungrouped')">
                     <i class="fas fa-list-ol"></i> Ungrouped Data
@@ -393,21 +393,21 @@
             const tbody = document.getElementById('ungroupedTableBody');
             const row = document.createElement('tr');
             row.innerHTML = `
-        <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
-        <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
-        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-      `;
+                <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+                <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+                <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+            `;
             tbody.appendChild(row);
             toggleFrequency();
         }
         function clearUngroupedData() {
             document.getElementById('ungroupedTableBody').innerHTML = `
-        <tr>
-          <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
-          <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
-          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-        </tr>
-      `;
+                <tr>
+                    <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+                    <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+                    <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `;
             document.getElementById('percentile').value = '';
             document.getElementById('resultsGrid').innerHTML = '';
             clearBoxPlot();
@@ -418,22 +418,22 @@
             const tbody = document.getElementById('groupedTableBody');
             const row = document.createElement('tr');
             row.innerHTML = `
-        <td><input type="number" step="any" placeholder="e.g., 10" /></td>
-        <td><input type="number" step="any" placeholder="e.g., 20" /></td>
-        <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
-        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-      `;
+                <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+                <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+                <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+                <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+            `;
             tbody.appendChild(row);
         }
         function clearGroupedData() {
             document.getElementById('groupedTableBody').innerHTML = `
-        <tr>
-          <td><input type="number" step="any" placeholder="e.g., 10" /></td>
-          <td><input type="number" step="any" placeholder="e.g., 20" /></td>
-          <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
-          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-        </tr>
-      `;
+                <tr>
+                    <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+                    <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+                    <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+                    <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `;
             document.getElementById('groupedPercentile').value = '';
             document.getElementById('resultsGrid').innerHTML = '';
             clearBoxPlot();
@@ -443,7 +443,9 @@
             const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.style.display = 'block';
-            setTimeout(() => { notification.style.display = 'none'; }, 3000);
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
         function calculateUngroupedStats() {
             const useFrequency = document.getElementById('toggleFrequency').checked;
@@ -465,7 +467,6 @@
             const sorted = dataPoints.sort((a, b) => a - b);
             const n = sorted.length;
             const mean = sorted.reduce((sum, v) => sum + v, 0) / n;
-
             const variance = sorted.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / n;
             const stdDev = Math.sqrt(variance);
             const median = n % 2 === 0 ? (sorted[n / 2 - 1] + sorted[n / 2]) / 2 : sorted[Math.floor(n / 2)];
@@ -473,11 +474,9 @@
             const quartiles = calculateQuartiles(sorted);
             const skew = calculateSkewness(sorted, mean, stdDev);
             const skewClass = classifySkewness(skew);
-
             const IQR = quartiles.Q3 - quartiles.Q1;
             const lowerFence = quartiles.Q1 - 1.5 * IQR;
             const upperFence = quartiles.Q3 + 1.5 * IQR;
-
             let percentileValue = null;
             let percentileLabel = '';
             const pInput = document.getElementById('percentile').value;
@@ -528,37 +527,30 @@
             }
             let cum = 0;
             let cumulative = classes.map(cl => { cum += cl.freq; return cum; });
-
             let mean = classes.reduce((sum, cl) => sum + cl.freq * ((cl.lower + cl.upper) / 2), 0) / totalFreq;
-
             let variance = classes.reduce((sum, cl) => {
                 let mark = (cl.lower + cl.upper) / 2;
                 return sum + cl.freq * Math.pow(mark - mean, 2);
             }, 0) / totalFreq;
             let stdDev = Math.sqrt(variance);
-
             let minVal = Math.min(...classes.map(cl => cl.lower));
             let maxVal = Math.max(...classes.map(cl => cl.upper));
             let range = maxVal - minVal;
-
             let medianThreshold = totalFreq / 2;
             let medIdx = cumulative.findIndex(cf => cf >= medianThreshold);
             let medClass = classes[medIdx];
             let CF_before = medIdx === 0 ? 0 : cumulative[medIdx - 1];
             let median = medClass.lower + ((medianThreshold - CF_before) / medClass.freq) * medClass.width;
-
             let Q1Threshold = totalFreq / 4;
             let Q1Idx = cumulative.findIndex(cf => cf >= Q1Threshold);
             let Q1Class = classes[Q1Idx];
             let CF_before_Q1 = Q1Idx === 0 ? 0 : cumulative[Q1Idx - 1];
             let Q1 = Q1Class.lower + ((Q1Threshold - CF_before_Q1) / Q1Class.freq) * Q1Class.width;
-
             let Q3Threshold = (3 * totalFreq) / 4;
             let Q3Idx = cumulative.findIndex(cf => cf >= Q3Threshold);
             let Q3Class = classes[Q3Idx];
             let CF_before_Q3 = Q3Idx === 0 ? 0 : cumulative[Q3Idx - 1];
             let Q3 = Q3Class.lower + ((Q3Threshold - CF_before_Q3) / Q3Class.freq) * Q3Class.width;
-
             let modalIdx = classes.reduce((maxI, cl, i) => (cl.freq > classes[maxI].freq ? i : maxI), 0);
             let modalClass = classes[modalIdx];
             let f_m = modalClass.freq;
@@ -587,7 +579,6 @@
             }, 0);
             let skew = (sum_fx3 / totalFreq) / Math.pow(stdDev, 3);
             let skewClass = skew > 0.1 ? "Positively skewed (right skewed)" : (skew < -0.1 ? "Negatively skewed (left skewed)" : "Symmetrical");
-
             let stats = [
                 { title: 'Mean', value: mean, icon: 'fa-chart-line' },
                 { title: 'Median', value: median, icon: 'fa-sliders-h' },
@@ -615,34 +606,28 @@
             const minVal = sorted[0];
             const maxVal = sorted[sorted.length - 1];
             const median = calculateMedian(sorted);
-
             function mapX(val) {
                 return margin + ((val - minVal) / (maxVal - minVal)) * plotWidth;
             }
-
             let whiskerLeft = sorted.find(v => v >= lowerFence) || minVal;
             let whiskerRight = sorted.slice().reverse().find(v => v <= upperFence) || maxVal;
-
             ctx.beginPath();
             ctx.moveTo(mapX(whiskerLeft), canvas.height / 2);
             ctx.lineTo(mapX(whiskerRight), canvas.height / 2);
             ctx.strokeStyle = "#333";
             ctx.lineWidth = 2;
             ctx.stroke();
-
             const boxY = canvas.height / 2 - 20;
             const boxHeight = 40;
             ctx.fillStyle = "#ccc";
             ctx.fillRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
             ctx.strokeRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
-
             ctx.beginPath();
             ctx.moveTo(mapX(median), boxY);
             ctx.lineTo(mapX(median), boxY + boxHeight);
             ctx.strokeStyle = "#f00";
             ctx.lineWidth = 2;
             ctx.stroke();
-
             ctx.beginPath();
             ctx.setLineDash([5, 3]);
             ctx.moveTo(mapX(lowerFence), canvas.height / 2 - 30);
@@ -653,7 +638,6 @@
             ctx.lineWidth = 1;
             ctx.stroke();
             ctx.setLineDash([]);
-
             const outliers = sorted.filter(v => v < lowerFence || v > upperFence);
             outliers.forEach(val => {
                 ctx.beginPath();
@@ -661,7 +645,6 @@
                 ctx.fillStyle = "red";
                 ctx.fill();
             });
-
             ctx.fillStyle = "#000";
             ctx.font = "12px sans-serif";
             ctx.fillText(minVal.toFixed(2), mapX(minVal) - 10, canvas.height / 2 + 30);
@@ -706,9 +689,9 @@
         function displayResults(stats) {
             document.getElementById('resultsGrid').innerHTML =
                 stats.map(s => `<div class="stat-card">
-          <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
-          <div class="stat-value">${typeof s.value === 'number' ? s.value.toFixed(2) : s.value}</div>
-        </div>`).join('');
+                    <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
+                    <div class="stat-value">${typeof s.value === 'number' ? s.value.toFixed(2) : s.value}</div>
+                </div>`).join('');
         }
         document.addEventListener('DOMContentLoaded', () => { toggleFrequency(); });
     </script>
