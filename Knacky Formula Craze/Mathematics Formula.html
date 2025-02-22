@@ -763,6 +763,11 @@
                     "P (Principal)",
                     "R (Rate of interest)",
                     "T (Time in years)"]
+            },
+            "data description": {
+                formula: "Data Description Tools",
+                definition: "Click to access tools for calculating mean, median, mode, etc.",
+                variables: []
             }
         };
 
@@ -882,7 +887,11 @@
                 var formulaContainer = document.createElement('div');
                 formulaContainer.className = 'formula-container';
                 formulaContainer.onclick = function () {
-                    showCalculator(formulaData);
+                    if (query === "data description") {
+                        window.location.href = 'data_description.html';
+                    } else {
+                        showCalculator(formulaData);
+                    }
                 };
 
                 var formulaDiv = document.createElement('div');
