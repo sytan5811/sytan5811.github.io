@@ -886,13 +886,13 @@
                 var formulaData = formulas[query];
                 var formulaContainer = document.createElement('div');
                 formulaContainer.className = 'formula-container';
-                formulaContainer.onclick = function () {
+                formulaContainer.addEventListener('click', function () {
                     if (query === "data description") {
-                        window.location.href = 'Data Description Tools.html';
+                        window.location.assign('https://sytan5811.github.io/Knacky%20Formula%20Craze/Data%20Description%20Tools.html');
                     } else {
                         showCalculator(formulaData);
                     }
-                };
+                });
 
                 var formulaDiv = document.createElement('div');
                 formulaDiv.className = 'formula';
