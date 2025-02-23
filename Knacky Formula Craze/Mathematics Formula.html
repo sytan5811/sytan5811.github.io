@@ -888,7 +888,19 @@
                 formulaContainer.className = 'formula-container';
                 formulaContainer.onclick = function () {
                     if (query === "data description") {
-                        window.location.href = 'Data Description Tools.html';
+                        fetch('https://sytan5811.github.io/Knacky%20Formula%20Craze/Data%20Description%20Tools.html')
+                            .then(function (response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
+                            .then(function (html) {
+                                document.getElementById('content').innerHTML = html;
+                            })
+                            .catch(function (error) {
+                                console.error('Error loading data description:', error);
+                            });
                     } else {
                         showCalculator(formulaData);
                     }
