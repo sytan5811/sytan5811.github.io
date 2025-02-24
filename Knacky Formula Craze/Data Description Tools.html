@@ -276,13 +276,49 @@
             }
         }
 
-        @media (max-width: 768px) {
+         @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
             .container {
                 padding: 1rem;
             }
 
+            .header h1 {
+                font-size: 2rem;
+            }
+
             .results-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.75rem;
+            }
+
+            .btn,
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .percentile-input input {
+                width: 120px;
+            }
+
+            .notification {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
             }
         }
     </style>
