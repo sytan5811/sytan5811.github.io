@@ -56,8 +56,20 @@
         }
 
         .home-btn {
-            margin-bottom: 1rem;
+            display: inline-block;
+            margin: 1rem auto;
+            padding: 0.75rem 1.5rem;
+            background: #e0e7ff;
+            color: var(--primary);
+            border-radius: 0.75rem;
             text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-1px);
         }
 
         .data-type-tabs {
@@ -313,8 +325,7 @@
                         <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
                         <td class="frequency-col"><input type="number" step="1" placeholder="Frequency"
                                 class="data-frequency" value="1" /></td>
-                        <td>
-                            <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -347,8 +358,7 @@
                         <td><input type="number" step="any" placeholder="e.g., 10" /></td>
                         <td><input type="number" step="any" placeholder="e.g., 20" /></td>
                         <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
-                        <td>
-                            <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -393,21 +403,21 @@
             const tbody = document.getElementById('ungroupedTableBody');
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
-                <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
-                <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-            `;
+        <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+        <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+      `;
             tbody.appendChild(row);
             toggleFrequency();
         }
         function clearUngroupedData() {
             document.getElementById('ungroupedTableBody').innerHTML = `
-                <tr>
-                    <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
-                    <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-                </tr>
-            `;
+        <tr>
+          <td><input type="number" step="any" placeholder="Enter value" class="data-value" /></td>
+          <td class="frequency-col"><input type="number" step="1" placeholder="Frequency" class="data-frequency" value="1" /></td>
+          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
             document.getElementById('percentile').value = '';
             document.getElementById('resultsGrid').innerHTML = '';
             clearBoxPlot();
@@ -418,22 +428,22 @@
             const tbody = document.getElementById('groupedTableBody');
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><input type="number" step="any" placeholder="e.g., 10" /></td>
-                <td><input type="number" step="any" placeholder="e.g., 20" /></td>
-                <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
-                <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-            `;
+        <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+        <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+        <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+        <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+      `;
             tbody.appendChild(row);
         }
         function clearGroupedData() {
             document.getElementById('groupedTableBody').innerHTML = `
-                <tr>
-                    <td><input type="number" step="any" placeholder="e.g., 10" /></td>
-                    <td><input type="number" step="any" placeholder="e.g., 20" /></td>
-                    <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
-                </tr>
-            `;
+        <tr>
+          <td><input type="number" step="any" placeholder="e.g., 10" /></td>
+          <td><input type="number" step="any" placeholder="e.g., 20" /></td>
+          <td><input type="number" step="1" placeholder="Frequency" value="1" /></td>
+          <td><button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
             document.getElementById('groupedPercentile').value = '';
             document.getElementById('resultsGrid').innerHTML = '';
             clearBoxPlot();
@@ -443,9 +453,10 @@
             const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
+            setTimeout(() => { notification.style.display = 'none'; }, 3000);
+        }
+        function calculatePearsonSkewness(mean, median, stdDev) {
+            return 3 * (mean - median) / stdDev;
         }
         function calculateUngroupedStats() {
             const useFrequency = document.getElementById('toggleFrequency').checked;
@@ -472,11 +483,8 @@
             const median = n % 2 === 0 ? (sorted[n / 2 - 1] + sorted[n / 2]) / 2 : sorted[Math.floor(n / 2)];
             const mode = calculateMode(sorted);
             const quartiles = calculateQuartiles(sorted);
-            const skew = calculateSkewness(sorted, mean, stdDev);
-            const skewClass = classifySkewness(skew);
-            const IQR = quartiles.Q3 - quartiles.Q1;
-            const lowerFence = quartiles.Q1 - 1.5 * IQR;
-            const upperFence = quartiles.Q3 + 1.5 * IQR;
+            const skew = calculatePearsonSkewness(mean, median, stdDev);
+            const skewClass = skew > 0.1 ? "Positively skewed (right skewed)" : (skew < -0.1 ? "Negatively skewed (left skewed)" : "Symmetrical");
             let percentileValue = null;
             let percentileLabel = '';
             const pInput = document.getElementById('percentile').value;
@@ -486,7 +494,7 @@
                     percentileValue = calculatePercentile(sorted, p);
                     percentileLabel = `${p}th Percentile`;
                 } else {
-                    showNotification('Enter a valid percentile (0-100)!', 'error');
+                    showNotification('Enter valid percentile (0-100) for ungrouped data!', 'error');
                 }
             }
             const stats = [
@@ -495,17 +503,17 @@
                 { title: 'Mode', value: Array.isArray(mode) ? mode.join(', ') : mode, icon: 'fa-th' },
                 { title: 'Variance', value: variance, icon: 'fa-square' },
                 { title: 'Std Dev', value: stdDev, icon: 'fa-superscript' },
-                { title: 'Range', value: sorted[n - 1] - sorted[0], icon: 'fa-arrows-alt-h' },
+                { title: 'Range', value: sorted[sorted.length - 1] - sorted[0], icon: 'fa-arrows-alt-h' },
                 { title: 'Q1', value: quartiles.Q1, icon: 'fa-sort-amount-down' },
                 { title: 'Q3', value: quartiles.Q3, icon: 'fa-sort-amount-up' },
-                { title: 'Skewness', value: skew, icon: 'fa-slash' },
+                { title: 'Skewness (Pearson)', value: skew, icon: 'fa-slash' },
                 { title: 'Distribution', value: skewClass, icon: 'fa-balance-scale' }
             ];
             if (percentileValue !== null) {
                 stats.push({ title: percentileLabel, value: percentileValue, icon: 'fa-percent' });
             }
             displayResults(stats);
-            drawBoxPlot(sorted, quartiles, lowerFence, upperFence);
+            drawBoxPlot(sorted);
         }
         function calculateGroupedStats() {
             const rows = document.querySelectorAll('#groupedTableBody tr');
@@ -573,12 +581,8 @@
                     showNotification('Enter valid percentile (0-100) for grouped data!', 'error');
                 }
             }
-            let sum_fx3 = classes.reduce((sum, cl) => {
-                let mark = (cl.lower + cl.upper) / 2;
-                return sum + cl.freq * Math.pow(mark - mean, 2);
-            }, 0);
-            let skew = (sum_fx3 / totalFreq) / Math.pow(stdDev, 3);
-            let skewClass = skew > 0.1 ? "Positively skewed (right skewed)" : (skew < -0.1 ? "Negatively skewed (left skewed)" : "Symmetrical");
+            const skew = calculatePearsonSkewness(mean, median, stdDev);
+            const skewClass = skew > 0.1 ? "Positively skewed (right skewed)" : (skew < -0.1 ? "Negatively skewed (left skewed)" : "Symmetrical");
             let stats = [
                 { title: 'Mean', value: mean, icon: 'fa-chart-line' },
                 { title: 'Median', value: median, icon: 'fa-sliders-h' },
@@ -588,63 +592,86 @@
                 { title: 'Range', value: range, icon: 'fa-arrows-alt-h' },
                 { title: 'Q1', value: Q1, icon: 'fa-sort-amount-down' },
                 { title: 'Q3', value: Q3, icon: 'fa-sort-amount-up' },
-                { title: 'Skewness', value: skew, icon: 'fa-slash' },
+                { title: 'Skewness (Pearson)', value: skew, icon: 'fa-slash' },
                 { title: 'Distribution', value: skewClass, icon: 'fa-balance-scale' }
             ];
             if (percentileValue !== null) {
                 stats.push({ title: percentileLabel, value: percentileValue, icon: 'fa-percent' });
             }
             displayResults(stats);
-            clearBoxPlot();
+            drawBoxPlotForGrouped(minVal, Q1, median, Q3, maxVal);
         }
-        function drawBoxPlot(sorted, quartiles, lowerFence, upperFence) {
+        function displayResults(stats) {
+            document.getElementById('resultsGrid').innerHTML =
+                stats.map(s => `<div class="stat-card">
+          <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
+          <div class="stat-value">${typeof s.value === 'number' ? s.value.toFixed(2) : s.value}</div>
+        </div>`).join('');
+        }
+        function drawBoxPlot(sorted) {
             const canvas = document.getElementById('boxPlotCanvas');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const margin = 50;
-            const plotWidth = canvas.width - 2 * margin;
-            const minVal = sorted[0];
-            const maxVal = sorted[sorted.length - 1];
+            const margin = 50, plotWidth = canvas.width - 2 * margin;
+            const minVal = sorted[0], maxVal = sorted[sorted.length - 1];
+            const quart = calculateQuartiles(sorted);
             const median = calculateMedian(sorted);
-            function mapX(val) {
-                return margin + ((val - minVal) / (maxVal - minVal)) * plotWidth;
-            }
-            let whiskerLeft = sorted.find(v => v >= lowerFence) || minVal;
-            let whiskerRight = sorted.slice().reverse().find(v => v <= upperFence) || maxVal;
+            function mapX(val) { return margin + ((val - minVal) / (maxVal - minVal)) * plotWidth; }
             ctx.beginPath();
-            ctx.moveTo(mapX(whiskerLeft), canvas.height / 2);
-            ctx.lineTo(mapX(whiskerRight), canvas.height / 2);
+            ctx.moveTo(mapX(minVal), canvas.height / 2);
+            ctx.lineTo(mapX(maxVal), canvas.height / 2);
             ctx.strokeStyle = "#333";
             ctx.lineWidth = 2;
             ctx.stroke();
-            const boxY = canvas.height / 2 - 20;
-            const boxHeight = 40;
+            ctx.beginPath();
+            ctx.moveTo(mapX(minVal), canvas.height / 2 - 10);
+            ctx.lineTo(mapX(minVal), canvas.height / 2 + 10);
+            ctx.moveTo(mapX(maxVal), canvas.height / 2 - 10);
+            ctx.lineTo(mapX(maxVal), canvas.height / 2 + 10);
+            ctx.stroke();
+            const boxY = canvas.height / 2 - 20, boxH = 40;
             ctx.fillStyle = "#ccc";
-            ctx.fillRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
-            ctx.strokeRect(mapX(quartiles.Q1), boxY, mapX(quartiles.Q3) - mapX(quartiles.Q1), boxHeight);
+            ctx.fillRect(mapX(quart.Q1), boxY, mapX(quart.Q3) - mapX(quart.Q1), boxH);
+            ctx.strokeRect(mapX(quart.Q1), boxY, mapX(quart.Q3) - mapX(quart.Q1), boxH);
             ctx.beginPath();
             ctx.moveTo(mapX(median), boxY);
-            ctx.lineTo(mapX(median), boxY + boxHeight);
+            ctx.lineTo(mapX(median), boxY + boxH);
             ctx.strokeStyle = "#f00";
             ctx.lineWidth = 2;
             ctx.stroke();
+            ctx.fillStyle = "#000";
+            ctx.font = "12px sans-serif";
+            ctx.fillText(minVal.toFixed(2), mapX(minVal) - 10, canvas.height / 2 + 30);
+            ctx.fillText(maxVal.toFixed(2), mapX(maxVal) - 10, canvas.height / 2 + 30);
+        }
+        function drawBoxPlotForGrouped(minVal, Q1, median, Q3, maxVal) {
+            const canvas = document.getElementById('boxPlotCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const margin = 50, plotWidth = canvas.width - 2 * margin;
+            function mapX(val) { return margin + ((val - minVal) / (maxVal - minVal)) * plotWidth; }
             ctx.beginPath();
-            ctx.setLineDash([5, 3]);
-            ctx.moveTo(mapX(lowerFence), canvas.height / 2 - 30);
-            ctx.lineTo(mapX(lowerFence), canvas.height / 2 + 30);
-            ctx.moveTo(mapX(upperFence), canvas.height / 2 - 30);
-            ctx.lineTo(mapX(upperFence), canvas.height / 2 + 30);
-            ctx.strokeStyle = "#00f";
-            ctx.lineWidth = 1;
+            ctx.moveTo(mapX(minVal), canvas.height / 2);
+            ctx.lineTo(mapX(maxVal), canvas.height / 2);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 2;
             ctx.stroke();
-            ctx.setLineDash([]);
-            const outliers = sorted.filter(v => v < lowerFence || v > upperFence);
-            outliers.forEach(val => {
-                ctx.beginPath();
-                ctx.arc(mapX(val), canvas.height / 2, 4, 0, 2 * Math.PI);
-                ctx.fillStyle = "red";
-                ctx.fill();
-            });
+            ctx.beginPath();
+            ctx.moveTo(mapX(minVal), canvas.height / 2 - 10);
+            ctx.lineTo(mapX(minVal), canvas.height / 2 + 10);
+            ctx.moveTo(mapX(maxVal), canvas.height / 2 - 10);
+            ctx.lineTo(mapX(maxVal), canvas.height / 2 + 10);
+            ctx.stroke();
+            const boxY = canvas.height / 2 - 20, boxH = 40;
+            ctx.fillStyle = "#ccc";
+            ctx.fillRect(mapX(Q1), boxY, mapX(Q3) - mapX(Q1), boxH);
+            ctx.strokeRect(mapX(Q1), boxY, mapX(Q3) - mapX(Q1), boxH);
+            ctx.beginPath();
+            ctx.moveTo(mapX(median), boxY);
+            ctx.lineTo(mapX(median), boxY + boxH);
+            ctx.strokeStyle = "#f00";
+            ctx.lineWidth = 2;
+            ctx.stroke();
             ctx.fillStyle = "#000";
             ctx.font = "12px sans-serif";
             ctx.fillText(minVal.toFixed(2), mapX(minVal) - 10, canvas.height / 2 + 30);
@@ -675,23 +702,6 @@
             const n = data.length;
             const pos = Math.ceil((k * n) / 100);
             return data[Math.max(0, pos - 1)];
-        }
-        function calculateSkewness(data, mean, stdDev) {
-            const n = data.length;
-            const sumCubed = data.reduce((sum, v) => sum + Math.pow(v - mean, 3), 0);
-            return (sumCubed / n) / Math.pow(stdDev, 3);
-        }
-        function classifySkewness(skew) {
-            if (skew > 0.1) return "Positively skewed (right skewed)";
-            else if (skew < -0.1) return "Negatively skewed (left skewed)";
-            else return "Symmetrical";
-        }
-        function displayResults(stats) {
-            document.getElementById('resultsGrid').innerHTML =
-                stats.map(s => `<div class="stat-card">
-                    <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
-                    <div class="stat-value">${typeof s.value === 'number' ? s.value.toFixed(2) : s.value}</div>
-                </div>`).join('');
         }
         document.addEventListener('DOMContentLoaded', () => { toggleFrequency(); });
     </script>
